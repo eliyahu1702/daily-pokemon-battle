@@ -6,6 +6,7 @@
 //   press KEY [N]   hold KEY for N frames (default 6), then release for 12 frames
 //   repeat N KEY    press KEY N times
 //   poke8 ADDR V    write byte V to ADDR
+//   clockdays N     run the cartridge clock N days ahead of the real date
 //   shot NAME       save the screen to NAME.png in the output directory
 #include <mgba/core/core.h>
 #include <mgba/core/log.h>
@@ -126,6 +127,11 @@ int main(int argc, char **argv)
                 Press(arg2, 6);
         else if (!strcmp(cmd, "shot"))
             Shot(arg1);
+        else if (!strcmp(cmd, "clockdays")) // shift the cartridge clock by N days from now
+        {
+            core->rtc.override = RTC_WALLCLOCK_OFFSET;
+            core->rtc.value = (int64_t)atoi(arg1) * 24 * 60 * 60 * 1000;
+        }
         else if (!strcmp(cmd, "poke8"))
             core->busWrite8(core, strtoul(arg1, NULL, 0), strtoul(arg2, NULL, 0));
         else

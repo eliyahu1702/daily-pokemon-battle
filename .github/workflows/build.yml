@@ -50,11 +50,12 @@ jobs:
           make -C tools/daily/playtest
           python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win win
           python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/lose lose
+          python3 tools/daily/playtest/day_rollover.py pokeemerald.gba playtest-out/days 7
 
       - name: Upload playtest screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playtest-screenshots
-          path: playtest-out/*/*.png
+          path: playtest-out/**/*.png
           if-no-files-found: ignore
