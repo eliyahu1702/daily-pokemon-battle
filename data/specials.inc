@@ -638,3 +638,13 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+	def_special DailyBattle_Setup
+	def_special DailyBattle_RecordWin
+	def_special DailyBattle_BufferStreak
+	def_special DailyDraft_HasTodaysTeam
+	def_special DailyDraft_Begin
+	def_special DailyDraft_BufferRound
+	def_special DailyDraft_PrepareChoices
+	def_special DailyDraft_BufferChoice
+	def_special DailyDraft_Pick
+	def_special DailyDraft_ShowSummary, waitstate=1

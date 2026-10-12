@@ -16877,3 +16877,15 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+/* Placeholder: battles against TRAINER_DAILY use today's team from src/data/daily_trainers.party. */
+=== TRAINER_DAILY ===
+Name: DAILY
+Class: Leader
+Pic: Cooltrainer M
+Gender: Male
+Music: Male
+Double Battle: No
+
+Pikachu
+Level: 5

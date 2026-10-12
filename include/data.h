@@ -7,6 +7,7 @@
 #include "constants/pokeball.h"
 #include "difficulty.h"
 #include "debug.h"
+#include "daily_battle.h"
 
 #define MAX_TRAINER_ITEMS 4
 
@@ -279,6 +280,7 @@ static inline u16 GetPartnerIdFromTrainerId(u16 trainerId)
 static inline const struct Trainer *GetTrainerStructFromId(u16 trainerId)
 {
     if (gIsDebugBattle) return GetDebugAiTrainer();
+    if (trainerId == TRAINER_DAILY) return GetDailyTrainer();
     enum DifficultyLevel difficulty;
 
     if (IsPartnerTrainerId(trainerId))

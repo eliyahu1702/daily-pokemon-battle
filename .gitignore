@@ -66,3 +66,8 @@ tools/aif2pcm/aif2pcm
 *.smolTM
 __pycache__
 .map_version
+
+# Daily Battle: generated from .party files
+src/data/draft_pool.h
+src/data/daily_trainers.h
+tools/daily/playtest/playtest

@@ -1,0 +1,102 @@
+Draft pool: 240 mons
+Blastoise, Nidoqueen, Nidoking, Clefable, Arcanine, Arcanine-Hisui, Alakazam, Machamp, Tentacruel, Rapidash, Rapidash-Galar, Slowbro, Muk-Alola, Cloyster, Gengar, Weezing-Galar, Starmie, Pinsir, Tauros-Paldea-Aqua, Gyarados, Vaporeon, Aerodactyl, Articuno-Galar, Zapdos, Zapdos-Galar, Moltres, Moltres-Galar, Dragonite, Feraligatr, Crobat, Azumarill, Politoed, Quagsire, Espeon, Umbreon, Slowking, Slowking-Galar, Forretress, Steelix, Scizor, Shuckle, Skarmory, Donphan, Blissey, Raikou, Entei, Suicune, Tyranitar, Blaziken, Swampert, Pelipper, Gardevoir, Breloom, Aggron, Wailord, Flygon, Altaria, Crawdaunt, Claydol, Walrein, Salamence, Metagross, Registeel, Latias, Latios, Torterra, Infernape, Empoleon, Staraptor, Roserade, Gastrodon, Bronzong, Garchomp, Lucario, Hippowdon, Drapion, Weavile, Magnezone, Lickilicky, Rhyperior, Tangrowth, Togekiss, Yanmega, Gliscor, Mamoswine, Porygon-Z, Gallade, Rotom-Wash, Uxie, Azelf, Heatran, Cresselia, Serperior, Samurott-Hisui, Stoutland, Gigalith, Excadrill, Conkeldurr, Seismitoad, Scolipede, Lilligant-Hisui, Krookodile, Archeops, Zoroark-Hisui, Cinccino, Reuniclus, Vanilluxe, Alomomola, Ferrothorn, Klinklang, Chandelure, Haxorus, Mienshao, Braviary, Mandibuzz, Hydreigon, Cobalion, Terrakion, Tornadus, Tornadus-Therian, Thundurus, Thundurus-Therian, Landorus-Therian, Chesnaught, Greninja, Talonflame, Aegislash, Barbaracle, Tyrantrum, Aurorus, Sylveon, Hawlucha, Goodra, Goodra-Hisui, Klefki, Avalugg, Noivern, Decidueye, Incineroar, Primarina, Oricorio-Pom-Pom, Ribombee, Lycanroc-Dusk, Toxapex, Araquanid, Bewear, Tsareena, Comfey, Golisopod, Silvally, Mimikyu, Dhelmise, Kommo-o, Tapu Koko, Tapu Lele, Tapu Bulu, Tapu Fini, Nihilego, Buzzwole, Xurkitree, Celesteela, Kartana, Guzzlord, Stakataka, Blacephalon, Rillaboom, Cinderace, Corviknight, Orbeetle, Barraskewda, Toxtricity, Centiskorch, Polteageist, Hatterene, Obstagoon, Cursola, Sirfetch’d, Mr. Rime, Copperajah, Dracozolt, Arctozolt, Arctovish, Dragapult, Regieleki, Regidrago, Kleavor, Ursaluna, Basculegion, Basculegion-F, Overqwil, Enamorus, Enamorus-Therian, Meowscarada, Skeledirge, Quaquaval, Lokix, Maushold-Four, Garganacl, Armarouge, Ceruledge, Bellibolt, Kilowattrel, Brambleghast, Tinkaton, Revavroom, Cyclizar, Glimmora, Houndstone, Flamigo, Cetitan, Dondozo, Clodsire, Dudunsparce, Kingambit, Great Tusk, Scream Tail, Slither Wing, Sandy Shocks, Iron Treads, Iron Hands, Iron Jugulis, Iron Moth, Iron Thorns, Gholdengo, Ting-Lu, Iron Valiant, Walking Wake, Iron Leaves, Sinistcha, Sinistcha-Masterpiece, Okidogi, Munkidori, Fezandipiti, Ogerpon, Ogerpon-Cornerstone, Ogerpon-Wellspring, Hydrapple, Raging Bolt, Iron Boulder, Iron Crown
+
+Opponents:
+BROCK      Leader     Rock     Aerodactyl, Kabutops, Omastar, Rhyperior, Tyranitar, Garganacl
+MISTY      Leader     Water    Starmie, Gyarados, Politoed, Walking Wake, Primarina, Ogerpon-Wellspring
+LT_SURGE   Leader     Electric Magnezone, Zapdos, Tapu Koko, Raging Bolt, Xurkitree, Iron Hands
+ERIKA      Leader     Grass    Vileplume, Tangrowth, Ogerpon, Ferrothorn, Rillaboom, Meowscarada
+KOGA       Leader     Poison   Crobat, Nidoking, Glimmora, Slowking-Galar, Weezing-Galar, Iron Moth
+SABRINA    Leader     Psychic  Alakazam, Espeon, Slowbro, Tapu Lele, Hatterene, Iron Crown
+BLAINE     Leader     Fire     Arcanine, Rapidash, Cinderace, Heatran, Ceruledge, Iron Moth
+GIOVANNI   Leader     Ground   Nidoking, Nidoqueen, Rhyperior, Landorus-Therian, Iron Treads, Gliscor
+LORELEI    Elite Four Ice      Cloyster, Mamoswine, Weavile, Silvally-Ice, Walrein, Aurorus
+BRUNO      Elite Four Fighting Machamp, Hitmonlee, Lucario, Iron Valiant, Great Tusk, Quaquaval
+AGATHA     Elite Four Ghost    Gengar, Mismagius, Gholdengo, Dragapult, Ceruledge, Polteageist
+LANCE      Champion   Dragon   Dragonite, Salamence, Garchomp, Dragapult, Walking Wake, Raging Bolt
+FALKNER    Leader     Flying   Pidgeot, Xatu, Skarmory, Landorus-Therian, Zapdos, Dragonite
+BUGSY      Leader     Bug      Scizor, Heracross, Yanmega, Forretress, Lokix, Slither Wing
+WHITNEY    Leader     Normal   Miltank, Blissey, Ursaluna, Zoroark-Hisui, Dubwool, Lopunny
+MORTY      Leader     Ghost    Gengar, Mismagius, Ceruledge, Gholdengo, Dragapult, Polteageist
+CHUCK      Leader     Fighting Machamp, Breloom, Iron Valiant, Great Tusk, Kommo-o, Iron Hands
+JASMINE    Leader     Steel    Steelix, Magnezone, Skarmory, Scizor, Bronzong, Iron Crown
+PRYCE      Leader     Ice      Mamoswine, Walrein, Weavile, Aurorus, Arctovish, Vanilluxe
+CLAIR      Leader     Dragon   Dragonite, Altaria, Raging Bolt, Walking Wake, Dragapult, Latias
+WILL       Elite Four Psychic  Xatu, Slowbro, Bronzong, Hatterene, Iron Crown, Slowking-Galar
+KAREN      Elite Four Dark     Umbreon, Tyranitar, Weavile, Kingambit, Ting-Lu, Samurott-Hisui
+ROXANNE    Leader     Rock     Aerodactyl, Cradily, Armaldo, Tyranitar, Glimmora, Garganacl
+BRAWLY     Leader     Fighting Hariyama, Breloom, Machamp, Great Tusk, Iron Valiant, Blaziken
+WATTSON    Leader     Electric Manectric, Magnezone, Raging Bolt, Zapdos, Tapu Koko, Iron Hands
+FLANNERY   Leader     Fire     Blaziken, Cinderace, Moltres, Ceruledge, Iron Moth, Heatran
+NORMAN     Leader     Normal   Kangaskhan, Snorlax, Ursaluna, Zoroark-Hisui, Heliolisk, Blissey
+WINONA     Leader     Flying   Altaria, Skarmory, Pelipper, Corviknight, Gliscor, Enamorus
+TATE_LIZA  Leader     Psychic  Metagross, Claydol, Gardevoir, Slowking-Galar, Tapu Lele, Hatterene
+JUAN       Leader     Water    Crawdaunt, Milotic, Alomomola, Walking Wake, Samurott-Hisui, Ogerpon-Wellspring
+SIDNEY     Elite Four Dark     Crawdaunt, Kingambit, Ting-Lu, Tyranitar, Samurott-Hisui, Moltres-Galar
+PHOEBE     Elite Four Ghost    Chandelure, Dragapult, Ceruledge, Gholdengo, Polteageist, Blacephalon
+GLACIA     Elite Four Ice      Walrein, Weavile, Mamoswine, Silvally-Ice, Aurorus, Arctovish
+DRAKE      Elite Four Dragon   Salamence, Altaria, Flygon, Haxorus, Raging Bolt, Dragonite
+WALLACE    Champion   Water    Milotic, Swampert, Gyarados, Tentacruel, Primarina, Samurott-Hisui
+STEVEN     Champion   Steel    Metagross, Skarmory, Aggron, Excadrill, Bronzong, Kingambit
+ROARK      Leader     Rock     Tyranitar, Garganacl, Glimmora, Iron Boulder, Ogerpon-Cornerstone, Arcanine-Hisui
+GARDENIA   Leader     Grass    Roserade, Tangrowth, Breloom, Ferrothorn, Ogerpon-Wellspring, Rillaboom
+MAYLENE    Leader     Fighting Lucario, Hariyama, Infernape, Great Tusk, Iron Valiant, Iron Hands
+WAKE       Leader     Water    Floatzel, Gyarados, Quagsire, Gastrodon, Alomomola, Primarina
+FANTINA    Leader     Ghost    Mismagius, Gengar, Ceruledge, Gholdengo, Dragapult, Polteageist
+BYRON      Leader     Steel    Steelix, Magnezone, Bronzong, Lucario, Heatran, Gholdengo
+CANDICE    Leader     Ice      Weavile, Mamoswine, Vanilluxe, Aurorus, Mr. Rime, Arctozolt
+VOLKNER    Leader     Electric Rotom-Heat, Zapdos, Tapu Koko, Raging Bolt, Xurkitree, Iron Hands
+AARON      Elite Four Bug      Scizor, Heracross, Yanmega, Buzzwole, Slither Wing, Lokix
+BERTHA     Elite Four Ground   Hippowdon, Gliscor, Rhyperior, Quagsire, Landorus-Therian, Ting-Lu
+FLINT      Elite Four Fire     Infernape, Rapidash, Iron Moth, Ceruledge, Heatran, Moltres
+LUCIAN     Elite Four Psychic  Gallade, Bronzong, Alakazam, Espeon, Hatterene, Iron Crown
+CYNTHIA    Champion   Dragon   Garchomp, Kommo-o, Dragonite, Haxorus, Hydreigon, Walking Wake
+LENORA     Leader     Normal   Stoutland, Cinccino, Bouffalant, Braviary, Ursaluna, Zoroark-Hisui
+BURGH      Leader     Bug      Escavalier, Crustle, Durant, Lokix, Buzzwole, Slither Wing
+ELESA      Leader     Electric Rotom-Wash, Tapu Koko, Raging Bolt, Zapdos, Xurkitree, Iron Hands
+CLAY       Leader     Ground   Excadrill, Krookodile, Seismitoad, Golurk, Gastrodon, Ting-Lu
+SKYLA      Leader     Flying   Unfezant, Skarmory, Braviary, Talonflame, Enamorus, Gliscor
+DRAYDEN    Leader     Dragon   Haxorus, Druddigon, Flygon, Hydreigon, Dragonite, Walking Wake
+SHAUNTAL   Elite Four Ghost    Chandelure, Cofagrigus, Golurk, Jellicent, Dragapult, Ceruledge
+GRIMSLEY   Elite Four Dark     Krookodile, Scrafty, Hydreigon, Ting-Lu, Tyranitar, Kingambit
+CAITLIN    Elite Four Psychic  Reuniclus, Musharna, Sigilyph, Metagross, Tapu Lele, Hatterene
+MARSHAL    Elite Four Fighting Conkeldurr, Mienshao, Lucario, Great Tusk, Iron Valiant, Iron Hands
+IRIS       Champion   Dragon   Haxorus, Hydreigon, Druddigon, Salamence, Dragapult, Raging Bolt
+VIOLA      Leader     Bug      Scizor, Heracross, Lokix, Slither Wing, Buzzwole, Scolipede
+GRANT      Leader     Rock     Tyrantrum, Aurorus, Tyranitar, Gigalith, Garganacl, Glimmora
+KORRINA    Leader     Fighting Lucario, Hawlucha, Machamp, Mienshao, Pangoro, Great Tusk
+RAMOS      Leader     Grass    Ferrothorn, Chesnaught, Rillaboom, Ogerpon, Kartana, Meowscarada
+CLEMONT    Leader     Electric Heliolisk, Magnezone, Rotom-Wash, Raging Bolt, Tapu Koko, Zapdos
+VALERIE    Leader     Fairy    Sylveon, Clefable, Azumarill, Hatterene, Enamorus, Weezing-Galar
+OLYMPIA    Leader     Psychic  Slowking, Sigilyph, Gardevoir, Espeon, Iron Crown, Hatterene
+WULFRIC    Leader     Ice      Avalugg, Cloyster, Mamoswine, Weavile, Mr. Rime, Arctovish
+MALVA      Elite Four Fire     Talonflame, Chandelure, Heatran, Ceruledge, Cinderace, Iron Moth
+SIEBOLD    Elite Four Water    Gyarados, Starmie, Barbaracle, Greninja, Walking Wake, Dondozo
+WIKSTROM   Elite Four Steel    Aegislash, Scizor, Klefki, Corviknight, Iron Crown, Heatran
+DRASNA     Elite Four Dragon   Noivern, Dragalge, Altaria, Goodra, Garchomp, Raging Bolt
+HALA       Leader     Fighting Hariyama, Bewear, Great Tusk, Iron Valiant, Kommo-o, Blaziken
+OLIVIA     Elite Four Rock     Relicanth, Tyranitar, Garganacl, Glimmora, Iron Boulder, Ogerpon-Cornerstone
+ACEROLA    Elite Four Ghost    Palossand, Mimikyu, Dhelmise, Gholdengo, Dragapult, Ceruledge
+KAHILI     Elite Four Flying   Braviary, Mandibuzz, Skarmory, Tornadus-Therian, Moltres, Landorus-Therian
+NANU       Leader     Dark     Krookodile, Weavile, Kingambit, Tyranitar, Ting-Lu, Samurott-Hisui
+MILO       Leader     Grass    Rillaboom, Ferrothorn, Ogerpon, Meowscarada, Kartana, Hydrapple
+NESSA      Leader     Water    Drednaw, Golisopod, Pelipper, Barraskewda, Toxapex, Primarina
+KABU       Leader     Fire     Centiskorch, Arcanine, Cinderace, Moltres, Ceruledge, Heatran
+BEA        Leader     Fighting Machamp, Grapploct, Hawlucha, Iron Valiant, Great Tusk, Quaquaval
+ALLISTER   Leader     Ghost    Gengar, Cursola, Polteageist, Runerigus, Dragapult, Ceruledge
+OPAL       Leader     Fairy    Togekiss, Hatterene, Grimmsnarl, Iron Valiant, Primarina, Weezing-Galar
+GORDIE     Leader     Rock     Coalossal, Barbaracle, Shuckle, Tyranitar, Glimmora, Garganacl
+MELONY     Leader     Ice      Frosmoth, Mr. Rime, Mamoswine, Weavile, Aurorus, Silvally-Ice
+PIERS      Leader     Dark     Obstagoon, Scrafty, Grimmsnarl, Kingambit, Samurott-Hisui, Ting-Lu
+RAIHAN     Leader     Dragon   Flygon, Goodra, Turtonator, Dragapult, Dragonite, Walking Wake
+KATY       Leader     Bug      Lokix, Scizor, Ribombee, Buzzwole, Slither Wing, Scolipede
+BRASSIUS   Leader     Grass    Meowscarada, Rillaboom, Ogerpon, Ferrothorn, Kartana, Hydrapple
+IONO       Leader     Electric Bellibolt, Kilowattrel, Iron Hands, Raging Bolt, Tapu Koko, Zapdos
+KOFU       Leader     Water    Dondozo, Samurott-Hisui, Ogerpon-Wellspring, Alomomola, Walking Wake, Primarina
+LARRY      Elite Four Normal   Staraptor, Dudunsparce, Ursaluna, Zoroark-Hisui, Drampa, Kangaskhan
+RYME       Leader     Ghost    Houndstone, Mimikyu, Gholdengo, Dragapult, Ceruledge, Polteageist
+TULIP      Leader     Psychic  Gardevoir, Hatterene, Iron Crown, Slowking-Galar, Tapu Lele, Iron Boulder
+GRUSHA     Leader     Ice      Cetitan, Frosmoth, Mamoswine, Weavile, Aurorus, Silvally-Ice
+RIKA       Elite Four Ground   Clodsire, Donphan, Great Tusk, Landorus-Therian, Gliscor, Ting-Lu
+POPPY      Elite Four Steel    Tinkaton, Copperajah, Magnezone, Bronzong, Corviknight, Ferrothorn
+HASSEL     Elite Four Dragon   Noivern, Dragalge, Haxorus, Walking Wake, Dragonite, Dragapult
