@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_factory_screen.h"
 #include "battle_main.h"
 #include "daily_battle.h"
 #include "data.h"
@@ -9,7 +10,6 @@
 #include "overworld.h"
 #include "palette.h"
 #include "pokemon.h"
-#include "pokemon_summary_screen.h"
 #include "random.h"
 #include "rtc.h"
 #include "script.h"
@@ -37,7 +37,7 @@ STATIC_ASSERT(ARRAY_COUNT(sDailyTrainerTypes) == DAILY_TRAINERS_COUNT, DailyTrai
 
 static EWRAM_DATA struct Pokemon sDraftChoices[DRAFT_CHOICES] = {0};
 
-static void Task_ShowDraftSummary(u8 taskId);
+static void Task_OpenDraftPicker(u8 taskId);
 
 // A fixed generator, separate from the game's RNG, so every player gets the same
 // draft and opponent on the same date.
@@ -175,14 +175,6 @@ void DailyDraft_PrepareChoices(void)
     }
 }
 
-// Buffers the name of choice VAR_0x8005 into STR_VAR_1.
-void DailyDraft_BufferChoice(void)
-{
-    u32 choice = min(gSpecialVar_0x8005, DRAFT_CHOICES - 1);
-
-    StringCopy(gStringVar1, GetSpeciesName(GetMonData(&sDraftChoices[choice], MON_DATA_SPECIES)));
-}
-
 // Adds choice VAR_0x8005 to the player's party and moves to the next round.
 void DailyDraft_Pick(void)
 {
@@ -198,21 +190,20 @@ void DailyDraft_Pick(void)
         VarSet(VAR_DAILY_DRAFT_DAY, GetToday() + 1);
 }
 
-// Opens the summary screen on this round's choices, starting at VAR_0x8005.
-void DailyDraft_ShowSummary(void)
+// Opens the Battle Factory style picker on this round's choices. The pick comes back in VAR_0x8005.
+void DailyDraft_OpenPicker(void)
 {
     LockPlayerFieldControls();
     FadeScreen(FADE_TO_BLACK, 0);
-    CreateTask(Task_ShowDraftSummary, 10);
+    CreateTask(Task_OpenDraftPicker, 10);
 }
 
-static void Task_ShowDraftSummary(u8 taskId)
+static void Task_OpenDraftPicker(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, sDraftChoices, min(gSpecialVar_0x8005, DRAFT_CHOICES - 1),
-                                 DRAFT_CHOICES - 1, CB2_ReturnToFieldContinueScript);
+        DoDailyDraftSelectScreen(sDraftChoices);
         DestroyTask(taskId);
     }
 }

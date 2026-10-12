@@ -53,23 +53,9 @@ DailyBattleHall_EventScript_Draft::
 DailyBattleHall_EventScript_DraftRound::
 	special DailyDraft_BufferRound
 	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_DraftDone
-	message DailyBattleHall_Text_Round
-	waitmessage
 	special DailyDraft_PrepareChoices
-	dynmultichoice 0, 0, TRUE, 4, 0, DYN_MULTICHOICE_CB_NONE, DailyBattleHall_Text_Choice1, DailyBattleHall_Text_Choice2, DailyBattleHall_Text_Choice3, DailyBattleHall_Text_CheckStats
-	goto_if_eq VAR_RESULT, 3, DailyBattleHall_EventScript_CheckStats
-	copyvar VAR_0x8005, VAR_RESULT
-	special DailyDraft_BufferChoice
-	msgbox DailyBattleHall_Text_ConfirmPick, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, DailyBattleHall_EventScript_DraftRound
+	special DailyDraft_OpenPicker
 	special DailyDraft_Pick
-	playse SE_SELECT
-	goto DailyBattleHall_EventScript_DraftRound
-
-DailyBattleHall_EventScript_CheckStats::
-	closemessage
-	setvar VAR_0x8005, 0
-	special DailyDraft_ShowSummary
 	goto DailyBattleHall_EventScript_DraftRound
 
 DailyBattleHall_EventScript_DraftDone::
@@ -84,9 +70,11 @@ DailyBattleHall_EventScript_Battle::
 	msgbox DailyBattleHall_Text_HereTheyCome, MSGBOX_DEFAULT
 	closemessage
 	trainerbattle_no_intro TRAINER_DAILY, DailyBattleHall_Text_OpponentDefeated
-	specialvar VAR_RESULT, GetBattleOutcome
+	special DailyBattle_RecordResult
+	copyvar VAR_0x8006, VAR_RESULT
+	special DailyBattle_ShowResults
 	special HealPlayerParty
-	goto_if_eq VAR_RESULT, B_OUTCOME_WON, DailyBattleHall_EventScript_Won
+	goto_if_eq VAR_0x8006, TRUE, DailyBattleHall_EventScript_Won
 	msgbox DailyBattleHall_Text_Lost, MSGBOX_DEFAULT
 	return
 
@@ -122,26 +110,8 @@ DailyBattleHall_Text_DraftRules:
 	.string "Time to draft! You'll get six rounds.\n"
 	.string "Each round, pick one of three POKéMON.\p"
 	.string "Every POKéMON comes with a real\n"
-	.string "competitive build. Choose CHECK STATS\l"
-	.string "to see moves, ability, item and stats.$"
-
-DailyBattleHall_Text_Round:
-	.string "Round {STR_VAR_1} of 6. Who do you pick?$"
-
-DailyBattleHall_Text_Choice1:
-	.string "{STR_VAR_1}$"
-
-DailyBattleHall_Text_Choice2:
-	.string "{STR_VAR_2}$"
-
-DailyBattleHall_Text_Choice3:
-	.string "{STR_VAR_3}$"
-
-DailyBattleHall_Text_CheckStats:
-	.string "CHECK STATS$"
-
-DailyBattleHall_Text_ConfirmPick:
-	.string "Add {STR_VAR_1} to your team?$"
+	.string "competitive build. Choose SUMMARY\l"
+	.string "to see its moves and stats.$"
 
 DailyBattleHall_Text_TeamReady:
 	.string "Your team of six is ready!$"

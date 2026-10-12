@@ -41,7 +41,7 @@ A headless mGBA driver that presses buttons from a script and saves screenshots.
 ```console
 sudo apt install libmgba-dev libpng-dev python3-pil
 make -C tools/daily/playtest
-python3 tools/daily/playtest/full_run.py pokeemerald.gba /tmp/run
+python3 tools/daily/playtest/full_run.py pokeemerald.gba /tmp/run win   # or lose
 ```
 
-`full_run.py` plays a new game through the six draft rounds and into today's battle, and fails if the game hits an assertion screen.
+`full_run.py` plays a new game through the six draft rounds, today's battle and the results screen, and fails if the game hits an assertion screen. After a few turns it forces the outcome by writing `gBattleOutcome`, so both the win and the loss paths get covered.

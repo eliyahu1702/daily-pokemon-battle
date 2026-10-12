@@ -645,6 +645,7 @@ gSpecials::
 	def_special DailyDraft_Begin
 	def_special DailyDraft_BufferRound
 	def_special DailyDraft_PrepareChoices
-	def_special DailyDraft_BufferChoice
 	def_special DailyDraft_Pick
-	def_special DailyDraft_ShowSummary, waitstate=1
+	def_special DailyDraft_OpenPicker, waitstate=1
+	def_special DailyBattle_RecordResult
+	def_special DailyBattle_ShowResults, waitstate=1

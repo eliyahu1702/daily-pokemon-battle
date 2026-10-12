@@ -27,6 +27,8 @@
 #include "starter_choose.h"
 #include "strings.h"
 #include "graphics.h"
+#include "item.h"
+#include "constants/daily_battle.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_tent.h"
 #include "constants/songs.h"
@@ -83,6 +85,7 @@ enum {
     SELECT_CONTINUE_CHOOSING,
     SELECT_CONFIRM_MONS,
     SELECT_INVALID_MON,
+    SELECT_DAILY_PICKED,
 };
 
 struct FactorySelectableMon
@@ -247,6 +250,21 @@ static EWRAM_DATA u8 *sSelectMonPicBgTilesetBuffer = NULL;
 static EWRAM_DATA u8 *sSelectMenuTilemapBuffer = NULL;
 static EWRAM_DATA u8 *sSelectMonPicBgTilemapBuffer = NULL;
 static EWRAM_DATA struct Pokemon *sFactorySelectMons = NULL;
+
+// Daily Battle draft mode: the select screen shows three offered Pokémon side by side
+// and the player picks one. The pick is returned in VAR_0x8005.
+static EWRAM_DATA bool8 sDailyDraft = FALSE;
+static EWRAM_DATA struct Pokemon *sDailyDraftMons = NULL;
+#define SELECT_MON_COUNT (sDailyDraft ? DRAFT_CHOICES : SELECTABLE_MONS_COUNT)
+
+static void Select_CreateDailyDraftPics(void);
+static void Select_FreeDailyDraftPics(void);
+static void Select_PrintDailyDraftMonInfo(void);
+static const u8 sText_DraftRound[] = _("ROUND {STR_VAR_1} OF 6");
+static const u8 sText_DraftPick[] = _("PICK");
+static const u8 sText_DraftBack[] = _("BACK");
+static const u8 sText_DraftItem[] = _("Item: {STR_VAR_1}");
+static const u8 sText_DraftAbility[] = _("Ability: {STR_VAR_1}");
 static EWRAM_DATA u8 *sSwapMenuTilesetBuffer = NULL;
 static EWRAM_DATA u8 *sSwapMonPicBgTilesetBuffer = NULL;
 static EWRAM_DATA u8 *sSwapMenuTilemapBuffer = NULL;
@@ -1081,6 +1099,15 @@ static void VBlankCB_SelectScreen(void)
 
 void DoBattleFactorySelectScreen(void)
 {
+    sDailyDraft = FALSE;
+    sFactorySelectScreen = NULL;
+    SetMainCallback2(CB2_InitSelectScreen);
+}
+
+void DoDailyDraftSelectScreen(struct Pokemon *mons)
+{
+    sDailyDraft = TRUE;
+    sDailyDraftMons = mons;
     sFactorySelectScreen = NULL;
     SetMainCallback2(CB2_InitSelectScreen);
 }
@@ -1190,10 +1217,17 @@ static void CB2_InitSelectScreen(void)
         SetVBlankCallback(VBlankCB_SelectScreen);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP);
+        if (sDailyDraft)
+        {
+            // All three picture frames stay open.
+            ShowBg(3);
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_OBJ);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(11, 4));
+        }
 #ifdef UBFIX
-        if (sFactorySelectScreen && sFactorySelectScreen->fromSummaryScreen)
+        else if (sFactorySelectScreen && sFactorySelectScreen->fromSummaryScreen)
 #else
-        if (sFactorySelectScreen->fromSummaryScreen == TRUE)
+        else if (sFactorySelectScreen->fromSummaryScreen == TRUE)
 #endif
         {
             Select_SetWinRegs(88, 152, 32, 96);
@@ -1216,7 +1250,9 @@ static void CB2_InitSelectScreen(void)
             sFactorySelectScreen->cursorPos = gLastViewedMonIndex;
         Select_InitMonsData();
         Select_InitAllSprites();
-        if (sFactorySelectScreen->fromSummaryScreen == TRUE)
+        if (sDailyDraft)
+            Select_CreateDailyDraftPics();
+        else if (sFactorySelectScreen->fromSummaryScreen == TRUE)
             Select_ReshowMonSprite();
         gMain.state++;
         break;
@@ -1274,10 +1310,25 @@ static void Select_InitMonsData(void)
     for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
         sFactorySelectScreen->mons[i].selectedId = 0;
 
-    if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_TENT)
+    if (sDailyDraft)
+    {
+        for (i = 0; i < DRAFT_CHOICES; i++)
+        {
+            sFactorySelectScreen->mons[i].monId = i;
+            sFactorySelectScreen->mons[i].monData = sDailyDraftMons[i];
+        }
+    }
+    else if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_TENT)
         CreateFrontierFactorySelectableMons(0);
     else
         CreateSlateportTentSelectableMons(0);
+}
+
+static s16 Select_GetCursorX(u8 cursorPos)
+{
+    if (sDailyDraft)
+        return (cursorPos * 72) + 48;
+    return gSprites[sFactorySelectScreen->mons[cursorPos].ballSpriteId].x;
 }
 
 static void Select_InitAllSprites(void)
@@ -1285,15 +1336,23 @@ static void Select_InitAllSprites(void)
     u8 i, cursorPos;
     s16 x;
 
-    for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
-    {
-        sFactorySelectScreen->mons[i].ballSpriteId = CreateSprite(&sSpriteTemplate_Select_Pokeball, (35 * i) + 32, 64, 1);
-        gSprites[sFactorySelectScreen->mons[i].ballSpriteId].data[0] = 0;
-        Select_SetBallSpritePaletteNum(i);
-    }
     cursorPos = sFactorySelectScreen->cursorPos;
-    x = gSprites[sFactorySelectScreen->mons[cursorPos].ballSpriteId].x;
-    sFactorySelectScreen->cursorSpriteId = CreateSprite(&sSpriteTemplate_Select_Arrow, x, 88, 0);
+    if (sDailyDraft)
+    {
+        // No Poké Balls: the arrow points at the picture frames instead.
+        sFactorySelectScreen->cursorSpriteId = CreateSprite(&sSpriteTemplate_Select_Arrow, Select_GetCursorX(cursorPos), 104, 0);
+    }
+    else
+    {
+        for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
+        {
+            sFactorySelectScreen->mons[i].ballSpriteId = CreateSprite(&sSpriteTemplate_Select_Pokeball, (35 * i) + 32, 64, 1);
+            gSprites[sFactorySelectScreen->mons[i].ballSpriteId].data[0] = 0;
+            Select_SetBallSpritePaletteNum(i);
+        }
+        x = gSprites[sFactorySelectScreen->mons[cursorPos].ballSpriteId].x;
+        sFactorySelectScreen->cursorSpriteId = CreateSprite(&sSpriteTemplate_Select_Arrow, x, 88, 0);
+    }
     sFactorySelectScreen->menuCursor1SpriteId = CreateSprite(&sSpriteTemplate_Select_MenuHighlightLeft, 176, 112, 0);
     sFactorySelectScreen->menuCursor2SpriteId = CreateSprite(&sSpriteTemplate_Select_MenuHighlightRight, 176, 144, 0);
 
@@ -1310,8 +1369,13 @@ static void Select_DestroyAllSprites(void)
 {
     u8 i;
 
-    for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
-        DestroySprite(&gSprites[sFactorySelectScreen->mons[i].ballSpriteId]);
+    if (sDailyDraft)
+        Select_FreeDailyDraftPics();
+    else
+    {
+        for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
+            DestroySprite(&gSprites[sFactorySelectScreen->mons[i].ballSpriteId]);
+    }
 
     DestroySprite(&gSprites[sFactorySelectScreen->cursorSpriteId]);
     DestroySprite(&gSprites[sFactorySelectScreen->menuCursor1SpriteId]);
@@ -1323,7 +1387,7 @@ static void Select_UpdateBallCursorPosition(s8 direction)
     u8 cursorPos;
     if (direction > 0) // Move cursor right.
     {
-        if (sFactorySelectScreen->cursorPos != SELECTABLE_MONS_COUNT - 1)
+        if (sFactorySelectScreen->cursorPos != SELECT_MON_COUNT - 1)
             sFactorySelectScreen->cursorPos++;
         else
             sFactorySelectScreen->cursorPos = 0;
@@ -1333,11 +1397,11 @@ static void Select_UpdateBallCursorPosition(s8 direction)
         if (sFactorySelectScreen->cursorPos != 0)
             sFactorySelectScreen->cursorPos--;
         else
-            sFactorySelectScreen->cursorPos = SELECTABLE_MONS_COUNT - 1;
+            sFactorySelectScreen->cursorPos = SELECT_MON_COUNT - 1;
     }
 
     cursorPos = sFactorySelectScreen->cursorPos;
-    gSprites[sFactorySelectScreen->cursorSpriteId].x = gSprites[sFactorySelectScreen->mons[cursorPos].ballSpriteId].x;
+    gSprites[sFactorySelectScreen->cursorSpriteId].x = Select_GetCursorX(cursorPos);
 }
 
 static void Select_UpdateMenuCursorPosition(s8 direction)
@@ -1443,7 +1507,8 @@ static void Select_Task_OpenSummaryScreen(u8 taskId)
         if (!gPaletteFade.active)
         {
             DestroyTask(sFactorySelectScreen->fadeSpeciesNameTaskId);
-            HideMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating);
+            if (!sDailyDraft)
+                HideMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating);
             Select_DestroyAllSprites();
             FREE_AND_SET_NULL(sSelectMenuTilesetBuffer);
             FREE_AND_SET_NULL(sSelectMonPicBgTilesetBuffer);
@@ -1459,9 +1524,9 @@ static void Select_Task_OpenSummaryScreen(u8 taskId)
         sFactorySelectScreen->fromSummaryScreen = TRUE;
         currMonId = sFactorySelectScreen->cursorPos;
         sFactorySelectMons = AllocZeroed(sizeof(struct Pokemon) * SELECTABLE_MONS_COUNT);
-        for (i = 0; i < SELECTABLE_MONS_COUNT; i++)
+        for (i = 0; i < SELECT_MON_COUNT; i++)
             sFactorySelectMons[i] = sFactorySelectScreen->mons[i].monData;
-        ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, sFactorySelectMons, currMonId, SELECTABLE_MONS_COUNT - 1, CB2_InitSelectScreen);
+        ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, sFactorySelectMons, currMonId, SELECT_MON_COUNT - 1, CB2_InitSelectScreen);
         break;
     }
 }
@@ -1562,7 +1627,7 @@ static void Select_Task_HandleMenu(u8 taskId)
     switch (gTasks[taskId].tState)
     {
     case STATE_MENU_INIT:
-        if (!sFactorySelectScreen->fromSummaryScreen)
+        if (!sFactorySelectScreen->fromSummaryScreen && !sDailyDraft)
             OpenMonPic(&sFactorySelectScreen->monPics[1].bgSpriteId, &sFactorySelectScreen->monPicAnimating, FALSE);
         gTasks[taskId].tState = STATE_MENU_SHOW_OPTIONS;
         break;
@@ -1596,6 +1661,11 @@ static void Select_Task_HandleMenu(u8 taskId)
                 gTasks[taskId].tState = STATE_CHOOSE_MONS_INVALID;
                 gTasks[taskId].func = Select_Task_HandleChooseMons;
             }
+            else if (retVal == SELECT_DAILY_PICKED)
+            {
+                gTasks[taskId].tState = 0;
+                gTasks[taskId].func = Select_Task_Exit;
+            }
             else // SELECT_SUMMARY
             {
                 gTasks[taskId].tState = STATE_SUMMARY_FADE;
@@ -1605,7 +1675,8 @@ static void Select_Task_HandleMenu(u8 taskId)
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
+            if (!sDailyDraft)
+                CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
             Select_ErasePopupMenu(SELECT_WIN_OPTIONS);
             sFactorySelectScreen->fadeSpeciesNameActive = TRUE;
             gTasks[taskId].tState = STATE_CHOOSE_MONS_HANDLE_INPUT;
@@ -1764,6 +1835,16 @@ static void Select_CopyMonsToPlayerParty(void)
 {
     u8 i, j;
 
+    if (sDailyDraft)
+    {
+        for (j = 0; j < DRAFT_CHOICES; j++)
+        {
+            if (sFactorySelectScreen->mons[j].selectedId)
+                gSpecialVar_0x8005 = j;
+        }
+        return;
+    }
+
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
         for (j = 0; j < SELECTABLE_MONS_COUNT; j++)
@@ -1825,7 +1906,14 @@ static void Select_ErasePopupMenu(u8 windowId)
 static void Select_PrintRentalPkmnString(void)
 {
     FillWindowPixelBuffer(SELECT_WIN_TITLE, PIXEL_FILL(0));
-    AddTextPrinterParameterized(SELECT_WIN_TITLE, FONT_NORMAL, gText_RentalPkmn2, 2, 1, 0, NULL);
+    if (sDailyDraft)
+    {
+        ConvertIntToDecimalStringN(gStringVar1, VarGet(VAR_DAILY_DRAFT_ROUND) + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
+        StringExpandPlaceholders(gStringVar4, sText_DraftRound);
+        AddTextPrinterParameterized(SELECT_WIN_TITLE, FONT_NORMAL, gStringVar4, 2, 1, 0, NULL);
+    }
+    else
+        AddTextPrinterParameterized(SELECT_WIN_TITLE, FONT_NORMAL, gText_RentalPkmn2, 2, 1, 0, NULL);
     CopyWindowToVram(SELECT_WIN_TITLE, COPYWIN_FULL);
 }
 
@@ -1841,11 +1929,19 @@ static void Select_PrintMonSpecies(void)
     x = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar4, 86);
     AddTextPrinterParameterized3(SELECT_WIN_SPECIES, FONT_NORMAL, x, 1, sSpeciesNameTextColors, 0, gStringVar4);
     CopyWindowToVram(SELECT_WIN_SPECIES, COPYWIN_GFX);
+    if (sDailyDraft)
+        Select_PrintDailyDraftMonInfo();
 }
 
 static void Select_PrintSelectMonString(void)
 {
     const u8 *str = NULL;
+
+    if (sDailyDraft)
+    {
+        Select_PrintDailyDraftMonInfo();
+        return;
+    }
 
     FillWindowPixelBuffer(SELECT_WIN_INFO, PIXEL_FILL(0));
     if (sFactorySelectScreen->selectingMonsState == 1)
@@ -1875,6 +1971,13 @@ static void Select_PrintMenuOptions(void)
     PutWindowTilemap(SELECT_WIN_OPTIONS);
     FillWindowPixelBuffer(SELECT_WIN_OPTIONS, PIXEL_FILL(0));
     AddTextPrinterParameterized3(SELECT_WIN_OPTIONS, FONT_NORMAL, 7, 1, sMenuOptionTextColors, 0, gText_Summary);
+    if (sDailyDraft)
+    {
+        AddTextPrinterParameterized3(SELECT_WIN_OPTIONS, FONT_NORMAL, 7, 17, sMenuOptionTextColors, 0, sText_DraftPick);
+        AddTextPrinterParameterized3(SELECT_WIN_OPTIONS, FONT_NORMAL, 7, 33, sMenuOptionTextColors, 0, sText_DraftBack);
+        CopyWindowToVram(SELECT_WIN_OPTIONS, COPYWIN_FULL);
+        return;
+    }
     if (selectedId != 0)
         AddTextPrinterParameterized3(SELECT_WIN_OPTIONS, FONT_NORMAL, 7, 17, sMenuOptionTextColors, 0, gText_Deselect);
     else
@@ -1903,6 +2006,13 @@ static u8 Select_OptionRentDeselect(void)
 {
     u8 selectedId = sFactorySelectScreen->mons[sFactorySelectScreen->cursorPos].selectedId;
     u16 monId  = sFactorySelectScreen->mons[sFactorySelectScreen->cursorPos].monId;
+
+    if (sDailyDraft)
+    {
+        sFactorySelectScreen->mons[sFactorySelectScreen->cursorPos].selectedId = 1;
+        Select_ErasePopupMenu(SELECT_WIN_OPTIONS);
+        return SELECT_DAILY_PICKED;
+    }
     if (selectedId == 0 && !Select_AreSpeciesValid(monId))
     {
         Select_PrintCantSelectSameMon();
@@ -1941,7 +2051,8 @@ static u8 Select_OptionSummary(void)
 
 static u8 Select_OptionOthers(void)
 {
-    CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
+    if (!sDailyDraft)
+        CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
     Select_ErasePopupMenu(SELECT_WIN_OPTIONS);
     return SELECT_CONTINUE_CHOOSING;
 }
@@ -1977,6 +2088,48 @@ static void Select_CreateMonSprite(void)
     gSprites[sFactorySelectScreen->monPics[1].monSpriteId].centerToCornerVecY = 0;
 
     sFactorySelectScreen->monPicAnimating = FALSE;
+}
+
+static void Select_CreateDailyDraftPics(void)
+{
+    u8 i;
+
+    for (i = 0; i < DRAFT_CHOICES; i++)
+    {
+        struct Pokemon *mon = &sFactorySelectScreen->mons[i].monData;
+        enum Species species = GetMonData(mon, MON_DATA_SPECIES);
+        u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
+        bool8 isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
+
+        sFactorySelectScreen->monPics[i].monSpriteId = CreateMonPicSprite(species, isShiny, personality, TRUE, (i * 72) + 16, 32, i + 13, TAG_NONE);
+        gSprites[sFactorySelectScreen->monPics[i].monSpriteId].centerToCornerVecX = 0;
+        gSprites[sFactorySelectScreen->monPics[i].monSpriteId].centerToCornerVecY = 0;
+    }
+    sFactorySelectScreen->monPicAnimating = FALSE;
+}
+
+static void Select_FreeDailyDraftPics(void)
+{
+    u8 i;
+
+    for (i = 0; i < DRAFT_CHOICES; i++)
+        FreeAndDestroyMonPicSprite(sFactorySelectScreen->monPics[i].monSpriteId);
+}
+
+// Shows the held item and ability of the Pokémon under the cursor in the info window.
+static void Select_PrintDailyDraftMonInfo(void)
+{
+    struct Pokemon *mon = &sFactorySelectScreen->mons[sFactorySelectScreen->cursorPos].monData;
+    enum Item item = GetMonData(mon, MON_DATA_HELD_ITEM);
+
+    FillWindowPixelBuffer(SELECT_WIN_INFO, PIXEL_FILL(0));
+    StringCopy(gStringVar1, item != ITEM_NONE ? GetItemName(item) : gText_None);
+    StringExpandPlaceholders(gStringVar4, sText_DraftItem);
+    AddTextPrinterParameterized(SELECT_WIN_INFO, FONT_SMALL, gStringVar4, 2, 0, TEXT_SKIP_DRAW, NULL);
+    StringCopy(gStringVar1, gAbilitiesInfo[GetMonAbility(mon)].name);
+    StringExpandPlaceholders(gStringVar4, sText_DraftAbility);
+    AddTextPrinterParameterized(SELECT_WIN_INFO, FONT_SMALL, gStringVar4, 2, 12, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(SELECT_WIN_INFO, COPYWIN_GFX);
 }
 
 static void Select_SetMonPicAnimating(bool8 animating)

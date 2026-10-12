@@ -5,6 +5,7 @@
 //   wait N          run N frames with no buttons held
 //   press KEY [N]   hold KEY for N frames (default 6), then release for 12 frames
 //   repeat N KEY    press KEY N times
+//   poke8 ADDR V    write byte V to ADDR
 //   shot NAME       save the screen to NAME.png in the output directory
 #include <mgba/core/core.h>
 #include <mgba/core/log.h>
@@ -125,6 +126,8 @@ int main(int argc, char **argv)
                 Press(arg2, 6);
         else if (!strcmp(cmd, "shot"))
             Shot(arg1);
+        else if (!strcmp(cmd, "poke8"))
+            core->busWrite8(core, strtoul(arg1, NULL, 0), strtoul(arg2, NULL, 0));
         else
         {
             fprintf(stderr, "unknown command %s\n", cmd);

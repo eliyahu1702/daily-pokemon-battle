@@ -45,15 +45,16 @@ jobs:
       - name: Build ROM
         run: make -j$(nproc) -O
 
-      - name: Playtest (new game, draft, battle)
+      - name: Playtest (new game, draft, battle, results screen)
         run: |
           make -C tools/daily/playtest
-          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out
+          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win win
+          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/lose lose
 
       - name: Upload playtest screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playtest-screenshots
-          path: playtest-out/*.png
+          path: playtest-out/*/*.png
           if-no-files-found: ignore

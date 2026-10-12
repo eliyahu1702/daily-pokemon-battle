@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Plays a fresh game from the title screen through the draft and into today's battle.
 
-Usage: full_run.py ROM OUTDIR
+Usage: full_run.py ROM OUTDIR [win|lose]
 Writes screenshots to OUTDIR and exits non-zero if the game hits an assertion screen.
+After a few turns the outcome is forced by writing gBattleOutcome (looked up in the .map
+file next to the ROM), so the run always reaches the results screen.
 """
 import os
 import subprocess
@@ -11,20 +13,39 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def script():
+B_OUTCOME = {"win": 1, "lose": 2}  # include/constants/battle.h
+
+
+def symbol_address(map_path, name):
+    for line in open(map_path):
+        parts = line.split()
+        if len(parts) == 2 and parts[1] == name and parts[0].startswith("0x"):
+            return int(parts[0], 16)
+    raise SystemExit("%s not found in %s" % (name, map_path))
+
+
+def script(battle_outcome, outcome):
     s = ["wait 600", "press START", "wait 120", "press START", "wait 60", "press A", "wait 60"]
-    s += ["press A", "wait 20"] * 121          # Birch's intro, the hall intro and draft rules
-    s += ["wait 60", "shot 01_round1_menu"]
-    s += ["press DOWN"] * 3 + ["press A", "wait 120", "shot 02_summary"]
-    s += ["press RIGHT", "wait 40", "shot 03_summary_stats", "press RIGHT", "wait 40", "shot 04_summary_moves"]
-    s += ["press B", "wait 120", "press A", "wait 30", "shot 05_confirm", "press A", "wait 30"]
+    s += ["press A", "wait 20"] * 120          # Birch's intro, the hall intro and draft rules
+    s += ["wait 90", "shot 01_round1"]
+    s += ["press RIGHT", "wait 30", "shot 02_round1_right"]
+    s += ["press A", "wait 40", "shot 03_menu", "press A", "wait 120", "shot 04_summary"]
+    s += ["press RIGHT", "wait 40", "shot 05_summary_stats", "press RIGHT", "wait 40", "shot 06_summary_moves"]
+    s += ["press B", "wait 120", "shot 07_back"]   # back on the picker with the menu still open
+    s += ["press DOWN", "wait 20", "press A", "wait 240"]
     for r in range(2, 7):
-        s += ["wait 20", "shot 1%d_round" % r, "press A", "wait 20", "press A", "wait 30"]
+        s += ["shot 1%d_round" % r, "press A", "wait 40", "press DOWN", "wait 20", "press A", "wait 240"]
     s += ["press A", "wait 30", "press A", "wait 30", "press A", "wait 30", "press A", "wait 400", "shot 20_battle"]
-    for i in range(300):
-        s += ["press A", "wait 15"]
-        if i % 30 == 0:
-            s.append("shot 3%03d_battle" % i)
+    # Mash through a few turns, then force the outcome: the battle ends at the next turn action.
+    # UP puts the action menu back on FIGHT; DOWN DOWN walks the party cursor off fainted Pokémon
+    # when one has to be replaced, and the B presses back out of any menu that opened by accident.
+    pattern = ["UP", "A", "A", "A", "DOWN", "DOWN", "A", "A", "B", "B", "B"]
+    for i in range(500):
+        if i == 120:
+            s.append("poke8 0x%x %d" % (battle_outcome, B_OUTCOME[outcome]))
+        s += ["press " + pattern[i % len(pattern)], "wait 20"]
+        if i % 5 == 0 or 120 <= i <= 160:  # every press around the end of the battle
+            s.append("shot 3%04d" % i)
     return "\n".join(s) + "\n"
 
 
@@ -39,9 +60,11 @@ def is_assert_screen(png):
 
 def main():
     rom, out = sys.argv[1], sys.argv[2]
+    outcome = sys.argv[3] if len(sys.argv) > 3 else "win"
+    battle_outcome = symbol_address(os.path.splitext(rom)[0] + ".map", "gBattleOutcome")
     os.makedirs(out, exist_ok=True)
     path = os.path.join(out, "script.txt")
-    open(path, "w").write(script())
+    open(path, "w").write(script(battle_outcome, outcome))
     save = os.path.join(out, "save.sav")
     if os.path.exists(save):
         os.remove(save)
