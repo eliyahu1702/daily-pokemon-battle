@@ -32,8 +32,8 @@ static const struct Trainer sDailyTrainers[DIFFICULTY_COUNT][DAILY_TRAINERS_COUN
 #include "data/daily_trainers.h"
 };
 
-static const u8 sDailyTrainerTypes[] = DAILY_TRAINER_TYPES;
-STATIC_ASSERT(ARRAY_COUNT(sDailyTrainerTypes) == DAILY_TRAINERS_COUNT, DailyTrainerTypesCount);
+static const u8 *const sDailyTrainerThemes[] = DAILY_TRAINER_THEMES;
+STATIC_ASSERT(ARRAY_COUNT(sDailyTrainerThemes) == DAILY_TRAINERS_COUNT, DailyTrainerThemesCount);
 
 static EWRAM_DATA struct Pokemon sDraftChoices[DRAFT_CHOICES] = {0};
 
@@ -132,7 +132,7 @@ void DailyBattle_Setup(void)
     trainer = GetDailyTrainer();
     StringCopy(gStringVar1, trainer->trainerName);
     StringCopy(gStringVar2, gTrainerClasses[trainer->trainerClass].name);
-    StringCopy(gStringVar3, gTypesInfo[sDailyTrainerTypes[id]].name);
+    StringCopy(gStringVar3, sDailyTrainerThemes[id]);
     gSpecialVar_Result = (VarGet(VAR_DAILY_WON_DAY) == today + 1);
 }
 

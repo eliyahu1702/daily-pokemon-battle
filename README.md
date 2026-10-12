@@ -6,8 +6,11 @@ A Pokémon Emerald romhack built around a daily challenge: draft a team of six, 
 
 - **Start a new game** and you go straight to the Daily Battle Hall.
 - **Draft six Pokémon** on a Battle Factory style screen. Each round shows three Pokémon side by side with their held item and ability; move the cursor to compare them, open SUMMARY for moves and stats, and PICK one. Every option comes with a real competitive build (moves, item, ability, nature, EVs) taken from Smogon.
-- **Fight today's opponent.** It's one of 98 leaders, Elite Four members and champions from Kanto to Paldea, each with a monotype team of competitive sets and the expansion's smartest battle AI.
-- **Same challenge for everyone.** The date seeds both the draft and the opponent, so everybody gets the same fight on the same day. Opponents run through a shuffled order, so none repeats until all 98 have appeared.
+- **Fight today's opponent.** There are 178 of them, all running competitive sets with the expansion's smartest battle AI:
+  - 92 gym leaders and Elite Four members from Kanto to Paldea, each with a monotype team.
+  - Champions (Red, Blue, Lance, Steven, Wallace, Cynthia, Alder, Iris, Diantha, Kukui, Leon, Geeta, Nemona, Kieran), villains (Giovanni, Archie, Maxie, Cyrus, Ghetsis, N, Lysandre, Guzma, Lusamine, Rose, Volo), rivals (Silver, Wally, Hop, Arven, Penny) and the Frontier Brains, each with their signature team plus a variation.
+  - Battle Tower aces running real competitive archetypes: rain, sun, sand, snow, hyper offense, stall, balance, Trick Room, VoltTurn, setup, and classic DPP and BW sand teams.
+- **Same challenge for everyone.** The date seeds both the draft and the opponent, so everybody gets the same fight on the same day. Opponents run through a shuffled order, so none repeats until all of them have appeared.
 - **See your score.** After the battle a results screen shows your team, how each one finished, and a score. A win is worth 1000, plus 150 for every Pokémon still standing and 1 per percent of HP left across the team, minus 15 per turn. A loss scores 75 per opposing Pokémon knocked out. Your best score of the day is kept.
 - Lose and you can try again as often as you like that day. Win and your streak goes up.
 

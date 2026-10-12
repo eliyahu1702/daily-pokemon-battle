@@ -11,7 +11,7 @@ python3 tools/daily/generate.py
 It writes three files, which are committed so the ROM builds without Python:
 
 - `src/data/draft_pool.party`: every Pokémon you can be offered in the draft, one competitive set each.
-- `src/data/daily_trainers.party`: one monotype team per gym leader, Elite Four member and champion in `leaders.py`.
+- `src/data/daily_trainers.party`: every daily opponent: a monotype team per gym leader and Elite Four member in `leaders.py`, and the signature teams (with variations) and competitive archetypes in `opponents.py`.
 - `include/constants/daily_battle_generated.h`: their ids and types.
 
 `data/report.txt` lists the pool and each opponent's team for a quick read.

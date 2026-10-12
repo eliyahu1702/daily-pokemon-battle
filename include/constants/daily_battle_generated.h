@@ -11,11 +11,9 @@ enum DailyTrainerId
     DAILY_TRAINER_KOGA,
     DAILY_TRAINER_SABRINA,
     DAILY_TRAINER_BLAINE,
-    DAILY_TRAINER_GIOVANNI,
     DAILY_TRAINER_LORELEI,
     DAILY_TRAINER_BRUNO,
     DAILY_TRAINER_AGATHA,
-    DAILY_TRAINER_LANCE,
     DAILY_TRAINER_FALKNER,
     DAILY_TRAINER_BUGSY,
     DAILY_TRAINER_WHITNEY,
@@ -38,8 +36,6 @@ enum DailyTrainerId
     DAILY_TRAINER_PHOEBE,
     DAILY_TRAINER_GLACIA,
     DAILY_TRAINER_DRAKE,
-    DAILY_TRAINER_WALLACE,
-    DAILY_TRAINER_STEVEN,
     DAILY_TRAINER_ROARK,
     DAILY_TRAINER_GARDENIA,
     DAILY_TRAINER_MAYLENE,
@@ -52,7 +48,6 @@ enum DailyTrainerId
     DAILY_TRAINER_BERTHA,
     DAILY_TRAINER_FLINT,
     DAILY_TRAINER_LUCIAN,
-    DAILY_TRAINER_CYNTHIA,
     DAILY_TRAINER_LENORA,
     DAILY_TRAINER_BURGH,
     DAILY_TRAINER_ELESA,
@@ -63,7 +58,6 @@ enum DailyTrainerId
     DAILY_TRAINER_GRIMSLEY,
     DAILY_TRAINER_CAITLIN,
     DAILY_TRAINER_MARSHAL,
-    DAILY_TRAINER_IRIS,
     DAILY_TRAINER_VIOLA,
     DAILY_TRAINER_GRANT,
     DAILY_TRAINER_KORRINA,
@@ -102,109 +96,275 @@ enum DailyTrainerId
     DAILY_TRAINER_RIKA,
     DAILY_TRAINER_POPPY,
     DAILY_TRAINER_HASSEL,
+    DAILY_TRAINER_RED_1,
+    DAILY_TRAINER_RED_2,
+    DAILY_TRAINER_BLUE_1,
+    DAILY_TRAINER_BLUE_2,
+    DAILY_TRAINER_LANCE_1,
+    DAILY_TRAINER_LANCE_2,
+    DAILY_TRAINER_STEVEN_1,
+    DAILY_TRAINER_STEVEN_2,
+    DAILY_TRAINER_WALLACE_1,
+    DAILY_TRAINER_WALLACE_2,
+    DAILY_TRAINER_CYNTHIA_1,
+    DAILY_TRAINER_CYNTHIA_2,
+    DAILY_TRAINER_ALDER_1,
+    DAILY_TRAINER_ALDER_2,
+    DAILY_TRAINER_IRIS_1,
+    DAILY_TRAINER_IRIS_2,
+    DAILY_TRAINER_DIANTHA_1,
+    DAILY_TRAINER_DIANTHA_2,
+    DAILY_TRAINER_KUKUI_1,
+    DAILY_TRAINER_KUKUI_2,
+    DAILY_TRAINER_LEON_1,
+    DAILY_TRAINER_LEON_2,
+    DAILY_TRAINER_GEETA_1,
+    DAILY_TRAINER_GEETA_2,
+    DAILY_TRAINER_NEMONA_1,
+    DAILY_TRAINER_NEMONA_2,
+    DAILY_TRAINER_KIERAN_1,
+    DAILY_TRAINER_KIERAN_2,
+    DAILY_TRAINER_GIOVANNI_1,
+    DAILY_TRAINER_GIOVANNI_2,
+    DAILY_TRAINER_ARCHIE_1,
+    DAILY_TRAINER_ARCHIE_2,
+    DAILY_TRAINER_MAXIE_1,
+    DAILY_TRAINER_MAXIE_2,
+    DAILY_TRAINER_CYRUS_1,
+    DAILY_TRAINER_CYRUS_2,
+    DAILY_TRAINER_GHETSIS_1,
+    DAILY_TRAINER_GHETSIS_2,
+    DAILY_TRAINER_N_1,
+    DAILY_TRAINER_N_2,
+    DAILY_TRAINER_LYSANDRE_1,
+    DAILY_TRAINER_LYSANDRE_2,
+    DAILY_TRAINER_GUZMA_1,
+    DAILY_TRAINER_GUZMA_2,
+    DAILY_TRAINER_LUSAMINE_1,
+    DAILY_TRAINER_LUSAMINE_2,
+    DAILY_TRAINER_ROSE_1,
+    DAILY_TRAINER_ROSE_2,
+    DAILY_TRAINER_VOLO_1,
+    DAILY_TRAINER_VOLO_2,
+    DAILY_TRAINER_SILVER_1,
+    DAILY_TRAINER_SILVER_2,
+    DAILY_TRAINER_WALLY_1,
+    DAILY_TRAINER_WALLY_2,
+    DAILY_TRAINER_HOP_1,
+    DAILY_TRAINER_HOP_2,
+    DAILY_TRAINER_ARVEN_1,
+    DAILY_TRAINER_ARVEN_2,
+    DAILY_TRAINER_PENNY_1,
+    DAILY_TRAINER_PENNY_2,
+    DAILY_TRAINER_PALMER_1,
+    DAILY_TRAINER_PALMER_2,
+    DAILY_TRAINER_ANABEL_1,
+    DAILY_TRAINER_ANABEL_2,
+    DAILY_TRAINER_TUCKER_1,
+    DAILY_TRAINER_TUCKER_2,
+    DAILY_TRAINER_SPENSER_1,
+    DAILY_TRAINER_SPENSER_2,
+    DAILY_TRAINER_GRETA_1,
+    DAILY_TRAINER_GRETA_2,
+    DAILY_TRAINER_LUCY_1,
+    DAILY_TRAINER_LUCY_2,
+    DAILY_TRAINER_BRANDON_1,
+    DAILY_TRAINER_BRANDON_2,
+    DAILY_TRAINER_ACE_RAIN,
+    DAILY_TRAINER_ACE_SUN,
+    DAILY_TRAINER_ACE_SAND,
+    DAILY_TRAINER_ACE_SNOW,
+    DAILY_TRAINER_ACE_HO,
+    DAILY_TRAINER_ACE_STALL,
+    DAILY_TRAINER_ACE_BALANCE,
+    DAILY_TRAINER_ACE_TR,
+    DAILY_TRAINER_ACE_VOLTTURN,
+    DAILY_TRAINER_ACE_SETUP,
+    DAILY_TRAINER_ACE_DPP,
+    DAILY_TRAINER_ACE_BWSAND,
     DAILY_TRAINERS_COUNT
 };
 
-// Each opponent's monotype, indexed by DailyTrainerId.
-#define DAILY_TRAINER_TYPES { \
-    TYPE_ROCK, \
-    TYPE_WATER, \
-    TYPE_ELECTRIC, \
-    TYPE_GRASS, \
-    TYPE_POISON, \
-    TYPE_PSYCHIC, \
-    TYPE_FIRE, \
-    TYPE_GROUND, \
-    TYPE_ICE, \
-    TYPE_FIGHTING, \
-    TYPE_GHOST, \
-    TYPE_DRAGON, \
-    TYPE_FLYING, \
-    TYPE_BUG, \
-    TYPE_NORMAL, \
-    TYPE_GHOST, \
-    TYPE_FIGHTING, \
-    TYPE_STEEL, \
-    TYPE_ICE, \
-    TYPE_DRAGON, \
-    TYPE_PSYCHIC, \
-    TYPE_DARK, \
-    TYPE_ROCK, \
-    TYPE_FIGHTING, \
-    TYPE_ELECTRIC, \
-    TYPE_FIRE, \
-    TYPE_NORMAL, \
-    TYPE_FLYING, \
-    TYPE_PSYCHIC, \
-    TYPE_WATER, \
-    TYPE_DARK, \
-    TYPE_GHOST, \
-    TYPE_ICE, \
-    TYPE_DRAGON, \
-    TYPE_WATER, \
-    TYPE_STEEL, \
-    TYPE_ROCK, \
-    TYPE_GRASS, \
-    TYPE_FIGHTING, \
-    TYPE_WATER, \
-    TYPE_GHOST, \
-    TYPE_STEEL, \
-    TYPE_ICE, \
-    TYPE_ELECTRIC, \
-    TYPE_BUG, \
-    TYPE_GROUND, \
-    TYPE_FIRE, \
-    TYPE_PSYCHIC, \
-    TYPE_DRAGON, \
-    TYPE_NORMAL, \
-    TYPE_BUG, \
-    TYPE_ELECTRIC, \
-    TYPE_GROUND, \
-    TYPE_FLYING, \
-    TYPE_DRAGON, \
-    TYPE_GHOST, \
-    TYPE_DARK, \
-    TYPE_PSYCHIC, \
-    TYPE_FIGHTING, \
-    TYPE_DRAGON, \
-    TYPE_BUG, \
-    TYPE_ROCK, \
-    TYPE_FIGHTING, \
-    TYPE_GRASS, \
-    TYPE_ELECTRIC, \
-    TYPE_FAIRY, \
-    TYPE_PSYCHIC, \
-    TYPE_ICE, \
-    TYPE_FIRE, \
-    TYPE_WATER, \
-    TYPE_STEEL, \
-    TYPE_DRAGON, \
-    TYPE_FIGHTING, \
-    TYPE_ROCK, \
-    TYPE_GHOST, \
-    TYPE_FLYING, \
-    TYPE_DARK, \
-    TYPE_GRASS, \
-    TYPE_WATER, \
-    TYPE_FIRE, \
-    TYPE_FIGHTING, \
-    TYPE_GHOST, \
-    TYPE_FAIRY, \
-    TYPE_ROCK, \
-    TYPE_ICE, \
-    TYPE_DARK, \
-    TYPE_DRAGON, \
-    TYPE_BUG, \
-    TYPE_GRASS, \
-    TYPE_ELECTRIC, \
-    TYPE_WATER, \
-    TYPE_NORMAL, \
-    TYPE_GHOST, \
-    TYPE_PSYCHIC, \
-    TYPE_ICE, \
-    TYPE_GROUND, \
-    TYPE_STEEL, \
-    TYPE_DRAGON, \
+// The line shown under each opponent's name before the battle, indexed by DailyTrainerId.
+#define DAILY_TRAINER_THEMES { \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A GRASS-type specialist!"), \
+    COMPOUND_STRING("A POISON-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("A FIRE-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A FLYING-type specialist!"), \
+    COMPOUND_STRING("A BUG-type specialist!"), \
+    COMPOUND_STRING("A NORMAL-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A STEEL-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("A DARK-type specialist!"), \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A FIRE-type specialist!"), \
+    COMPOUND_STRING("A NORMAL-type specialist!"), \
+    COMPOUND_STRING("A FLYING-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("A DARK-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("A GRASS-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A STEEL-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A BUG-type specialist!"), \
+    COMPOUND_STRING("A GROUND-type specialist!"), \
+    COMPOUND_STRING("A FIRE-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("A NORMAL-type specialist!"), \
+    COMPOUND_STRING("A BUG-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A GROUND-type specialist!"), \
+    COMPOUND_STRING("A FLYING-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A DARK-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A BUG-type specialist!"), \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A GRASS-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A FAIRY-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A FIRE-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("A STEEL-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A FLYING-type specialist!"), \
+    COMPOUND_STRING("A DARK-type specialist!"), \
+    COMPOUND_STRING("A GRASS-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("A FIRE-type specialist!"), \
+    COMPOUND_STRING("A FIGHTING-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A FAIRY-type specialist!"), \
+    COMPOUND_STRING("A ROCK-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A DARK-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("A BUG-type specialist!"), \
+    COMPOUND_STRING("A GRASS-type specialist!"), \
+    COMPOUND_STRING("An ELECTRIC-type specialist!"), \
+    COMPOUND_STRING("A WATER-type specialist!"), \
+    COMPOUND_STRING("A NORMAL-type specialist!"), \
+    COMPOUND_STRING("A GHOST-type specialist!"), \
+    COMPOUND_STRING("A PSYCHIC-type specialist!"), \
+    COMPOUND_STRING("An ICE-type specialist!"), \
+    COMPOUND_STRING("A GROUND-type specialist!"), \
+    COMPOUND_STRING("A STEEL-type specialist!"), \
+    COMPOUND_STRING("A DRAGON-type specialist!"), \
+    COMPOUND_STRING("The legend of Mt. Silver."), \
+    COMPOUND_STRING("The legend of Mt. Silver."), \
+    COMPOUND_STRING("Kanto's first Champion."), \
+    COMPOUND_STRING("Kanto's first Champion."), \
+    COMPOUND_STRING("Bringing his dragon squad."), \
+    COMPOUND_STRING("Bringing his dragon squad."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing her signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("Bringing his signature team."), \
+    COMPOUND_STRING("The unbeatable Champion."), \
+    COMPOUND_STRING("The unbeatable Champion."), \
+    COMPOUND_STRING("Paldea's Top Champion."), \
+    COMPOUND_STRING("Paldea's Top Champion."), \
+    COMPOUND_STRING("Your rival is fired up!"), \
+    COMPOUND_STRING("Your rival is fired up!"), \
+    COMPOUND_STRING("The Blueberry League Champ."), \
+    COMPOUND_STRING("The Blueberry League Champ."), \
+    COMPOUND_STRING("Team Rocket's boss."), \
+    COMPOUND_STRING("Team Rocket's boss."), \
+    COMPOUND_STRING("Team Aqua's leader."), \
+    COMPOUND_STRING("Team Aqua's leader."), \
+    COMPOUND_STRING("Team Magma's leader."), \
+    COMPOUND_STRING("Team Magma's leader."), \
+    COMPOUND_STRING("Team Galactic's boss."), \
+    COMPOUND_STRING("Team Galactic's boss."), \
+    COMPOUND_STRING("Team Plasma's true leader."), \
+    COMPOUND_STRING("Team Plasma's true leader."), \
+    COMPOUND_STRING("The King of Team Plasma."), \
+    COMPOUND_STRING("The King of Team Plasma."), \
+    COMPOUND_STRING("Team Flare's boss."), \
+    COMPOUND_STRING("Team Flare's boss."), \
+    COMPOUND_STRING("Team Skull's big bad boss."), \
+    COMPOUND_STRING("Team Skull's big bad boss."), \
+    COMPOUND_STRING("The Aether Foundation head."), \
+    COMPOUND_STRING("The Aether Foundation head."), \
+    COMPOUND_STRING("Chairman of Macro Cosmos."), \
+    COMPOUND_STRING("Chairman of Macro Cosmos."), \
+    COMPOUND_STRING("The wandering merchant...?"), \
+    COMPOUND_STRING("The wandering merchant...?"), \
+    COMPOUND_STRING("Your bitter Johto rival."), \
+    COMPOUND_STRING("Your bitter Johto rival."), \
+    COMPOUND_STRING("Wally has grown strong."), \
+    COMPOUND_STRING("Wally has grown strong."), \
+    COMPOUND_STRING("Leon's little brother."), \
+    COMPOUND_STRING("Leon's little brother."), \
+    COMPOUND_STRING("Paldea's sandwich master."), \
+    COMPOUND_STRING("Paldea's sandwich master."), \
+    COMPOUND_STRING("Eevee lover and hacker."), \
+    COMPOUND_STRING("Eevee lover and hacker."), \
+    COMPOUND_STRING("The Battle Tower Tycoon."), \
+    COMPOUND_STRING("The Battle Tower Tycoon."), \
+    COMPOUND_STRING("The Battle Tower's maiden."), \
+    COMPOUND_STRING("The Battle Tower's maiden."), \
+    COMPOUND_STRING("The Battle Dome's ace."), \
+    COMPOUND_STRING("The Battle Dome's ace."), \
+    COMPOUND_STRING("The Battle Palace's maven."), \
+    COMPOUND_STRING("The Battle Palace's maven."), \
+    COMPOUND_STRING("The Battle Arena's tycoon."), \
+    COMPOUND_STRING("The Battle Arena's tycoon."), \
+    COMPOUND_STRING("The Battle Pike's queen."), \
+    COMPOUND_STRING("The Battle Pike's queen."), \
+    COMPOUND_STRING("The Battle Pyramid's king."), \
+    COMPOUND_STRING("The Battle Pyramid's king."), \
+    COMPOUND_STRING("Tower ace: rain team."), \
+    COMPOUND_STRING("Tower ace: sun team."), \
+    COMPOUND_STRING("Tower ace: sand team."), \
+    COMPOUND_STRING("Tower ace: snow team."), \
+    COMPOUND_STRING("Tower ace: hyper offense."), \
+    COMPOUND_STRING("Tower ace: full stall."), \
+    COMPOUND_STRING("Tower ace: balance team."), \
+    COMPOUND_STRING("Tower ace: Trick Room."), \
+    COMPOUND_STRING("Tower ace: VoltTurn."), \
+    COMPOUND_STRING("Tower ace: setup sweepers."), \
+    COMPOUND_STRING("Tower ace: DPP classic."), \
+    COMPOUND_STRING("Tower ace: BW sand."), \
 }
 
 enum DraftPoolChunk

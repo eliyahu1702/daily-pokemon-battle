@@ -1,9 +1,10 @@
-# Daily opponents: gym leaders, Elite Four members and champions from every region,
-# each with a monotype team. `signature` lists species from their canon teams that the
-# generator tries first; the rest of the team is filled with strong mons of that type.
+# Daily opponents: gym leaders and Elite Four members from every region, each with a
+# monotype team. Champions, villains and other strong trainers live in opponents.py.
+# `signature` lists species from their canon teams that the generator tries first; the
+# rest of the team is filled with strong mons of that type.
 #
 # Fields: (constant suffix, display name, title, type, pic, signature species)
-# `title` is one of Leader / Elite Four / Champion and picks the trainer class.
+# `title` is Leader or Elite Four and picks the trainer class.
 
 LEADERS = [
     # Kanto
@@ -14,11 +15,9 @@ LEADERS = [
     ("KOGA",       "KOGA",       "Leader",     "Poison",   "Leader Koga FRLG",      ["Weezing", "Muk", "Crobat", "Venomoth", "Nidoking"]),
     ("SABRINA",    "SABRINA",    "Leader",     "Psychic",  "Leader Sabrina FRLG",   ["Alakazam", "Mr. Mime", "Espeon", "Slowbro", "Hypno"]),
     ("BLAINE",     "BLAINE",     "Leader",     "Fire",     "Leader Blaine FRLG",    ["Arcanine", "Magmortar", "Rapidash", "Ninetales", "Houndoom"]),
-    ("GIOVANNI",   "GIOVANNI",   "Leader",     "Ground",   "Leader Giovanni FRLG",  ["Nidoking", "Nidoqueen", "Rhyperior", "Dugtrio", "Marowak"]),
     ("LORELEI",    "LORELEI",    "Elite Four", "Ice",      "Elite Four Lorelei FRLG", ["Lapras", "Cloyster", "Jynx", "Dewgong", "Mamoswine"]),
     ("BRUNO",      "BRUNO",      "Elite Four", "Fighting", "Elite Four Bruno FRLG", ["Machamp", "Hitmonlee", "Hitmonchan", "Hitmontop", "Lucario"]),
     ("AGATHA",     "AGATHA",     "Elite Four", "Ghost",    "Elite Four Agatha FRLG", ["Gengar", "Mismagius", "Dusknoir", "Banette"]),
-    ("LANCE",      "LANCE",      "Champion",   "Dragon",   "Elite Four Lance FRLG", ["Dragonite", "Kingdra", "Salamence", "Garchomp"]),
     # Johto
     ("FALKNER",    "FALKNER",    "Leader",     "Flying",   "Bird Keeper",           ["Pidgeot", "Noctowl", "Xatu", "Skarmory", "Honchkrow"]),
     ("BUGSY",      "BUGSY",      "Leader",     "Bug",      "Bug Maniac",            ["Scizor", "Heracross", "Ariados", "Yanmega", "Forretress"]),
@@ -43,8 +42,6 @@ LEADERS = [
     ("PHOEBE",     "PHOEBE",     "Elite Four", "Ghost",    "Elite Four Phoebe",     ["Dusknoir", "Banette", "Sableye", "Dusclops", "Chandelure"]),
     ("GLACIA",     "GLACIA",     "Elite Four", "Ice",      "Elite Four Glacia",     ["Walrein", "Glalie", "Froslass", "Abomasnow"]),
     ("DRAKE",      "DRAKE",      "Elite Four", "Dragon",   "Elite Four Drake",      ["Salamence", "Altaria", "Flygon", "Kingdra", "Haxorus"]),
-    ("WALLACE",    "WALLACE",    "Champion",   "Water",    "Champion Wallace",      ["Milotic", "Swampert", "Gyarados", "Ludicolo", "Tentacruel", "Whiscash"]),
-    ("STEVEN",     "STEVEN",     "Champion",   "Steel",    "Steven",                ["Metagross", "Skarmory", "Aggron", "Excadrill", "Bronzong"]),
     # Sinnoh
     ("ROARK",      "ROARK",      "Leader",     "Rock",     "Hiker",                 ["Rampardos", "Probopass", "Golem", "Tyranitar"]),
     ("GARDENIA",   "GARDENIA",   "Leader",     "Grass",    "Picnicker",             ["Roserade", "Tangrowth", "Cherrim", "Leafeon", "Breloom"]),
@@ -58,7 +55,6 @@ LEADERS = [
     ("BERTHA",     "BERTHA",     "Elite Four", "Ground",   "Expert F",              ["Hippowdon", "Gliscor", "Rhyperior", "Golem", "Quagsire"]),
     ("FLINT",      "FLINT",      "Elite Four", "Fire",     "Kindler",               ["Infernape", "Rapidash", "Houndoom", "Magmortar", "Flareon"]),
     ("LUCIAN",     "LUCIAN",     "Elite Four", "Psychic",  "Gentleman",             ["Gallade", "Bronzong", "Alakazam", "Espeon", "Girafarig"]),
-    ("CYNTHIA",    "CYNTHIA",    "Champion",   "Dragon",   "Expert F",              ["Garchomp", "Kommo-o", "Dragonite", "Haxorus", "Hydreigon"]),
     # Unova
     ("LENORA",     "LENORA",     "Leader",     "Normal",   "Pokefan F",             ["Watchog", "Stoutland", "Cinccino", "Bouffalant", "Braviary"]),
     ("BURGH",      "BURGH",      "Leader",     "Bug",      "Painter FRLG",          ["Leavanny", "Escavalier", "Crustle", "Durant", "Volcarona"]),
@@ -70,7 +66,6 @@ LEADERS = [
     ("GRIMSLEY",   "GRIMSLEY",   "Elite Four", "Dark",     "Gentleman",             ["Bisharp", "Krookodile", "Scrafty", "Liepard", "Hydreigon"]),
     ("CAITLIN",    "CAITLIN",    "Elite Four", "Psychic",  "Lady",                  ["Reuniclus", "Gothitelle", "Musharna", "Sigilyph", "Metagross"]),
     ("MARSHAL",    "MARSHAL",    "Elite Four", "Fighting", "Black Belt",            ["Conkeldurr", "Mienshao", "Throh", "Sawk", "Lucario"]),
-    ("IRIS",       "IRIS",       "Champion",   "Dragon",   "Dragon Tamer",          ["Haxorus", "Hydreigon", "Druddigon", "Salamence", "Dragapult"]),
     # Kalos
     ("VIOLA",      "VIOLA",      "Leader",     "Bug",      "Picnicker",             ["Vivillon", "Masquerain", "Scizor", "Volcarona", "Heracross"]),
     ("GRANT",      "GRANT",      "Leader",     "Rock",     "Camper",                ["Tyrunt", "Tyrantrum", "Aurorus", "Tyranitar", "Gigalith"]),

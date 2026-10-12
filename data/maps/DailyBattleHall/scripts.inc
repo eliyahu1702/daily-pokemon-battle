@@ -91,16 +91,16 @@ DailyBattleHall_EventScript_Won::
 
 DailyBattleHall_Text_Welcome:
 	.string "Welcome to the DAILY BATTLE HALL!\p"
-	.string "Every day a new GYM LEADER, ELITE FOUR\n"
-	.string "member or CHAMPION from every region\l"
-	.string "waits here with a monotype team.\p"
+	.string "Every day brings a new challenger:\n"
+	.string "GYM LEADERS, ELITE FOUR, CHAMPIONS,\l"
+	.string "villains and Battle Tower aces!\p"
 	.string "Everyone in the world faces the same\n"
 	.string "opponent and the same draft each day.$"
 
 DailyBattleHall_Text_TodaysOpponent:
 	.string "Today's opponent is {STR_VAR_2}\n"
-	.string "{STR_VAR_1}, master of {STR_VAR_3}-type\l"
-	.string "POKéMON!$"
+	.string "{STR_VAR_1}!\p"
+	.string "{STR_VAR_3}$"
 
 DailyBattleHall_Text_KeepTeam:
 	.string "You already drafted a team today.\n"

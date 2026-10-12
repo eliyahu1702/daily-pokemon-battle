@@ -21,6 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 from leaders import LEADERS  # noqa: E402
+from opponents import COMPETITIVE, CUSTOM_SETS, SIGNATURE  # noqa: E402
 
 LEVEL = 100
 DRAFT_CHUNK_SIZE = 200
@@ -34,7 +35,9 @@ OPPONENT_FORMATS = ["monotype", "nationaldexmonotype", "ou", "nationaldex", "uu"
 OLD_GENS = ["gen8", "gen7"]
 
 BANNED_ITEMS = {"Eviolite", "Light Ball", "Thick Club", "Leek", "Stick"}
-BANNED_MOVES = {"Hidden Power", "Return", "Frustration", "Baton Pass", "Last Respects",
+# Opponents may use the species-specific items, since their teams include canon NFE aces.
+OPPONENT_BANNED_ITEMS = BANNED_ITEMS - {"Eviolite", "Light Ball"}
+BANNED_MOVES = {"Hidden Power", "Return", "Frustration", "Baton Pass", "Last Respects", "Tera Blast",
                 "Shed Tail", "Revival Blessing", "Fissure", "Sheer Cold", "Horn Drill", "Guillotine"}
 BANNED_ABILITIES = {"Moody", "Shadow Tag", "Arena Trap"}
 
@@ -126,7 +129,7 @@ def options(v):
     return v if isinstance(v, list) else [v]
 
 
-def build_set(R, dex, species, raw):
+def build_set(R, dex, species, raw, banned_items=BANNED_ITEMS):
     """Turn one Smogon set into a validated, expansion-ready set, or None."""
     info = dex.get(species)
     if not info:
@@ -139,7 +142,7 @@ def build_set(R, dex, species, raw):
     item = None
     for it in options(raw.get("item", [])):
         meta = ITEMS.get(it, {})
-        if it in BANNED_ITEMS or meta.get("mega") or meta.get("z"):
+        if it in banned_items or meta.get("mega") or meta.get("z"):
             continue
         c = R.item(it)
         if c:
@@ -176,23 +179,62 @@ def build_set(R, dex, species, raw):
             "nature": nature, "evs": evs, "ivs": ivs, "moves": moves[:4]}
 
 
-def pick_set(R, dex, sets_by_gen, species, formats):
-    """The first set with four legal moves, in format preference order."""
-    fallback = None
+# Sets that only work under a weather the team doesn't set up go last outside weather teams.
+WEATHER_ABILITIES = {"CHLOROPHYLL", "SWIFT_SWIM", "SAND_RUSH", "SLUSH_RUSH", "SOLAR_POWER"}
+WEATHER_MOVES = {"SOLAR_BEAM", "WEATHER_BALL"}
+
+
+def needs_weather(s):
+    return s["ability"] in WEATHER_ABILITIES or bool(WEATHER_MOVES & set(s["moves"]))
+
+
+def all_sets(R, dex, sets_by_gen, species, formats, banned_items=BANNED_ITEMS, weather=False):
+    """Every valid set for a species, best format first, four-move sets ahead of the rest.
+    Without `weather`, sets that rely on a weather setter come after the others."""
+    full, partial, seen = [], [], set()
     for gen in ["gen9"] + OLD_GENS:
         entry = sets_by_gen.get(gen, {}).get(species)
         if not entry:
             continue
-        fmts = [f for f in formats if f in entry]
-        for fmt in fmts:
+        for fmt in [f for f in formats if f in entry]:
             for set_name, raw in entry[fmt].items():
-                s = build_set(R, dex, species, raw)
-                if s:
-                    s["source"] = "%s%s: %s" % (gen, fmt, set_name)
-                    if len(s["moves"]) == 4:
-                        return s
-                    fallback = fallback or s
-    return fallback
+                s = build_set(R, dex, species, raw, banned_items)
+                if not s:
+                    continue
+                key = (s["item"], s["ability"], tuple(sorted(s["moves"])))
+                if key in seen:
+                    continue
+                seen.add(key)
+                s["source"] = "%s%s: %s" % (gen, fmt, set_name)
+                (full if len(s["moves"]) == 4 else partial).append(s)
+    if species in CUSTOM_SETS:
+        s = build_set(R, dex, species, CUSTOM_SETS[species], banned_items)
+        if s:
+            s["source"] = "custom"
+            full.append(s)
+    sets = full or partial
+    if not weather:
+        sets = [x for x in sets if not needs_weather(x)] + [x for x in sets if needs_weather(x)]
+    return sets
+
+
+def pick_set(R, dex, sets_by_gen, species, formats, variant=0, banned_items=BANNED_ITEMS,
+             weather=False, move=None):
+    """The best set, or for variant n the n-th distinct one (wrapping around). With `move`,
+    prefer a set that has it, and otherwise put it in the last slot."""
+    sets = all_sets(R, dex, sets_by_gen, species, formats, banned_items, weather)
+    if not sets:
+        return None
+    if move:
+        c = R.move(move)
+        with_move = [x for x in sets if c in x["moves"]]
+        if with_move:
+            return with_move[0]
+        s = dict(sets[0])
+        s["moves"] = s["moves"][:3] + [c]
+        s["source"] += " + " + move
+        return s
+    return sets[variant % len(sets)]
 
 
 STRONG_TIERS = {"OU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU"}
@@ -302,7 +344,84 @@ def build_leader_team(R, dex, sets_by_gen, leader):
     return team
 
 
-CLASS = {"Leader": "Leader", "Elite Four": "Elite Four", "Champion": "Champion"}
+def build_signature_team(R, dex, sets_by_gen, entry, variant):
+    """Variant 0 is the first six of the pool; later variants keep the ace and draw the rest
+    from the whole pool, with alternate sets."""
+    key, name, cls, pic, theme, variants, pool = entry
+    pool = [sp for sp in pool if sp in dex and not banned_species(dex[sp])]
+    if variant == 0:
+        order = pool
+    else:
+        rest = sorted(pool[1:], key=lambda sp: stable_hash("%s%d%s" % (key, variant, sp)))
+        order = [pool[0]] + rest
+    team, used_base = [], set()
+    for sp in order:
+        if len(team) >= 6:
+            break
+        if dex[sp]["base"] in used_base:
+            continue
+        s = pick_set(R, dex, sets_by_gen, sp, OPPONENT_FORMATS, variant, OPPONENT_BANNED_ITEMS)
+        if s:
+            team.append(s)
+            used_base.add(dex[sp]["base"])
+        else:
+            print("warning: no set for %s (%s)" % (sp, key), file=sys.stderr)
+    return team
+
+
+def build_fixed_team(R, dex, sets_by_gen, key, species):
+    """`species` entries are names, optionally "Name:Move" to require a move (a Trick Room
+    setter, say)."""
+    team = []
+    for entry in species:
+        sp, _, move = entry.partition(":")
+        s = sp in dex and pick_set(R, dex, sets_by_gen, sp, ARCHETYPE_FORMATS, 0, OPPONENT_BANNED_ITEMS,
+                                   weather=True, move=move or None)
+        if s:
+            team.append(s)
+        else:
+            print("warning: no set for %s (%s)" % (sp, key), file=sys.stderr)
+    return team
+
+
+def banned_species(info):
+    # Box legends and mythicals stay out: the player can't draft them either.
+    return "Restricted Legendary" in info["tags"] or "Mythical" in info["tags"]
+
+
+# Archetype teams come from the standard singles tiers, where those sets are written for teams.
+ARCHETYPE_FORMATS = ["ou", "nationaldex", "uu", "nationaldexuu", "ru", "nationaldexru", "nu",
+                     "monotype", "nationaldexmonotype", "battlestadiumsingles", "pu", "zu", "1v1"]
+
+
+def all_opponents(R, dex, sets_by_gen):
+    """Every daily opponent: dicts with key, name, class, pic, music, theme and team."""
+    opponents = []
+    for leader in LEADERS:
+        key, name, title, typ, pic, _ = leader
+        team = build_leader_team(R, dex, sets_by_gen, leader)
+        if len(team) < 6:
+            print("warning: %s only has %d %s mons" % (key, len(team), typ), file=sys.stderr)
+        opponents.append({"key": key, "name": name, "class": title, "pic": pic,
+                          "music": "Intense" if title == "Leader" else "Elite Four",
+                          "theme": "%s %s-type specialist!" % ("An" if typ[0] in "AEIOU" else "A", typ.upper()),
+                          "kind": typ, "team": team})
+    for entry in SIGNATURE:
+        key, name, cls, pic, theme, variants, _ = entry
+        for v in range(variants):
+            team = build_signature_team(R, dex, sets_by_gen, entry, v)
+            opponents.append({"key": "%s_%d" % (key, v + 1), "name": name, "class": cls, "pic": pic,
+                              "music": "Elite Four", "theme": theme,
+                              "kind": "signature" if v == 0 else "variant", "team": team})
+    for key, name, cls, pic, theme, species in COMPETITIVE:
+        opponents.append({"key": key, "name": name, "class": cls, "pic": pic, "music": "Intense",
+                          "theme": theme, "kind": "archetype",
+                          "team": build_fixed_team(R, dex, sets_by_gen, key, species)})
+    for o in opponents:
+        assert len(o["name"]) <= 10, o["name"]
+        if len(o["team"]) < 6:
+            print("warning: %s has only %d mons" % (o["key"], len(o["team"])), file=sys.stderr)
+    return opponents
 AI = "Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention"
 
 
@@ -341,30 +460,27 @@ def main():
 
     tout = ["/* Generated by tools/daily/generate.py from Smogon sets. Do not edit by hand. */", ""]
     report = []
-    for leader in LEADERS:
-        key, name, title, typ, pic, _ = leader
-        team = build_leader_team(R, dex, sets_by_gen, leader)
-        if len(team) < 6:
-            print("warning: %s only has %d %s mons" % (key, len(team), typ), file=sys.stderr)
-        tout += ["=== DAILY_TRAINER_%s ===" % key, "Name: %s" % name, "Class: %s" % CLASS[title],
-                 "Pic: %s" % pic, "Music: %s" % ("Intense" if title == "Leader" else "Elite Four"),
-                 "AI: %s" % AI, ""]
-        for s in team:
+    opponents = all_opponents(R, dex, sets_by_gen)
+    for o in opponents:
+        tout += ["=== DAILY_TRAINER_%s ===" % o["key"], "Name: %s" % o["name"], "Class: %s" % o["class"],
+                 "Pic: %s" % o["pic"], "Music: %s" % o["music"], "AI: %s" % AI, ""]
+        for s in o["team"]:
             tout.append("/* %s (%s) */" % (s["name"], s["source"]))
             tout.append(party_text(s))
             tout.append("")
-        report.append("%-10s %-10s %-8s %s" % (key, title, typ, ", ".join(s["name"] for s in team)))
+        report.append("%-12s %-10s %-9s %s" % (o["key"], o["class"][:10], o["kind"][:9],
+                                               ", ".join(s["name"] for s in o["team"])))
     open(os.path.join(ROOT, "src", "data", "daily_trainers.party"), "w").write("\n".join(tout))
 
     hdr = ["// Generated by tools/daily/generate.py. Do not edit by hand.",
            "#ifndef GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H",
            "#define GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H", "",
            "enum DailyTrainerId", "{"]
-    hdr += ["    DAILY_TRAINER_%s," % l[0] for l in LEADERS]
+    hdr += ["    DAILY_TRAINER_%s," % o["key"] for o in opponents]
     hdr += ["    DAILY_TRAINERS_COUNT", "};", "",
-            "// Each opponent's monotype, indexed by DailyTrainerId.",
-            "#define DAILY_TRAINER_TYPES { \\"]
-    hdr += ["    TYPE_%s, \\" % l[3].upper() for l in LEADERS]
+            "// The line shown under each opponent's name before the battle, indexed by DailyTrainerId.",
+            "#define DAILY_TRAINER_THEMES { \\"]
+    hdr += ["    COMPOUND_STRING(\"%s\"), \\" % o["theme"] for o in opponents]
     hdr += ["}", "",
             "enum DraftPoolChunk", "{"] + ["    DRAFT_POOL_%d," % n for n in range(len(chunks))] + [
             "    DRAFT_POOL_CHUNKS", "};", "",
@@ -378,7 +494,7 @@ def main():
             len(draft), ", ".join(s["name"] for s in draft), "\n".join(report)))
     for kind, names in sorted(R.misses.items()):
         print("unresolved %s: %s" % (kind, ", ".join(sorted(names))), file=sys.stderr)
-    print("draft pool: %d, opponents: %d" % (len(draft), len(LEADERS)))
+    print("draft pool: %d, opponents: %d" % (len(draft), len(opponents)))
 
 
 if __name__ == "__main__":

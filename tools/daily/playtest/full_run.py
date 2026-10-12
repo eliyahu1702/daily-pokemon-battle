@@ -26,8 +26,9 @@ def symbol_address(map_path, name):
 
 def script(battle_outcome, outcome):
     s = ["wait 600", "press START", "wait 120", "press START", "wait 60", "press A", "wait 60"]
-    s += ["press A", "wait 20"] * 120          # Birch's intro, the hall intro and draft rules
-    s += ["wait 90", "shot 01_round1"]
+    s += ["press A", "wait 20"] * 119          # Birch's intro, the hall intro and draft rules
+    # B closes the picker's menu if the last A opened it; with no menu open it does nothing.
+    s += ["wait 180", "press B", "wait 30", "shot 01_round1"]
     s += ["press RIGHT", "wait 30", "shot 02_round1_right"]
     s += ["press A", "wait 40", "shot 03_menu", "press A", "wait 120", "shot 04_summary"]
     s += ["press RIGHT", "wait 40", "shot 05_summary_stats", "press RIGHT", "wait 40", "shot 06_summary_moves"]

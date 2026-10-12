@@ -6,17 +6,17 @@ Class: Pkmn Trainer 1
 Pic: Cooltrainer M
 Party Size: 6
 
-/* Blastoise (gen9uu: Shell Smash) */
+/* Blastoise (gen8ru: Shell Smash) */
 SPECIES_BLASTOISE @ ITEM_WHITE_HERB
 Level: 100
 Ability: ABILITY_TORRENT
-EVs: 252 SpA / 4 SpD / 252 Spe
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 4 HP / 252 SpA / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Nature: NATURE_MODEST
 - MOVE_SHELL_SMASH
 - MOVE_SURF
 - MOVE_ICE_BEAM
-- MOVE_TERA_BLAST
+- MOVE_DARK_PULSE
 
 /* Nidoqueen (gen9nationaldexru: Defensive Utility) */
 SPECIES_NIDOQUEEN @ ITEM_BLACK_SLUDGE
@@ -162,17 +162,17 @@ Nature: NATURE_CAREFUL
 - MOVE_REST
 - MOVE_SLEEP_TALK
 
-/* Cloyster (gen9ru: Shell Smash Sweeper) */
-SPECIES_CLOYSTER @ ITEM_WHITE_HERB
+/* Cloyster (gen9monotype: Shell Smash (Water)) */
+SPECIES_CLOYSTER @ ITEM_NEVER_MELT_ICE
 Level: 100
 Ability: ABILITY_SKILL_LINK
-EVs: 252 Atk / 4 SpA / 252 Spe
+EVs: 120 Atk / 136 SpA / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_ADAMANT
+Nature: NATURE_NAIVE
 - MOVE_SHELL_SMASH
+- MOVE_ICE_BEAM
+- MOVE_HYDRO_PUMP
 - MOVE_ICICLE_SPEAR
-- MOVE_DRILL_RUN
-- MOVE_TERA_BLAST
 
 /* Gengar (gen9ru: Choice Scarf) */
 SPECIES_GENGAR @ ITEM_CHOICE_SCARF
@@ -378,16 +378,16 @@ Nature: NATURE_ADAMANT
 - MOVE_LIQUIDATION
 - MOVE_AQUA_JET
 
-/* Politoed (gen9uu: Rain Setter) */
+/* Politoed (gen9ru: Perish Trapper) */
 SPECIES_POLITOED @ ITEM_DAMP_ROCK
 Level: 100
 Ability: ABILITY_DRIZZLE
-EVs: 252 HP / 156 SpD / 100 Spe
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_CALM
-- MOVE_SURF
+EVs: 80 Def / 252 HP / 176 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_WHIRLPOOL
+- MOVE_PERISH_SONG
 - MOVE_ICE_BEAM
-- MOVE_TERA_BLAST
 - MOVE_ENCORE
 
 /* Quagsire (gen9ou: Defensive) */
@@ -1134,16 +1134,16 @@ Nature: NATURE_ADAMANT
 - MOVE_SUCKER_PUNCH
 - MOVE_KNOCK_OFF
 
-/* Stoutland (gen7ru: Sand Attacker) */
+/* Stoutland (gen7pu: Choice Band) */
 SPECIES_STOUTLAND @ ITEM_CHOICE_BAND
 Level: 100
-Ability: ABILITY_SAND_RUSH
-EVs: 252 Atk / 4 SpD / 252 Spe
+Ability: ABILITY_SCRAPPY
+EVs: 252 Atk / 4 Def / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Nature: NATURE_ADAMANT
 - MOVE_SUPERPOWER
 - MOVE_PURSUIT
-- MOVE_CRUNCH
+- MOVE_FACADE
 
 /* Gigalith (gen8ru: Specially Defensive) */
 SPECIES_GIGALITH @ ITEM_LEFTOVERS
@@ -1157,17 +1157,17 @@ Nature: NATURE_ADAMANT
 - MOVE_EARTHQUAKE
 - MOVE_TOXIC
 
-/* Excadrill (gen9ou: Sand Sweeper) */
-SPECIES_EXCADRILL @ ITEM_AIR_BALLOON
+/* Excadrill (gen9uu: Lead) */
+SPECIES_EXCADRILL @ ITEM_FOCUS_SASH
 Level: 100
-Ability: ABILITY_SAND_RUSH
-EVs: 252 Atk / 4 Def / 252 Spe
+Ability: ABILITY_MOLD_BREAKER
+EVs: 252 Atk / 4 SpD / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_ADAMANT
+Nature: NATURE_JOLLY
+- MOVE_STEALTH_ROCK
 - MOVE_EARTHQUAKE
+- MOVE_ROCK_TOMB
 - MOVE_RAPID_SPIN
-- MOVE_ROCK_SLIDE
-- MOVE_SWORDS_DANCE
 
 /* Conkeldurr (gen9uu: Assault Vest) */
 SPECIES_CONKELDURR @ ITEM_ASSAULT_VEST
@@ -1181,17 +1181,17 @@ Nature: NATURE_ADAMANT
 - MOVE_KNOCK_OFF
 - MOVE_MACH_PUNCH
 
-/* Seismitoad (gen8ou: Physical Rain Wallbreaker) */
-SPECIES_SEISMITOAD @ ITEM_LIFE_ORB
+/* Seismitoad (gen8uu: Defensive Stealth Rock) */
+SPECIES_SEISMITOAD @ ITEM_LEFTOVERS
 Level: 100
-Ability: ABILITY_SWIFT_SWIM
-EVs: 252 Atk / 4 SpD / 252 Spe
+Ability: ABILITY_WATER_ABSORB
+EVs: 192 Def / 252 HP / 64 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_ADAMANT
+Nature: NATURE_BOLD
 - MOVE_STEALTH_ROCK
-- MOVE_LIQUIDATION
-- MOVE_EARTHQUAKE
-- MOVE_ICE_PUNCH
+- MOVE_SCALD
+- MOVE_KNOCK_OFF
+- MOVE_TOXIC
 
 /* Scolipede (gen8uu: Suicide Lead) */
 SPECIES_SCOLIPEDE @ ITEM_FOCUS_SASH
@@ -1205,17 +1205,17 @@ Nature: NATURE_JOLLY
 - MOVE_ENDEAVOR
 - MOVE_EARTHQUAKE
 
-/* Lilligant-Hisui (gen9ou: Sun Sweeper) */
-SPECIES_LILLIGANT_HISUI @ ITEM_LIFE_ORB
+/* Lilligant-Hisui (gen9monotype: Victory Dance (Fighting)) */
+SPECIES_LILLIGANT_HISUI @ ITEM_WIDE_LENS
 Level: 100
-Ability: ABILITY_CHLOROPHYLL
+Ability: ABILITY_HUSTLE
 EVs: 252 Atk / 4 SpD / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_ADAMANT
+Nature: NATURE_JOLLY
+- MOVE_VICTORY_DANCE
+- MOVE_LEAF_BLADE
 - MOVE_CLOSE_COMBAT
-- MOVE_SOLAR_BLADE
-- MOVE_TRIPLE_AXEL
-- MOVE_SWORDS_DANCE
+- MOVE_ICE_SPINNER
 
 /* Krookodile (gen9uu: Stealth Rock) */
 SPECIES_KROOKODILE @ ITEM_LEFTOVERS
@@ -2153,17 +2153,17 @@ Nature: NATURE_ADAMANT
 - MOVE_EARTHQUAKE
 - MOVE_SUPERCELL_SLAM
 
-/* Dracozolt (gen8ou: Life Orb) */
-SPECIES_DRACOZOLT @ ITEM_LIFE_ORB
+/* Dracozolt (gen8monotype: Choice Scarf (Electric)) */
+SPECIES_DRACOZOLT @ ITEM_CHOICE_SCARF
 Level: 100
-Ability: ABILITY_SAND_RUSH
-EVs: 148 Atk / 176 SpA / 184 Spe
+Ability: ABILITY_HUSTLE
+EVs: 252 Atk / 4 SpD / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_NAUGHTY
+Nature: NATURE_JOLLY
 - MOVE_BOLT_BEAK
-- MOVE_DRACO_METEOR
-- MOVE_EARTHQUAKE
-- MOVE_FIRE_BLAST
+- MOVE_DRAGON_CLAW
+- MOVE_OUTRAGE
+- MOVE_FIRE_FANG
 
 /* Arctozolt (gen9nationaldexru: Slush Rush) */
 SPECIES_ARCTOZOLT @ ITEM_HEAVY_DUTY_BOOTS
@@ -2177,17 +2177,17 @@ Nature: NATURE_NAIVE
 - MOVE_LOW_KICK
 - MOVE_SUBSTITUTE
 
-/* Arctovish (gen8ru: Hail Wallbreaker) */
-SPECIES_ARCTOVISH @ ITEM_LIFE_ORB
+/* Arctovish (gen8pu: Use Fishious Rend) */
+SPECIES_ARCTOVISH @ ITEM_CHOICE_BAND
 Level: 100
-Ability: ABILITY_SLUSH_RUSH
-EVs: 236 Atk / 40 SpA / 232 Spe
+Ability: ABILITY_WATER_ABSORB
+EVs: 252 Atk / 4 SpD / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_NAIVE
+Nature: NATURE_ADAMANT
 - MOVE_FISHIOUS_REND
-- MOVE_FREEZE_DRY
 - MOVE_ICICLE_CRASH
-- MOVE_SUBSTITUTE
+- MOVE_CRUNCH
+- MOVE_PSYCHIC_FANGS
 
 /* Dragapult (gen9ou: Boots Pivot) */
 SPECIES_DRAGAPULT @ ITEM_HEAVY_DUTY_BOOTS
@@ -2273,17 +2273,17 @@ Nature: NATURE_TIMID
 - MOVE_ICE_BEAM
 - MOVE_FLIP_TURN
 
-/* Overqwil (gen9ou: Rain Sweeper) */
-SPECIES_OVERQWIL @ ITEM_LIFE_ORB
+/* Overqwil (gen9nu: Setup Sweeper) */
+SPECIES_OVERQWIL @ ITEM_LOADED_DICE
 Level: 100
-Ability: ABILITY_SWIFT_SWIM
+Ability: ABILITY_INTIMIDATE
 EVs: 252 Atk / 4 Def / 252 Spe
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Nature: NATURE_JOLLY
-- MOVE_GUNK_SHOT
-- MOVE_CRUNCH
-- MOVE_LIQUIDATION
 - MOVE_SWORDS_DANCE
+- MOVE_GUNK_SHOT
+- MOVE_THROAT_CHOP
+- MOVE_SCALE_SHOT
 
 /* Enamorus (gen9ou: Choice Scarf) */
 SPECIES_ENAMORUS @ ITEM_CHOICE_SCARF
@@ -2495,17 +2495,17 @@ Nature: NATURE_BOLD
 - MOVE_EARTH_POWER
 - MOVE_POWER_GEM
 
-/* Houndstone (gen9uu: Sand Sweeper) */
-SPECIES_HOUNDSTONE @ ITEM_CHOICE_BAND
+/* Houndstone (gen9nu: Defensive) */
+SPECIES_HOUNDSTONE @ ITEM_ROCKY_HELMET
 Level: 100
-Ability: ABILITY_SAND_RUSH
-EVs: 252 Atk / 4 SpD / 252 Spe
+Ability: ABILITY_FLUFFY
+EVs: 252 Def / 252 HP / 4 SpD
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-Nature: NATURE_ADAMANT
-- MOVE_POLTERGEIST
-- MOVE_PLAY_ROUGH
-- MOVE_SHADOW_SNEAK
-- MOVE_BODY_PRESS
+Nature: NATURE_BOLD
+- MOVE_NIGHT_SHADE
+- MOVE_ROAR
+- MOVE_REST
+- MOVE_SLEEP_TALK
 
 /* Flamigo (gen9ru: Choice Scarf) */
 SPECIES_FLAMIGO @ ITEM_CHOICE_SCARF
@@ -2855,17 +2855,17 @@ Nature: NATURE_BOLD
 - MOVE_GIGA_DRAIN
 - MOVE_EARTH_POWER
 
-/* Raging Bolt (gen9ou: All-Out Attacker) */
-SPECIES_RAGING_BOLT @ ITEM_LIFE_ORB
+/* Raging Bolt (gen9ou: Boots Pivot) */
+SPECIES_RAGING_BOLT @ ITEM_HEAVY_DUTY_BOOTS
 Level: 100
 Ability: ABILITY_PROTOSYNTHESIS
 EVs: 4 Def / 252 SpA / 252 Spe
 IVs: 31 HP / 20 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Nature: NATURE_MODEST
-- MOVE_THUNDERCLAP
-- MOVE_DRAGON_PULSE
-- MOVE_WEATHER_BALL
 - MOVE_THUNDERBOLT
+- MOVE_THUNDERCLAP
+- MOVE_VOLT_SWITCH
+- MOVE_DRAGON_PULSE
 
 /* Iron Boulder (gen9ou: Swords Dance) */
 SPECIES_IRON_BOULDER @ ITEM_BOOSTER_ENERGY
