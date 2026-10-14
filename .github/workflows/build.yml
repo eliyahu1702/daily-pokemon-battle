@@ -1,0 +1,62 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3 libmgba-dev python3-pil
+
+      - name: Cache build tools
+        uses: actions/cache@v4
+        with:
+          path: |
+            tools/bin2c/bin2c
+            tools/gbafix/gbafix
+            tools/gbagfx/gbagfx
+            tools/jsonproc/jsonproc
+            tools/mapjson/mapjson
+            tools/mid2agb/mid2agb
+            tools/preproc/preproc
+            tools/ramscrgen/ramscrgen
+            tools/rsfont/rsfont
+            tools/scaninc/scaninc
+            tools/trainerproc/trainerproc
+            tools/compresSmol/compresSmol
+            tools/compresSmol/compresSmolTilemap
+            tools/wav2agb/wav2agb
+          key: tools-${{ runner.os }}-${{ hashFiles('tools/*/Makefile', 'tools/**/*.c', 'tools/**/*.cpp', 'tools/**/*.h') }}
+
+      - name: Check generated teams are up to date
+        run: |
+          python3 tools/daily/generate.py
+          git diff --exit-code -- src/data/draft_pool.party src/data/daily_trainers.party include/constants/daily_battle_generated.h
+
+      - name: Build ROM
+        run: make -j$(nproc) -O
+
+      - name: Playtest (new game, draft, battle, results screen)
+        run: |
+          make -C tools/daily/playtest
+          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win-singles win singles
+          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win-doubles win doubles
+          python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/lose-doubles lose doubles
+          python3 tools/daily/playtest/day_rollover.py pokeemerald.gba playtest-out/days 7
+
+      - name: Upload playtest screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtest-screenshots
+          path: playtest-out/**/*.png
+          if-no-files-found: ignore

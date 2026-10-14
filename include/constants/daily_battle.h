@@ -1,0 +1,26 @@
+#ifndef GUARD_CONSTANTS_DAILY_BATTLE_H
+#define GUARD_CONSTANTS_DAILY_BATTLE_H
+
+#define DRAFT_ROUNDS  6
+#define DRAFT_CHOICES 3
+
+// Save vars used by the daily challenge. Days are stored as (RTC day count + 1) so 0 means "never".
+#define VAR_DAILY_INTRO_DONE  VAR_UNUSED_0x404E
+#define VAR_DAILY_OPPONENT    VAR_UNUSED_0x4083
+#define VAR_DAILY_DRAFT_ROUND VAR_UNUSED_0x408B
+#define VAR_DAILY_DRAFT_DAY   VAR_UNUSED_0x4091
+#define VAR_DAILY_WON_DAY     VAR_UNUSED_0x409B
+#define VAR_DAILY_STREAK      VAR_UNUSED_0x409D
+#define VAR_DAILY_BEST_SCORE  VAR_UNUSED_0x40A1
+#define VAR_DAILY_BEST_DAY    VAR_UNUSED_0x40A8
+#define VAR_DAILY_DOUBLES     VAR_UNUSED_0x40B8 // TRUE when today's battle is a double battle
+
+// One day in DOUBLES_DAY_PERIOD is a double battle, picked by the daily seed.
+#define DOUBLES_DAY_PERIOD 3
+
+// VAR_FRONTIER_FACILITY value while the party menu picks the daily battle's leads.
+#define FACILITY_DAILY_LEADS 0xFD
+
+#define FLAG_DAILY_NO_WHITEOUT FLAG_UNUSED_0x020
+
+#endif // GUARD_CONSTANTS_DAILY_BATTLE_H
