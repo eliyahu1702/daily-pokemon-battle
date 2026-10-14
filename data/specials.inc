@@ -648,4 +648,6 @@ gSpecials::
 	def_special DailyDraft_Pick
 	def_special DailyDraft_OpenPicker, waitstate=1
 	def_special DailyBattle_RecordResult
+	def_special DailyBattle_IsDoubles
+	def_special DailyBattle_ChooseLeads, waitstate=1
 	def_special DailyBattle_ShowResults, waitstate=1

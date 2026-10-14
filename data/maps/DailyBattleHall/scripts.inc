@@ -29,6 +29,7 @@ DailyBattleHall_EventScript_Challenge::
 	special DailyBattle_Setup
 	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_AlreadyWon
 	msgbox DailyBattleHall_Text_TodaysOpponent, MSGBOX_DEFAULT
+	call DailyBattleHall_EventScript_AnnounceFormat
 	special DailyDraft_HasTodaysTeam
 	goto_if_eq VAR_RESULT, FALSE, DailyBattleHall_EventScript_Draft
 	msgbox DailyBattleHall_Text_KeepTeam, MSGBOX_YESNO
@@ -42,6 +43,16 @@ DailyBattleHall_EventScript_AlreadyWon::
 	special DailyDraft_HasTodaysTeam
 	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_Battle
 	goto DailyBattleHall_EventScript_Draft
+
+DailyBattleHall_EventScript_AnnounceFormat::
+	special DailyBattle_IsDoubles
+	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_AnnounceDoubles
+	msgbox DailyBattleHall_Text_SinglesDay, MSGBOX_DEFAULT
+	return
+
+DailyBattleHall_EventScript_AnnounceDoubles::
+	msgbox DailyBattleHall_Text_DoublesDay, MSGBOX_DEFAULT
+	return
 
 DailyBattleHall_EventScript_ComeBackTomorrow::
 	msgbox DailyBattleHall_Text_ComeBackTomorrow, MSGBOX_DEFAULT
@@ -66,6 +77,16 @@ DailyBattleHall_EventScript_Battle::
 	special HealPlayerParty
 	setflag FLAG_DAILY_NO_WHITEOUT
 	cleartrainerflag TRAINER_DAILY
+	special DailyBattle_Setup
+	special DailyBattle_IsDoubles
+	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_ChooseTwoLeads
+	msgbox DailyBattleHall_Text_ChooseLead, MSGBOX_DEFAULT
+	goto DailyBattleHall_EventScript_ChooseLeads
+DailyBattleHall_EventScript_ChooseTwoLeads::
+	msgbox DailyBattleHall_Text_ChooseTwoLeads, MSGBOX_DEFAULT
+DailyBattleHall_EventScript_ChooseLeads::
+	closemessage
+	special DailyBattle_ChooseLeads
 	special DailyBattle_Setup
 	msgbox DailyBattleHall_Text_HereTheyCome, MSGBOX_DEFAULT
 	closemessage
@@ -101,6 +122,24 @@ DailyBattleHall_Text_TodaysOpponent:
 	.string "Today's opponent is {STR_VAR_2}\n"
 	.string "{STR_VAR_1}!\p"
 	.string "{STR_VAR_3}$"
+
+DailyBattleHall_Text_SinglesDay:
+	.string "Today is a SINGLE BATTLE, six on six.$"
+
+DailyBattleHall_Text_DoublesDay:
+	.string "Today is a DOUBLE BATTLE!\n"
+	.string "Two POKéMON on each side at once.\p"
+	.string "The draft brings sets built for\n"
+	.string "doubles: Protect, Fake Out, spread\l"
+	.string "moves and support.$"
+
+DailyBattleHall_Text_ChooseLead:
+	.string "Pick the POKéMON that leads off.\n"
+	.string "The rest follow in party order.$"
+
+DailyBattleHall_Text_ChooseTwoLeads:
+	.string "Pick the two POKéMON that lead off.\n"
+	.string "The rest follow in party order.$"
 
 DailyBattleHall_Text_KeepTeam:
 	.string "You already drafted a team today.\n"

@@ -16,11 +16,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def script(days_ahead):
     s = ["clockdays %d" % days_ahead, "wait 600", "press START", "wait 120", "press START", "wait 60",
          "press A", "wait 60"]
-    for i in range(119):
+    for i in range(121):
         s += ["press A", "wait 20"]
         if i == 109:
             s.append("shot opponent")
-    s += ["wait 180", "press B", "wait 30", "shot draft"]
+    # Doubles days have two more intro pages; on singles days the spare presses open the
+    # picker's summary, which the B presses back out of.
+    s += ["wait 180", "press B", "wait 60", "press B", "wait 60", "press B", "wait 30", "shot draft"]
     return "\n".join(s) + "\n"
 
 

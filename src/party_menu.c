@@ -70,6 +70,7 @@
 #include "union_room.h"
 #include "window.h"
 #include "constants/battle.h"
+#include "constants/daily_battle.h"
 #include "constants/battle_frontier.h"
 #include "constants/field_effects.h"
 #include "constants/field_move.h"
@@ -7325,6 +7326,7 @@ static bool8 GetBattleEntryEligibility(struct Pokemon *mon)
             return TRUE;
         return FALSE;
     case FACILITY_UNION_ROOM:
+    case FACILITY_DAILY_LEADS:
         return TRUE;
     default: // Battle Frontier
         species = GetMonData(mon, MON_DATA_SPECIES);
@@ -7352,7 +7354,7 @@ static u8 CheckBattleEntriesAndGetMessage(void)
     }
 
     facility = VarGet(VAR_FRONTIER_FACILITY);
-    if (facility == FACILITY_UNION_ROOM || facility == FACILITY_MULTI_OR_EREADER)
+    if (facility == FACILITY_UNION_ROOM || facility == FACILITY_MULTI_OR_EREADER || facility == FACILITY_DAILY_LEADS)
         return 0xFF;
 
     maxBattlers = GetMaxBattleEntries();
@@ -7445,6 +7447,8 @@ static u8 GetBattleEntryLevelCap(void)
         return MAX_LEVEL;
     case FACILITY_UNION_ROOM:
         return UNION_ROOM_MAX_LEVEL;
+    case FACILITY_DAILY_LEADS:
+        return MAX_LEVEL;
     default: // Battle Frontier
         if (gSpecialVar_0x8004 == FRONTIER_LVL_50)
             return FRONTIER_MAX_LEVEL_50;
@@ -7456,6 +7460,8 @@ static const u8 *GetFacilityCancelString(void)
 {
     u8 facilityNum = VarGet(VAR_FRONTIER_FACILITY);
 
+    if (facilityNum == FACILITY_DAILY_LEADS)
+        return gText_Cancel2;
     if (!(facilityNum != FACILITY_UNION_ROOM && facilityNum != FACILITY_MULTI_OR_EREADER))
         return gText_CancelBattle;
     else if (facilityNum == FRONTIER_FACILITY_DOME && gSpecialVar_0x8005 == 2)

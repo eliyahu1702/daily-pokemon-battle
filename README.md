@@ -5,7 +5,9 @@ A Pokémon Emerald romhack built around a daily challenge: draft a team of six, 
 ## How it plays
 
 - **Start a new game** and you go straight to the Daily Battle Hall.
-- **Draft six Pokémon** on a Battle Factory style screen. Each round shows three Pokémon side by side with their held item and ability; move the cursor to compare them, open SUMMARY for moves and stats, and PICK one. Every option comes with a real competitive build (moves, item, ability, nature, EVs) taken from Smogon.
+- **Singles or doubles.** About one day in three is a double battle. The hall tells you which before the draft starts.
+- **Draft six Pokémon** on a Battle Factory style screen. Each round shows three Pokémon side by side with their held item and ability; move the cursor to compare them, open SUMMARY for moves and stats, and PICK one. Every option comes with a real competitive build (moves, item, ability, nature, EVs). Each Pokémon has three or four builds and the day decides which one shows up. On doubles days the builds are doubles builds: Protect, spread moves, Fake Out, redirection and doubles items.
+- **Choose your leads.** Before the battle you pick the Pokémon that lead off (two on doubles days); the rest follow in draft order.
 - **Fight today's opponent.** There are 178 of them, all running competitive sets with the expansion's smartest battle AI:
   - 92 gym leaders and Elite Four members from Kanto to Paldea, each with a monotype team.
   - Champions (Red, Blue, Lance, Steven, Wallace, Cynthia, Alder, Iris, Diantha, Kukui, Leon, Geeta, Nemona, Kieran), villains (Giovanni, Archie, Maxie, Cyrus, Ghetsis, N, Lysandre, Guzma, Lusamine, Rose, Volo), rivals (Silver, Wally, Hop, Arven, Penny) and the Frontier Brains, each with their signature team plus a variation.
@@ -32,6 +34,6 @@ This produces `pokeemerald.gba`. Play it in any GBA emulator with real-time cloc
 - `src/battle_factory_screen.c`: the draft picker (a daily mode of the Battle Factory rental screen).
 - `src/daily_results_screen.c`: the results screen and score.
 - `data/maps/DailyBattleHall/`: the hall map and its script.
-- `tools/daily/`: the generator that builds the draft pool and opponent teams from Smogon data, and a headless playtest driver. See [tools/daily/README.md](tools/daily/README.md).
+- `tools/daily/`: the generator that builds the draft pool and opponent teams from Smogon and Showdown data, and a headless playtest driver. See [tools/daily/README.md](tools/daily/README.md).
 
 The expansion's original README is in [docs/EXPANSION_README.md](docs/EXPANSION_README.md).

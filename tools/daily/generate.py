@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Generate the draft pool and daily opponent teams from Smogon set data.
 
+Every draft Pokémon gets several sets for singles days and several for doubles days; the
+game picks one per day. Every opponent gets a singles team and a doubles team.
+
 Inputs (see tools/daily/README.md for how to refresh them):
   tools/daily/data/dex.json   species info exported from @pkmn/dex
   tools/daily/data/sets.json  trimmed Smogon sets (built by --refresh from a pkmn/smogon checkout)
+  tools/daily/data/randbats_singles.json, randbats_doubles.json
+                              Showdown's gen 9 random battle roles, from pkmn/randbats
 
 Outputs (Showdown-format party files consumed by tools/trainerproc):
   src/data/draft_pool.party
@@ -22,9 +27,12 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 from leaders import LEADERS  # noqa: E402
 from opponents import COMPETITIVE, CUSTOM_SETS, SIGNATURE  # noqa: E402
+import setsource  # noqa: E402
 
 LEVEL = 100
 DRAFT_CHUNK_SIZE = 200
+MIN_DRAFT_SETS = 3  # a Pokémon needs this many sets in a format to be drafted in it
+MAX_DRAFT_SETS = 4
 
 # Smogon formats to take sets from, best first. The draft prefers standard singles
 # tiers; opponents prefer monotype sets, which are written for exactly this situation.
@@ -32,7 +40,10 @@ DRAFT_FORMATS = ["ou", "uu", "ru", "nu", "pu", "zu", "nationaldex", "nationaldex
                  "nationaldexru", "monotype", "nationaldexmonotype", "battlestadiumsingles", "1v1"]
 OPPONENT_FORMATS = ["monotype", "nationaldexmonotype", "ou", "nationaldex", "uu", "ru",
                     "nationaldexuu", "nationaldexru", "nu", "pu", "zu", "battlestadiumsingles", "1v1"]
+DOUBLES_FORMATS = ["doublesou", "vgc2025", "vgc2024", "vgc2023", "nationaldexdoubles", "battlestadiumdoubles",
+                   "vgc2022", "vgc2021", "vgc2020", "2v2doubles"]
 OLD_GENS = ["gen8", "gen7"]
+MODES = ["singles", "doubles"]
 
 BANNED_ITEMS = {"Eviolite", "Light Ball", "Thick Club", "Leek", "Stick"}
 # Opponents may use the species-specific items, since their teams include canon NFE aces.
@@ -188,45 +199,77 @@ def needs_weather(s):
     return s["ability"] in WEATHER_ABILITIES or bool(WEATHER_MOVES & set(s["moves"]))
 
 
-def all_sets(R, dex, sets_by_gen, species, formats, banned_items=BANNED_ITEMS, weather=False):
-    """Every valid set for a species, best format first, four-move sets ahead of the rest.
-    Without `weather`, sets that rely on a weather setter come after the others."""
-    full, partial, seen = [], [], set()
-    for gen in ["gen9"] + OLD_GENS:
-        entry = sets_by_gen.get(gen, {}).get(species)
-        if not entry:
-            continue
-        for fmt in [f for f in formats if f in entry]:
-            for set_name, raw in entry[fmt].items():
-                s = build_set(R, dex, species, raw, banned_items)
-                if not s:
-                    continue
-                key = (s["item"], s["ability"], tuple(sorted(s["moves"])))
-                if key in seen:
-                    continue
-                seen.add(key)
-                s["source"] = "%s%s: %s" % (gen, fmt, set_name)
-                (full if len(s["moves"]) == 4 else partial).append(s)
-    if species in CUSTOM_SETS:
-        s = build_set(R, dex, species, CUSTOM_SETS[species], banned_items)
-        if s:
-            s["source"] = "custom"
-            full.append(s)
-    sets = full or partial
-    if not weather:
-        sets = [x for x in sets if not needs_weather(x)] + [x for x in sets if needs_weather(x)]
-    return sets
+class SetSource:
+    """Every set the generator can use, by species and format (singles or doubles)."""
+
+    def __init__(self, R, dex, sets_by_gen):
+        self.R, self.dex, self.sets_by_gen = R, dex, sets_by_gen
+        self.randbats = {m: json.load(open(os.path.join(HERE, "data", "randbats_%s.json" % m))) for m in MODES}
+        self.base_stats = setsource.load_base_stats(ROOT)
+        self.move_info = setsource.load_move_info(ROOT)
+        self.cache = {}
+
+    def smogon(self, species, formats, banned_items):
+        full, partial = [], []
+        for gen in ["gen9"] + OLD_GENS:
+            entry = self.sets_by_gen.get(gen, {}).get(species)
+            if not entry:
+                continue
+            for fmt in [f for f in formats if f in entry]:
+                for set_name, raw in entry[fmt].items():
+                    s = build_set(self.R, self.dex, species, raw, banned_items)
+                    if s:
+                        s["source"] = "%s%s: %s" % (gen, fmt, set_name)
+                        (full if len(s["moves"]) == 4 else partial).append(s)
+        if species in CUSTOM_SETS:
+            s = build_set(self.R, self.dex, species, CUSTOM_SETS[species], banned_items)
+            if s:
+                s["source"] = "custom"
+                full.append(s)
+        return full + partial
+
+    def all(self, species, formats, banned_items=BANNED_ITEMS, weather=False, mode="singles"):
+        """Every distinct set, best source first: Smogon analyses, then random battle roles,
+        and for doubles, singles sets adapted with Protect as a last resort. Without
+        `weather`, sets that rely on a weather setter come after the others."""
+        key = (species, tuple(formats), tuple(sorted(banned_items)), weather, mode)
+        if key in self.cache:
+            return self.cache[key]
+        if mode == "doubles":
+            found = self.smogon(species, DOUBLES_FORMATS, banned_items)
+        else:
+            found = self.smogon(species, formats, banned_items)
+        found += setsource.randbats_sets(self.R, self.dex, self.randbats[mode], species, self.base_stats,
+                                         self.move_info, banned_items, BANNED_MOVES)
+        if mode == "doubles":
+            found += [setsource.doublesify(x) for x in self.all(species, formats, banned_items, weather)]
+        sets, seen = [], set()
+        for x in found:
+            k = (x["item"], x["ability"], tuple(sorted(x["moves"])))
+            if k not in seen:
+                seen.add(k)
+                sets.append(x)
+        full = [x for x in sets if len(x["moves"]) == 4]
+        sets = full or sets
+        if not weather:
+            sets = [x for x in sets if not needs_weather(x)] + [x for x in sets if needs_weather(x)]
+        self.cache[key] = sets
+        return sets
+
+    def real_doubles(self, species, formats=(), banned_items=BANNED_ITEMS):
+        """Doubles sets written for doubles, not adapted from singles."""
+        return [x for x in self.all(species, formats, banned_items, mode="doubles")
+                if not x["source"].endswith("(doubles)")]
 
 
-def pick_set(R, dex, sets_by_gen, species, formats, variant=0, banned_items=BANNED_ITEMS,
-             weather=False, move=None):
+def pick_set(S, species, formats, variant=0, banned_items=BANNED_ITEMS, weather=False, move=None, mode="singles"):
     """The best set, or for variant n the n-th distinct one (wrapping around). With `move`,
     prefer a set that has it, and otherwise put it in the last slot."""
-    sets = all_sets(R, dex, sets_by_gen, species, formats, banned_items, weather)
+    sets = S.all(species, formats, banned_items, weather, mode)
     if not sets:
         return None
     if move:
-        c = R.move(move)
+        c = S.R.move(move)
         with_move = [x for x in sets if c in x["moves"]]
         if with_move:
             return with_move[0]
@@ -293,29 +336,41 @@ def stable_hash(text):
 TIER_RANK = {t: i for i, t in enumerate(["OU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU"])}
 
 
-def build_draft(R, dex, sets_by_gen):
-    pool = []
+def draft_key(dex, name, species):
+    # Forms that share a name (Silvally) would look like duplicates in the draft menu; Rotom
+    # stays split since its forms have different names.
+    info = dex[name]
+    if not info["forme"] or info["base"] in ("Silvally", "Arceus", "Genesect", "Oricorio", "Urshifu",
+                                             "Toxtricity", "Gourgeist", "Lycanroc"):
+        return info["base"]
+    return species
+
+
+def build_draft(S, dex, mode):
+    """The draft pool for one format: a list of (species name, [sets]) with at least
+    MIN_DRAFT_SETS sets each."""
+    pool, seen = [], set()
     for name, info in sorted(dex.items(), key=lambda kv: (kv[1]["num"], kv[0])):
-        if not eligible(info):
+        # Doubles also takes Pokémon that only shine there (Indeedee, Amoonguss in any tier).
+        if not eligible(info) and not (mode == "doubles" and legal(info)
+                                       and S.smogon(name, DOUBLES_FORMATS, BANNED_ITEMS)):
             continue
-        s = pick_set(R, dex, sets_by_gen, name, DRAFT_FORMATS)
-        if s:
-            s["types"] = info["types"]
-            pool.append(s)
-    # One entry per species: forms that share a name (Silvally, Rotom stays split since its
-    # forms have different names) would look like duplicates in the draft menu.
-    seen, out = set(), []
-    for s in pool:
-        info = dex[s["name"]]
-        key = info["base"] if not info["forme"] or info["base"] in ("Silvally", "Arceus", "Genesect", "Oricorio", "Urshifu", "Toxtricity", "Gourgeist", "Lycanroc") else s["species"]
-        if key not in seen and s["species"] not in seen:
-            seen.add(key)
-            seen.add(s["species"])
-            out.append(s)
-    return out
+        sets = S.all(name, DRAFT_FORMATS, mode=mode)
+        if mode == "doubles":
+            # Adapted singles sets only top a Pokémon up to the minimum.
+            real = S.real_doubles(name)[:MAX_DRAFT_SETS]
+            sets = real + [x for x in sets if x["source"].endswith("(doubles)")][:max(0, MIN_DRAFT_SETS - len(real))]
+        if len(sets) < MIN_DRAFT_SETS:
+            continue
+        key = draft_key(dex, name, sets[0]["species"])
+        if key in seen or sets[0]["species"] in seen:
+            continue
+        seen.update((key, sets[0]["species"]))
+        pool.append((name, sets[:MAX_DRAFT_SETS]))
+    return pool
 
 
-def build_leader_team(R, dex, sets_by_gen, leader):
+def build_leader_team(S, dex, leader, mode):
     key, name, title, typ, pic, signature = leader
     team, used_base = [], set()
 
@@ -325,7 +380,7 @@ def build_leader_team(R, dex, sets_by_gen, leader):
             return
         if not eligible(info, deep=True):
             return
-        s = pick_set(R, dex, sets_by_gen, species, OPPONENT_FORMATS)
+        s = pick_set(S, species, OPPONENT_FORMATS, mode=mode)
         if s:
             team.append(s)
             used_base.add(info["base"])
@@ -335,8 +390,9 @@ def build_leader_team(R, dex, sets_by_gen, leader):
             try_add(sp)
     # Fill with the strongest mons of the type, shuffled per leader so teams differ.
     candidates = [n for n, i in dex.items() if typ in i["types"]]
-    candidates.sort(key=lambda n: (TIER_RANK.get(tier_of(dex[n]), 99),
-                                   stable_hash(key + n)))
+    # In doubles, Pokémon with real doubles sets go first.
+    candidates.sort(key=lambda n: (mode == "doubles" and not S.real_doubles(n),
+                                   TIER_RANK.get(tier_of(dex[n]), 99), stable_hash(key + n)))
     for sp in candidates:
         if len(team) >= 6:
             break
@@ -344,7 +400,7 @@ def build_leader_team(R, dex, sets_by_gen, leader):
     return team
 
 
-def build_signature_team(R, dex, sets_by_gen, entry, variant):
+def build_signature_team(S, dex, entry, variant, mode):
     """Variant 0 is the first six of the pool; later variants keep the ace and draw the rest
     from the whole pool, with alternate sets."""
     key, name, cls, pic, theme, variants, pool = entry
@@ -360,7 +416,7 @@ def build_signature_team(R, dex, sets_by_gen, entry, variant):
             break
         if dex[sp]["base"] in used_base:
             continue
-        s = pick_set(R, dex, sets_by_gen, sp, OPPONENT_FORMATS, variant, OPPONENT_BANNED_ITEMS)
+        s = pick_set(S, sp, OPPONENT_FORMATS, variant, OPPONENT_BANNED_ITEMS, mode=mode)
         if s:
             team.append(s)
             used_base.add(dex[sp]["base"])
@@ -369,14 +425,14 @@ def build_signature_team(R, dex, sets_by_gen, entry, variant):
     return team
 
 
-def build_fixed_team(R, dex, sets_by_gen, key, species):
+def build_fixed_team(S, dex, key, species, mode):
     """`species` entries are names, optionally "Name:Move" to require a move (a Trick Room
     setter, say)."""
     team = []
     for entry in species:
         sp, _, move = entry.partition(":")
-        s = sp in dex and pick_set(R, dex, sets_by_gen, sp, ARCHETYPE_FORMATS, 0, OPPONENT_BANNED_ITEMS,
-                                   weather=True, move=move or None)
+        s = sp in dex and pick_set(S, sp, ARCHETYPE_FORMATS, 0, OPPONENT_BANNED_ITEMS,
+                                   weather=True, move=move or None, mode=mode)
         if s:
             team.append(s)
         else:
@@ -394,12 +450,12 @@ ARCHETYPE_FORMATS = ["ou", "nationaldex", "uu", "nationaldexuu", "ru", "national
                      "monotype", "nationaldexmonotype", "battlestadiumsingles", "pu", "zu", "1v1"]
 
 
-def all_opponents(R, dex, sets_by_gen):
-    """Every daily opponent: dicts with key, name, class, pic, music, theme and team."""
+def all_opponents(S, dex, mode):
+    """Every daily opponent in one format: dicts with key, name, class, pic, music, theme and team."""
     opponents = []
     for leader in LEADERS:
         key, name, title, typ, pic, _ = leader
-        team = build_leader_team(R, dex, sets_by_gen, leader)
+        team = build_leader_team(S, dex, leader, mode)
         if len(team) < 6:
             print("warning: %s only has %d %s mons" % (key, len(team), typ), file=sys.stderr)
         opponents.append({"key": key, "name": name, "class": title, "pic": pic,
@@ -409,19 +465,21 @@ def all_opponents(R, dex, sets_by_gen):
     for entry in SIGNATURE:
         key, name, cls, pic, theme, variants, _ = entry
         for v in range(variants):
-            team = build_signature_team(R, dex, sets_by_gen, entry, v)
+            team = build_signature_team(S, dex, entry, v, mode)
             opponents.append({"key": "%s_%d" % (key, v + 1), "name": name, "class": cls, "pic": pic,
                               "music": "Elite Four", "theme": theme,
                               "kind": "signature" if v == 0 else "variant", "team": team})
     for key, name, cls, pic, theme, species in COMPETITIVE:
         opponents.append({"key": key, "name": name, "class": cls, "pic": pic, "music": "Intense",
                           "theme": theme, "kind": "archetype",
-                          "team": build_fixed_team(R, dex, sets_by_gen, key, species)})
+                          "team": build_fixed_team(S, dex, key, species, mode)})
     for o in opponents:
         assert len(o["name"]) <= 10, o["name"]
         if len(o["team"]) < 6:
             print("warning: %s has only %d mons" % (o["key"], len(o["team"])), file=sys.stderr)
     return opponents
+
+
 AI = "Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention"
 
 
@@ -437,64 +495,95 @@ def main():
         sets_by_gen = {}
         for gen in ["gen9"] + OLD_GENS:
             full = json.load(open(os.path.join(args.refresh, gen + ".json")))
-            keep = set(DRAFT_FORMATS) | set(OPPONENT_FORMATS)
+            keep = set(DRAFT_FORMATS) | set(OPPONENT_FORMATS) | set(DOUBLES_FORMATS)
             sets_by_gen[gen] = {sp: {f: v for f, v in fm.items() if f in keep} for sp, fm in full.items()}
             sets_by_gen[gen] = {sp: fm for sp, fm in sets_by_gen[gen].items() if fm}
         json.dump(sets_by_gen, open(sets_path, "w"), separators=(",", ":"), sort_keys=True)
     sets_by_gen = json.load(open(sets_path))
 
     R = Resolver()
-    draft = build_draft(R, dex, sets_by_gen)
+    S = SetSource(R, dex, sets_by_gen)
+    report = []
 
-    # trainerproc caps a party at 255 mons, so the pool is split into chunks.
-    out = ["/* Generated by tools/daily/generate.py from Smogon sets. Do not edit by hand. */", ""]
-    chunks = [draft[i:i + DRAFT_CHUNK_SIZE] for i in range(0, len(draft), DRAFT_CHUNK_SIZE)]
+    # The draft pool: each format's Pokémon with their sets, back to back. trainerproc caps a
+    # party at 255 mons, so the sets are split into chunks.
+    pools = {mode: build_draft(S, dex, mode) for mode in MODES}
+    flat, tables = [], {}
+    for mode in MODES:
+        first, counts = [], []
+        for name, sets in pools[mode]:
+            first.append(len(flat))
+            counts.append(len(sets))
+            flat += sets
+        tables[mode] = (first, counts)
+        report.append("Draft pool, %s: %d Pokémon, %d sets\n%s\n" % (
+            mode, len(pools[mode]), sum(counts), ", ".join("%s (%d)" % (n, len(x)) for n, x in pools[mode])))
+    out = ["/* Generated by tools/daily/generate.py. Do not edit by hand. */", ""]
+    chunks = [flat[i:i + DRAFT_CHUNK_SIZE] for i in range(0, len(flat), DRAFT_CHUNK_SIZE)]
     for n, chunk in enumerate(chunks):
         out += ["=== DRAFT_POOL_%d ===" % n, "Name: Draft", "Class: Pkmn Trainer 1",
                 "Pic: Cooltrainer M", "Party Size: 6", ""]
-        for s in chunk:
-            out.append("/* %s (%s) */" % (s["name"], s["source"]))
-            out.append(party_text(s))
+        for x in chunk:
+            out.append("/* %s (%s) */" % (x["name"], x["source"]))
+            out.append(party_text(x))
             out.append("")
     open(os.path.join(ROOT, "src", "data", "draft_pool.party"), "w").write("\n".join(out))
 
-    tout = ["/* Generated by tools/daily/generate.py from Smogon sets. Do not edit by hand. */", ""]
-    report = []
-    opponents = all_opponents(R, dex, sets_by_gen)
-    for o in opponents:
-        tout += ["=== DAILY_TRAINER_%s ===" % o["key"], "Name: %s" % o["name"], "Class: %s" % o["class"],
-                 "Pic: %s" % o["pic"], "Music: %s" % o["music"], "AI: %s" % AI, ""]
-        for s in o["team"]:
-            tout.append("/* %s (%s) */" % (s["name"], s["source"]))
-            tout.append(party_text(s))
+    # Opponents: every singles team, then every doubles team in the same order.
+    tout = ["/* Generated by tools/daily/generate.py. Do not edit by hand. */", ""]
+    opponents = {mode: all_opponents(S, dex, mode) for mode in MODES}
+    for mode in MODES:
+        report.append("Opponents, %s:" % mode)
+        for o in opponents[mode]:
+            tout += ["=== DAILY_TRAINER_%s%s ===" % (o["key"], "_DOUBLES" if mode == "doubles" else ""),
+                     "Name: %s" % o["name"], "Class: %s" % o["class"], "Pic: %s" % o["pic"],
+                     "Music: %s" % o["music"], "AI: %s" % AI]
+            if mode == "doubles":
+                tout.append("Battle Type: Doubles")
             tout.append("")
-        report.append("%-12s %-10s %-9s %s" % (o["key"], o["class"][:10], o["kind"][:9],
-                                               ", ".join(s["name"] for s in o["team"])))
+            for x in o["team"]:
+                tout.append("/* %s (%s) */" % (x["name"], x["source"]))
+                tout.append(party_text(x))
+                tout.append("")
+            report.append("%-12s %-10s %-9s %s" % (o["key"], o["class"][:10], o["kind"][:9],
+                                                   ", ".join(x["name"] for x in o["team"])))
+        report.append("")
     open(os.path.join(ROOT, "src", "data", "daily_trainers.party"), "w").write("\n".join(tout))
 
+    singles = opponents["singles"]
     hdr = ["// Generated by tools/daily/generate.py. Do not edit by hand.",
            "#ifndef GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H",
            "#define GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H", "",
+           "// Daily opponents. Each has a singles team at its id and a doubles team at",
+           "// id + DAILY_TRAINERS_COUNT.",
            "enum DailyTrainerId", "{"]
-    hdr += ["    DAILY_TRAINER_%s," % o["key"] for o in opponents]
-    hdr += ["    DAILY_TRAINERS_COUNT", "};", "",
+    hdr += ["    DAILY_TRAINER_%s," % o["key"] for o in singles]
+    hdr += ["    DAILY_TRAINERS_COUNT", "};", ""]
+    hdr += ["#define DAILY_TRAINER_%s_DOUBLES (DAILY_TRAINER_%s + DAILY_TRAINERS_COUNT)" % (o["key"], o["key"])
+            for o in singles]
+    hdr += ["",
             "// The line shown under each opponent's name before the battle, indexed by DailyTrainerId.",
             "#define DAILY_TRAINER_THEMES { \\"]
-    hdr += ["    COMPOUND_STRING(\"%s\"), \\" % o["theme"] for o in opponents]
+    hdr += ["    COMPOUND_STRING(\"%s\"), \\" % o["theme"] for o in singles]
     hdr += ["}", "",
             "enum DraftPoolChunk", "{"] + ["    DRAFT_POOL_%d," % n for n in range(len(chunks))] + [
             "    DRAFT_POOL_CHUNKS", "};", "",
-            "#define DRAFT_POOL_SIZE %d" % len(draft),
-            "#define DRAFT_POOL_CHUNK_SIZE %d" % DRAFT_CHUNK_SIZE, "",
-            "#endif // GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H", ""]
+            "#define DRAFT_POOL_CHUNK_SIZE %d" % DRAFT_CHUNK_SIZE, ""]
+    for mode in MODES:
+        first, counts = tables[mode]
+        up = mode.upper()
+        hdr += ["// %s draft: Pokémon n's sets are pool entries FIRST[n] .. FIRST[n] + SETS[n] - 1." % mode.capitalize(),
+                "#define DRAFT_%s_SPECIES_COUNT %d" % (up, len(first)),
+                "#define DRAFT_%s_FIRST_SET { %s }" % (up, ", ".join(map(str, first))),
+                "#define DRAFT_%s_SET_COUNT { %s }" % (up, ", ".join(map(str, counts))), ""]
+    hdr += ["#endif // GUARD_CONSTANTS_DAILY_BATTLE_GENERATED_H", ""]
     open(os.path.join(ROOT, "include", "constants", "daily_battle_generated.h"), "w").write("\n".join(hdr))
 
-    open(os.path.join(HERE, "data", "report.txt"), "w").write(
-        "Draft pool: %d mons\n%s\n\nOpponents:\n%s\n" % (
-            len(draft), ", ".join(s["name"] for s in draft), "\n".join(report)))
+    open(os.path.join(HERE, "data", "report.txt"), "w").write("\n".join(report))
     for kind, names in sorted(R.misses.items()):
         print("unresolved %s: %s" % (kind, ", ".join(sorted(names))), file=sys.stderr)
-    print("draft pool: %d, opponents: %d" % (len(draft), len(opponents)))
+    print("draft: %s; opponents: %d per format" % (
+        ", ".join("%s %d Pokémon / %d sets" % (m, len(pools[m]), sum(tables[m][1])) for m in MODES), len(singles)))
 
 
 if __name__ == "__main__":
