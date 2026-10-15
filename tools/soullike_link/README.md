@@ -32,6 +32,8 @@ You need mGBA 0.10 or newer on both computers (scripting was added in 0.10).
 
 3. **Both players load the game and the script.** Open the ROM in mGBA, then go to **Tools > Scripting**, and in that window **File > Load script** and pick `bridge.lua`. The scripting window shows when you've joined the room and when your partner arrives.
 
+Loading the script again (for example after editing it) replaces the copy that is already running, so it won't take up a second place in the room.
+
 To check the link in-game (debug builds): hold **R** and press **Start** in the overworld, then pick **Soullike Link**. It shows the connection, the ping to your partner and today's Daily Run date.
 
 ## Testing

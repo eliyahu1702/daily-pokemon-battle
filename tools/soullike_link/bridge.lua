@@ -41,6 +41,12 @@ local EWRAM_START, EWRAM_SIZE = 0x02000000, 0x40000
 local RECONNECT_FRAMES = 180
 local RESCAN_FRAMES = 60
 
+-- Loading the script again in mGBA keeps the old copy running, which
+-- would join the room a second time and fill it. Shut the old copy down.
+if SoullikeBridge and SoullikeBridge.shutdown then
+	SoullikeBridge.shutdown()
+end
+
 local bridge = {
 	sock = nil,
 	buffer = "",
@@ -252,6 +258,17 @@ local function onFrame()
 	pumpIncoming()
 end
 
-callbacks:add("frame", onFrame)
-callbacks:add("stop", function() disconnect("emulation stopped") end)
+local callbackIds = {
+	callbacks:add("frame", onFrame),
+	callbacks:add("stop", function() disconnect("emulation stopped") end),
+}
+
+function bridge.shutdown()
+	for _, id in ipairs(callbackIds) do
+		callbacks:remove(id)
+	end
+	disconnect("script reloaded")
+	bridge.retryIn = math.huge
+end
+
 log("Bridge loaded. Room: " .. ROOM)

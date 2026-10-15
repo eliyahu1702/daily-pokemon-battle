@@ -41,10 +41,13 @@ def main():
             config = os.path.join(tmp, "config.lua")
             with open(config, "w") as f:
                 f.write(f'RELAY_HOST = "127.0.0.1"\nRELAY_PORT = {port}\nROOM = "e2e"\n')
-            for _ in range(2):
+            bridge = os.path.join(LINK_DIR, "bridge.lua")
+            for i in range(2):
+                # Player 1 loads the bridge twice, like loading the script again in
+                # mGBA; the second copy must replace the first, not take a second slot.
+                scripts = [bridge, bridge] if i == 0 else [bridge]
                 players.append(subprocess.Popen(
-                    [args.harness, args.rom, str(args.frames), config,
-                     os.path.join(LINK_DIR, "bridge.lua"), os.path.join(HERE, "report.lua")],
+                    [args.harness, args.rom, str(args.frames), config, *scripts, os.path.join(HERE, "report.lua")],
                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True))
             outputs = [p.communicate(timeout=args.frames / 10 + 60)[0] for p in players]
     finally:
