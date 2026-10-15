@@ -336,6 +336,15 @@ Debug_ShowExpansionVersion::
 Debug_ExpansionVersion:
 	.string "pokeemerald-expansion {STR_VAR_1}$"
 
+Debug_SoullikeLinkStatus::
+	callnative SoullikeLink_BufferDebugStatus
+	msgbox Debug_SoullikeLinkStatusText, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_SoullikeLinkStatusText:
+	.string "Link: {STR_VAR_1}\nPing: {STR_VAR_2} frames\pDaily Run date: {STR_VAR_3}$"
+
 Debug_Follower_NPC_Not_Enabled::
 	msgbox Debug_Enable_To_Use_Follower_NPCs, MSGBOX_DEFAULT
 	release

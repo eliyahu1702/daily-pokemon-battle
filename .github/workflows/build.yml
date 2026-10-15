@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  rom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+
+      - name: Build ROM
+        run: make -j$(nproc) -O
+
+      - name: Upload ROM
+        uses: actions/upload-artifact@v4
+        with:
+          name: pokemon-soullike
+          path: pokeemerald.gba
+
+  link:
+    needs: rom
+    runs-on: ubuntu-latest
+    env:
+      MGBA_VERSION: 0.10.5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Relay tests
+        run: python3 -m unittest tools/soullike_link/test_relay.py
+
+      - name: Download ROM
+        uses: actions/download-artifact@v4
+        with:
+          name: pokemon-soullike
+
+      - name: Install mGBA build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake liblua5.4-dev zlib1g-dev libpng-dev pkg-config
+
+      - name: Cache mGBA
+        id: cache-mgba
+        uses: actions/cache@v4
+        with:
+          path: mgba
+          key: mgba-${{ env.MGBA_VERSION }}-scripting-${{ runner.os }}
+
+      - name: Build mGBA with scripting
+        if: steps.cache-mgba.outputs.cache-hit != 'true'
+        run: tools/soullike_link/e2e/build_mgba.sh mgba "$MGBA_VERSION"
+
+      - name: Two-emulator link test
+        run: |
+          make -C tools/soullike_link/e2e MGBA_DIR=$PWD/mgba
+          python3 tools/soullike_link/e2e/run_e2e.py tools/soullike_link/e2e/harness pokeemerald.gba
