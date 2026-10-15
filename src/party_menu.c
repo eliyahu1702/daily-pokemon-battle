@@ -504,6 +504,10 @@ static void Task_FirstBattleEnterParty_FadeNormal(u8 taskId);
 static void Task_FirstBattleEnterParty_WaitFadeNormal(u8 taskId);
 static u8 CombinedToIndividualPartyId(u8 index);
 static u8 IndividualToCombinedPartyId(u8 index, enum BattlerId battler);
+static bool32 IsMenuBattlerOnRight(void);
+static bool32 IsShowingAllysFullParty(void);
+static bool32 IsAllysMultiSlot(u8 slot);
+static bool32 IsAllysMultiPartyId(u8 partyId);
 
 static const u8 sText_askText[] = _("Would you like to change {STR_VAR_1}'s\nability to {STR_VAR_2}?");
 static const u8 sText_doneText[] = _("{STR_VAR_1}'s ability became\n{STR_VAR_2}!{PAUSE_UNTIL_PRESS}");
@@ -578,6 +582,8 @@ static void LoadBattlePartyCurrentOrderForLayout(void)
 
     if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_PARTNER || gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_SHOWCASE_PARTNER)
         battler = B_BATTLER_2;
+    else if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL)
+        battler = B_BATTLER_0;
 
     if (battler < gBattlersCount) // Including check given recent cases where animations set battlers OOB
         memcpy(gBattlePartyCurrentOrder, gBattleStruct->battlerPartyOrders[battler], sizeof(gBattlePartyCurrentOrder));
@@ -1398,10 +1404,10 @@ static u8 GetPartyBoxPaletteFlags(u8 slot, u8 animNum)
 
 static bool8 PartyBoxPal_ParnterOrDisqualifiedInArena(u8 slot)
 {
-    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_PARTNER || gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_SHOWCASE_PARTNER)
+    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_SHOWCASE_PARTNER || IsShowingAllysFullParty())
         return TRUE;
 
-    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI && (slot == 1 || slot == 4 || slot == 5))
+    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI && IsAllysMultiSlot(slot))
         return TRUE;
 
     if (slot < MULTI_PARTY_SIZE && (gBattleTypeFlags & BATTLE_TYPE_ARENA) && gMain.inBattle && (gBattleStruct->arenaLostPlayerMons >> GetPartyIdFromBattleSlot(slot) & 1))
@@ -1537,7 +1543,12 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
             }
             break;
         case PARTY_ACTION_USE_ITEM:
-            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE && IsAllysMultiSlot(*slotPtr))
+            {
+                // Items used in battle work on the user's own party
+                PlaySE(SE_FAILURE);
+            }
+            else if (IsSelectedMonNotEgg((u8 *)slotPtr))
             {
                 if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE)
                     sPartyMenuInternal->exitCallback = CB2_SetUpExitToBattleScreen;
@@ -1594,7 +1605,7 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
 
             if (GetMonData(&party[partySlot], MON_DATA_HP) > 0
              || GetMonData(&party[partySlot], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG
-             || ((gBattleTypeFlags & BATTLE_TYPE_MULTI) && !AreMultiPartiesFullTeams() && partyId >= (PARTY_SIZE / 2)))
+             || IsAllysMultiPartyId(partyId))
             {
                 // Can't select if egg, alive, or doesn't belong to you
                 PlaySE(SE_FAILURE);
@@ -4854,7 +4865,7 @@ void ItemUseCB_BattleScript(u8 taskId, TaskFunc task)
     }
     else
     {
-        gBattleStruct->itemPartyIndex[gBattlerInMenuId] = GetPartyIdFromBattleSlot(gPartyMenu.slotId);
+        gBattleStruct->itemPartyIndex[gBattlerInMenuId] = CombinedToIndividualPartyId(GetPartyIdFromBattleSlot(gPartyMenu.slotId));
         gPartyMenuUseExitCallback = TRUE;
         PlaySE(SE_SELECT);
         if (!IsItemFlute(gSpecialVar_ItemId))
@@ -5471,7 +5482,7 @@ static void TryUseItemOnMove(u8 taskId)
         }
         else
         {
-            gBattleStruct->itemPartyIndex[gBattlerInMenuId] = GetPartyIdFromBattleSlot(gPartyMenu.slotId);
+            gBattleStruct->itemPartyIndex[gBattlerInMenuId] = CombinedToIndividualPartyId(GetPartyIdFromBattleSlot(gPartyMenu.slotId));
             gBattleStruct->itemMoveIndex[gBattlerInMenuId] = ptr->data1;
             gPartyMenuUseExitCallback = TRUE;
             RemoveBagItem(gSpecialVar_ItemId, 1);
@@ -7484,7 +7495,7 @@ static u8 GetPartyLayoutFromBattleType(void)
     if (IsMultiBattle() == TRUE && !AreMultiPartiesFullTeams())
         return PARTY_LAYOUT_MULTI;
     if (IsMultiBattle() == TRUE && AreMultiPartiesFullTeams())
-        return PARTY_LAYOUT_MULTI_FULL;
+        return IsMenuBattlerOnRight() ? PARTY_LAYOUT_MULTI_FULL_PARTNER : PARTY_LAYOUT_MULTI_FULL;
     if (!IsDoubleBattle() || gPartiesCount[B_TRAINER_PLAYER] == 1) // Draw the single layout in a double battle where the player has only one Pokémon.
         return PARTY_LAYOUT_SINGLE;
     return PARTY_LAYOUT_DOUBLE;
@@ -7517,9 +7528,9 @@ void ChooseMonForInBattleItem(void)
 
 static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon)
 {
-    if (GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_SPECIES) != SPECIES_NONE
+    if (GetMonData(&GetBattlerParty(gBattlerInMenuId)[1], MON_DATA_SPECIES) != SPECIES_NONE
      && GetMonData(mon, MON_DATA_IS_EGG) == FALSE
-     && gPartyMenu.layout != PARTY_LAYOUT_MULTI_FULL_PARTNER)
+     && !IsShowingAllysFullParty())
     {
         if (gPartyMenu.action == PARTY_ACTION_SEND_OUT)
             return ACTIONS_SEND_OUT;
@@ -7541,7 +7552,7 @@ static bool8 TrySwitchInPokemon(void)
     battlePartyId = GetPartyIdFromBattleSlot(slot);
 
     // In a 6v6 multi battle, slots 1, 4, and 5 are the partner's Pokémon
-    if (IsMultiBattle() == TRUE && (slot == 1 || slot == 4 || slot == 5) && !AreMultiPartiesFullTeams())
+    if (IsAllysMultiSlot(slot))
     {
         StringCopy(gStringVar1, GetTrainerPartnerName());
         StringExpandPlaceholders(gStringVar4, gText_CantSwitchWithAlly);
@@ -8606,6 +8617,45 @@ static u8 IndividualToCombinedPartyId(u8 index, enum BattlerId battler)
     if (IsMultiBattle() == TRUE && !AreMultiPartiesFullTeams() && (GetBattlerPosition(battler) & BIT_FLANK))
         return index + MULTI_PARTY_SIZE;
     return index;
+}
+
+// In a multi battle the party menu belongs to the trainer whose battler
+// opened it, and that trainer can only choose their own Pokémon. Usually
+// that's the left trainer, but in a Soullike co-op battle player 2 controls
+// the right battler.
+static bool32 IsMenuBattlerOnRight(void)
+{
+    return gMain.inBattle && (GetBattlerPosition(gBattlerInMenuId) & BIT_FLANK) != 0;
+}
+
+// Full-team multis show one trainer's party at a time (L/R swaps them).
+static bool32 IsShowingAllysFullParty(void)
+{
+    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL)
+        return IsMenuBattlerOnRight();
+    if (gPartyMenu.layout == PARTY_LAYOUT_MULTI_FULL_PARTNER)
+        return !IsMenuBattlerOnRight();
+    return FALSE;
+}
+
+// Half-team multis show both trainers' Pokémon: the left trainer's in slots
+// 0, 2 and 3 and the right trainer's in 1, 4 and 5.
+static bool32 IsAllysMultiSlot(u8 slot)
+{
+    if (IsMultiBattle() != TRUE)
+        return FALSE;
+    if (AreMultiPartiesFullTeams())
+        return IsShowingAllysFullParty();
+    return (slot == 1 || slot == 4 || slot == 5) != IsMenuBattlerOnRight();
+}
+
+static bool32 IsAllysMultiPartyId(u8 partyId)
+{
+    if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+        return FALSE;
+    if (AreMultiPartiesFullTeams())
+        return IsShowingAllysFullParty();
+    return (partyId >= MULTI_PARTY_SIZE) != IsMenuBattlerOnRight();
 }
 
 #if TESTING

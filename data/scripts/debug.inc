@@ -375,6 +375,69 @@ Debug_SoullikeCoopNoPartnerText:
 Debug_SoullikeCoopResultText:
 	.string "{STR_VAR_1}\nBattle sync: {STR_VAR_2}.$"
 
+@ Both players pick this to play a Soullike run together.
+Debug_SoullikeRun::
+	lockall
+	message Debug_SoullikeRunWaitingText
+	waitmessage
+	callnative SoullikeRun_Begin
+	waitstate
+	closemessage
+	goto_if_eq VAR_RESULT, FALSE, Debug_SoullikeCoopNoPartner
+Debug_SoullikeRun_Loop:
+	callnative SoullikeRun_Next
+	switch VAR_RESULT
+	case SOULLIKE_RUN_ACTION_PICK, Debug_SoullikeRun_Pick
+	case SOULLIKE_RUN_ACTION_BATTLE, Debug_SoullikeRun_Battle
+	case SOULLIKE_RUN_ACTION_MESSAGE, Debug_SoullikeRun_Message
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Debug_SoullikeRun_Message:
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto Debug_SoullikeRun_Loop
+
+Debug_SoullikeRun_Pick:
+	callnative SoullikeRun_PreparePick
+	goto_if_eq VAR_RESULT, FALSE, Debug_SoullikeRun_WaitPick
+	message gStringVar4
+	waitmessage
+	dynmultistack 0, 0, TRUE, 6, FALSE, 0, DYN_MULTICHOICE_CB_NONE
+	callnative SoullikeRun_SendPick
+	goto Debug_SoullikeRun_ApplyPick
+
+Debug_SoullikeRun_WaitPick:
+	message gStringVar4
+	waitmessage
+	callnative SoullikeRun_WaitPick
+	waitstate
+Debug_SoullikeRun_ApplyPick:
+	callnative SoullikeRun_ApplyPick
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto Debug_SoullikeRun_Loop
+
+Debug_SoullikeRun_Battle:
+	message Debug_SoullikeRunBattleText
+	waitmessage
+	callnative SoullikeCoop_BeginHandshake
+	waitstate
+	closemessage
+	goto_if_eq VAR_RESULT, FALSE, Debug_SoullikeCoopNoPartner
+	callnative SoullikeCoop_StartBattle
+	waitstate @ until the battle is over
+	callnative SoullikeRun_AfterBattle
+	goto_if_eq VAR_RESULT, SOULLIKE_RUN_ACTION_MESSAGE, Debug_SoullikeRun_Message
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Debug_SoullikeRunWaitingText:
+	.string "Waiting for your partner to pick\nSoullike Run too…$"
+
+Debug_SoullikeRunBattleText:
+	.string "A battle! Waiting for your partner…$"
+
 Debug_Follower_NPC_Not_Enabled::
 	msgbox Debug_Enable_To_Use_Follower_NPCs, MSGBOX_DEFAULT
 	release

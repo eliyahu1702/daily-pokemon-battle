@@ -29,6 +29,17 @@ enum SoullikeLinkMsgType
     SOULLIKE_MSG_COOP_READY,// co-op battle handshake: team sent, plus the battle seed
     SOULLIKE_MSG_COOP_CHOICE, // co-op battle: what the sender picked for their Pokémon
     SOULLIKE_MSG_COOP_HASH, // co-op battle: checksum of the battle state at the start of a turn
+    SOULLIKE_MSG_RUN_START, // run: the sender is ready to start run number N
+    SOULLIKE_MSG_RUN_PICK,  // run: what the sender picked at one decision of the run
+};
+
+enum SoullikeRunState
+{
+    SOULLIKE_RUN_IDLE,
+    SOULLIKE_RUN_STARTING,  // waiting for the partner to start the run too
+    SOULLIKE_RUN_PLAYING,
+    SOULLIKE_RUN_WON,
+    SOULLIKE_RUN_LOST,
 };
 
 enum SoullikeCoopState
@@ -44,6 +55,8 @@ enum SoullikeTestCommand
     SOULLIKE_TEST_NONE,
     SOULLIKE_TEST_COOP_BATTLE,  // test script: skip the intro, start a new game and begin a co-op battle
     SOULLIKE_TEST_COOP_LOADING, // ROM: new game started, the battle begins once the map is up
+    SOULLIKE_TEST_RUN,          // test script: like SOULLIKE_TEST_COOP_BATTLE, but starts a whole run
+    SOULLIKE_TEST_RUN_LOADING,  // ROM: new game started, the run begins once the map is up
 };
 
 struct SoullikeLinkMailbox
@@ -78,7 +91,10 @@ struct SoullikeLinkMailbox
     /*0xA4*/ u8 testCommand;        // test script: enum SoullikeTestCommand, cleared by the ROM
     /*0xA5*/ u8 coopBattles;        // co-op battles started since power on
     /*0xA6*/ u16 coopRngCalls;      // random numbers the co-op battle engine has drawn (low 16 bits)
-}; /* size = 0xA8 */
+    /*0xA8*/ u8 runState;           // enum SoullikeRunState
+    /*0xA9*/ u8 runAct;             // act of the current run, from 0
+    /*0xAA*/ u16 runStep;           // decisions made so far in the current run
+}; /* size = 0xAC */
 
 extern volatile struct SoullikeLinkMailbox gSoullikeLink;
 
