@@ -1953,6 +1953,28 @@ void CB2_NewGame(void)
 #endif
 }
 
+// Soullike end-to-end tests: a new game that starts standing in Oldale Town,
+// skipping the intro and the moving truck. See SoullikeCoop_Update.
+void CB2_SoullikeTestNewGame(void)
+{
+    FieldClearVBlankHBlankCallbacks();
+    StopMapMusic();
+    ResetSafariZoneFlag_();
+    NewGameInitData();
+    ResetInitialPlayerAvatarState();
+    PlayTimeCounter_Start();
+    ScriptContext_Init();
+    UnlockPlayerFieldControls();
+    SetWarpDestination(MAP_GROUP(MAP_OLDALE_TOWN), MAP_NUM(MAP_OLDALE_TOWN), WARP_ID_NONE, 10, 10);
+    WarpIntoMap();
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    gFieldCallback2 = NULL;
+    DoMapLoadLoop(&gMain.state);
+    SetFieldVBlankCallback();
+    SetMainCallback1(CB1_Overworld);
+    SetMainCallback2(CB2_Overworld);
+}
+
 void CB2_WhiteOut(void)
 {
     u8 state;

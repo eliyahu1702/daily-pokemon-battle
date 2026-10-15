@@ -1,4 +1,5 @@
 #include "global.h"
+#include "soullike_coop.h"
 #include "battle.h"
 #include "battle_ai_util.h"
 #include "battle_anim.h"
@@ -335,7 +336,7 @@ static void SetTrainerSlideParameters(enum BattlerId battler, u32* lastId, u32* 
 
 enum TrainerSlideTargets ShouldDoTrainerSlide(enum BattlerId battler, enum TrainerSlideType slideId)
 {
-    if (BattlerIsPlayer(battler))
+    if (BattlerIsPlayer(battler) || (SoullikeCoop_IsActive() && IsOnPlayerSide(battler)))
         return TRAINER_SLIDE_TARGET_NONE;
 
     u32 lastId = PARTY_SIZE, trainerId = TRAINER_BATTLE_PARAM.opponentA;

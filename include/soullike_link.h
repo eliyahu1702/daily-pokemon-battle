@@ -25,6 +25,25 @@ enum SoullikeLinkMsgType
     SOULLIKE_MSG_NONE,
     SOULLIKE_MSG_PING,      // payload: u32 sender frame counter
     SOULLIKE_MSG_PONG,      // payload: echo of the PING payload
+    SOULLIKE_MSG_COOP_TEAM, // co-op battle handshake: one chunk of the sender's team
+    SOULLIKE_MSG_COOP_READY,// co-op battle handshake: team sent, plus the battle seed
+    SOULLIKE_MSG_COOP_CHOICE, // co-op battle: what the sender picked for their Pokémon
+    SOULLIKE_MSG_COOP_HASH, // co-op battle: checksum of the battle state at the start of a turn
+};
+
+enum SoullikeCoopState
+{
+    SOULLIKE_COOP_IDLE,
+    SOULLIKE_COOP_HANDSHAKE,  // swapping teams with the partner
+    SOULLIKE_COOP_IN_BATTLE,
+    SOULLIKE_COOP_FINISHED,   // last battle is over, coopOutcome holds the result
+};
+
+enum SoullikeTestCommand
+{
+    SOULLIKE_TEST_NONE,
+    SOULLIKE_TEST_COOP_BATTLE,  // test script: skip the intro, start a new game and begin a co-op battle
+    SOULLIKE_TEST_COOP_LOADING, // ROM: new game started, the battle begins once the map is up
 };
 
 struct SoullikeLinkMailbox
@@ -48,7 +67,18 @@ struct SoullikeLinkMailbox
     /*0x90*/ u32 dailyDate;         // bridge: today's date as YYYYMMDD (UTC), from the relay
     /*0x94*/ u16 pongsReceived;     // ROM: link health, for the debug menu and tests
     /*0x96*/ u16 lastPingFrames;    // ROM: round trip of the last ping, in frames
-}; /* size = 0x98 */
+    // Co-op battle status, for tests and debugging. The ROM writes these,
+    // except testCommand, which a test script sets.
+    /*0x98*/ u8 coopState;          // enum SoullikeCoopState
+    /*0x99*/ u8 coopOutcome;        // gBattleOutcome of the last co-op battle
+    /*0x9A*/ u16 coopTurn;          // turns played in the current co-op battle
+    /*0x9C*/ u32 coopHash;          // checksum of the battle state at the start of the current turn
+    /*0xA0*/ u16 coopHashesMatched; // turns where both games had the same checksum
+    /*0xA2*/ u16 coopDesyncs;       // turns where they did not, or choices arrived out of order
+    /*0xA4*/ u8 testCommand;        // test script: enum SoullikeTestCommand, cleared by the ROM
+    /*0xA5*/ u8 coopBattles;        // co-op battles started since power on
+    /*0xA6*/ u16 coopRngCalls;      // random numbers the co-op battle engine has drawn (low 16 bits)
+}; /* size = 0xA8 */
 
 extern volatile struct SoullikeLinkMailbox gSoullikeLink;
 

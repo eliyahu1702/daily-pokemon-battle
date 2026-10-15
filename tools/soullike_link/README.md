@@ -36,6 +36,12 @@ Loading the script again (for example after editing it) replaces the copy that i
 
 To check the link in-game (debug builds): hold **R** and press **Start** in the overworld, then pick **Soullike Link**. It shows the connection, the ping to your partner and today's Daily Run date.
 
+### Co-op battle
+
+Both players open the same debug menu and pick **Co-op Battle**. Once both have picked it, the games swap teams and you fight one double battle together against two trainers: player 1's lead Pokémon is on the left, player 2's on the right, and each of you picks moves only for your own. Up to three Pokémon from each party come along; a save with no Pokémon gets a demo team. After the battle, a message says whether every turn stayed in sync.
+
+Both games run the same battle side by side. Each game sends its player's choices to the other, and the battle engine draws from its own random number stream that both games keep identical, so damage, crits and the opponents' AI come out the same on both screens. At the start of every turn the games compare a checksum of the battle state. See `include/soullike_coop.h` for the details.
+
 ## Testing
 
 ```sh
@@ -46,9 +52,13 @@ python3 -m unittest tools/soullike_link/test_relay.py
 tools/soullike_link/e2e/build_mgba.sh /tmp/mgba        # once: libmgba with Lua scripting
 make -C tools/soullike_link/e2e MGBA_DIR=/tmp/mgba
 python3 tools/soullike_link/e2e/run_e2e.py tools/soullike_link/e2e/harness pokeemerald.gba
+
+# The same two emulators fight a whole co-op battle; passes when both finish it
+# with the same result and every turn's checksum matched
+python3 tools/soullike_link/e2e/run_coop_e2e.py tools/soullike_link/e2e/harness pokeemerald.gba
 ```
 
-CI runs both on every pull request.
+CI runs all of these on every pull request.
 
 ## Protocol
 
@@ -62,4 +72,4 @@ Relay frames are a big-endian `u16` length followed by that many bytes; the firs
 | 4 PEER | relay → bridge | `u8` 1 when the partner is in the room, 0 when they left |
 | 5 ERROR | relay → bridge | reason text; the relay closes the connection |
 
-The mailbox layout is documented in `include/soullike_link.h`. Game message types are `enum SoullikeLinkMsgType`; the link itself only uses PING and PONG so far.
+The mailbox layout is documented in `include/soullike_link.h`. Game message types are `enum SoullikeLinkMsgType`: PING and PONG for the link check, and COOP_TEAM, COOP_READY, COOP_CHOICE and COOP_HASH for co-op battles (byte 0 of each co-op message is the battle number, so a late message from an earlier battle is ignored).

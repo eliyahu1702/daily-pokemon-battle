@@ -6,6 +6,7 @@
 #include "battle_environment.h"
 #include "battle_pyramid.h"
 #include "battle_util.h"
+#include "soullike_coop.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
 #include "battle_setup.h"
@@ -2910,7 +2911,7 @@ bool32 TryFieldEffects(enum FieldEffectCases caseId)
         }
         break;
     case FIELD_EFFECT_OVERWORLD_WEATHER:
-        if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
+        if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED) && !SoullikeCoop_IsActive()) // each player's map can have different weather
         {
             switch (GetCurrentWeather())
             {
@@ -5630,6 +5631,8 @@ enum Obedience GetAttackerObedienceForAction(void)
     u8 levelReferenced;
 
     if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+        return OBEYS;
+    if (SoullikeCoop_IsActive()) // obedience depends on each save's badges, which would desync the two games
         return OBEYS;
     if (BattlerHasAi(gBattlerAttacker))
         return OBEYS;

@@ -4,7 +4,7 @@
 #include "soullike_link.h"
 #include "string_util.h"
 
-#define QUEUE_SIZE 8
+#define QUEUE_SIZE 16
 #define PING_INTERVAL_FRAMES 120
 #define PING_TIMEOUT_FRAMES 600
 
@@ -161,6 +161,10 @@ static void ReadIncoming(void)
         return;
 
     type = gSoullikeLink.inType;
+    // Leave game messages in the mailbox until there is room for them, so
+    // nothing is dropped. The bridge holds the rest until we catch up.
+    if (type != SOULLIKE_MSG_PING && type != SOULLIKE_MSG_PONG && sLinkState.incoming.count >= QUEUE_SIZE)
+        return;
     len = min(gSoullikeLink.inLen, SOULLIKE_LINK_PAYLOAD_MAX);
     for (i = 0; i < len; i++)
         data[i] = gSoullikeLink.in[i];

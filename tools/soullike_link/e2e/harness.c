@@ -25,9 +25,10 @@
 static void logToStdout(struct mLogger* logger, int category, enum mLogLevel level, const char* format, va_list args) {
 	(void) logger;
 	// Only show script output and real problems, not the emulator's debug chatter.
+	// The game's own debug prints (and failed asserts) come through gba.debug.
 	const char* id = mLogCategoryId(category);
-	bool fromScript = id && strcmp(id, "script") == 0;
-	if (fromScript || (level & (mLOG_FATAL | mLOG_ERROR))) {
+	bool wanted = id && (strcmp(id, "script") == 0 || strcmp(id, "gba.debug") == 0);
+	if (wanted || (level & (mLOG_FATAL | mLOG_ERROR))) {
 		vprintf(format, args);
 		printf("\n");
 		fflush(stdout);

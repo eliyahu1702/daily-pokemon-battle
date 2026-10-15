@@ -64,3 +64,6 @@ jobs:
         run: |
           make -C tools/soullike_link/e2e MGBA_DIR=$PWD/mgba
           python3 tools/soullike_link/e2e/run_e2e.py tools/soullike_link/e2e/harness pokeemerald.gba
+
+      - name: Two-emulator co-op battle test
+        run: python3 tools/soullike_link/e2e/run_coop_e2e.py tools/soullike_link/e2e/harness pokeemerald.gba --frames 12000

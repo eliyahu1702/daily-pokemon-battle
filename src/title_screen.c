@@ -671,6 +671,11 @@ void CB2_InitTitleScreen(void)
     }
 }
 
+bool32 IsTitleScreenRunning(void)
+{
+    return gMain.callback2 == MainCB2;
+}
+
 static void MainCB2(void)
 {
     RunTasks();

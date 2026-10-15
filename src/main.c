@@ -23,6 +23,7 @@
 #include "intro.h"
 #include "main.h"
 #include "trainer_hill.h"
+#include "soullike_coop.h"
 #include "soullike_link.h"
 #include "test_runner.h"
 #include "constants/rgb.h"
@@ -172,6 +173,7 @@ void AgbMainLoop(void)
         PlayTimeCounter_Update();
         MapMusicMain();
         SoullikeLink_Update();
+        SoullikeCoop_Update();
         WaitForVBlank();
     }
 }
@@ -377,7 +379,10 @@ static void VBlankIntr(void)
     m4aSoundMain();
     TryReceiveLinkBattleData();
 
-    if (!gTestRunnerEnabled && (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED))))
+    // A co-op battle's engine can be in the middle of using its own random
+    // stream when this interrupt lands, so leave the stream alone then.
+    if (!gTestRunnerEnabled && !SoullikeCoop_IsActive()
+     && (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED))))
         AdvanceRandom();
 
     UpdateWirelessStatusIndicatorSprite();

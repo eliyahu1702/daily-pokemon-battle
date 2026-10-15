@@ -4,6 +4,7 @@
 #include "battle_ai_record.h"
 #include "battle_controllers.h"
 #include "battle_message.h"
+#include "soullike_coop.h"
 #include "battle_setup.h"
 #include "battle_special.h"
 #include "battle_z_move.h"
@@ -3000,6 +3001,9 @@ static const u8 *BattleStringGetOpponentName(u8 *text, u8 multiplayerId, enum Ba
 static const u8 *BattleStringGetPlayerName(u8 *text, enum BattlerId battler)
 {
     const u8 *toCpy = NULL;
+
+    if (SoullikeCoop_IsActive() && IsOnPlayerSide(battler))
+        return SoullikeCoop_GetPlayerName(battler);
 
     switch (GetBattlerPosition(battler))
     {
