@@ -382,7 +382,10 @@ static void CreateCustomOpponents(void)
         for (i = 0; i < PARTY_SIZE; i++)
             ZeroMonData(&party[i]);
         for (i = 0; i < opponent->count && i < ARRAY_COUNT(opponent->species); i++)
+        {
             CreateMonWithIVs(&party[i], opponent->species[i], opponent->levels[i], Random32(), OTID_STRUCT_RANDOM_NO_SHINY, 10 + 5 * i);
+            GiveMonInitialMoveset(&party[i]);
+        }
     }
 }
 

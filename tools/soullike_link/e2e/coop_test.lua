@@ -40,10 +40,13 @@ callbacks:add("frame", function()
 		if press and not backing then emu:addKey(C.GBA_KEY.A) else emu:clearKey(C.GBA_KEY.A) end
 		if press and backing then emu:addKey(C.GBA_KEY.B) else emu:clearKey(C.GBA_KEY.B) end
 		if RUN_MODE and frames % 64 == 4 then emu:addKey(C.GBA_KEY.DOWN) else emu:clearKey(C.GBA_KEY.DOWN) end
+		-- After backing out, move the battle menu's cursor back up to FIGHT.
+		if RUN_MODE and frames % 256 == 250 then emu:addKey(C.GBA_KEY.UP) else emu:clearKey(C.GBA_KEY.UP) end
 	else
 		emu:clearKey(C.GBA_KEY.A)
 		emu:clearKey(C.GBA_KEY.DOWN)
 		emu:clearKey(C.GBA_KEY.B)
+		emu:clearKey(C.GBA_KEY.UP)
 	end
 
 	if SCREENSHOT_DIR and frames % 300 == 0 then

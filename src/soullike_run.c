@@ -259,6 +259,7 @@ static bool32 GiveRunMon(u16 species, u8 level, u32 salt)
     struct Pokemon mon;
 
     CreateMonWithIVs(&mon, EvolveForLevel(species, level), level, PrivateRandom(salt), OTID_STRUCT_PLAYER_ID, 15);
+    GiveMonInitialMoveset(&mon);
     return GiveCapturedMonToPlayer(&mon) != MON_CANT_GIVE;
 }
 
