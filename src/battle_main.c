@@ -78,6 +78,7 @@
 #include "constants/trainers.h"
 #include "constants/weather.h"
 #include "cable_club.h"
+#include "soullike_coop.h"
 
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
@@ -1480,7 +1481,9 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void)
         *savedCallback = gMain.savedCallback;
         *savedBattleTypeFlags = gBattleTypeFlags;
         gMain.savedCallback = CB2_PreInitIngamePlayerPartnerBattle;
-        if ((!PlayerHasFollowerNPC() || !FollowerNPCIsBattlePartner() || (FNPC_NPC_FOLLOWER_PARTY_PREVIEW && FollowerNPCIsBattlePartner())))
+        // Co-op battles skip the party preview, so neither player waits on the other's menu.
+        if (!SoullikeCoop_IsActive()
+         && (!PlayerHasFollowerNPC() || !FollowerNPCIsBattlePartner() || (FNPC_NPC_FOLLOWER_PARTY_PREVIEW && FollowerNPCIsBattlePartner())))
         {
             ShowPartyMenuToShowcaseMultiBattleParty();
         }
@@ -1790,7 +1793,7 @@ void CB2_QuitRecordedBattle(void)
 void VBlankCB_Battle(void)
 {
     // Change gRngSeed every vblank unless the battle could be recorded.
-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
+    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)) && !SoullikeCoop_IsActive())
         AdvanceRandom();
 
     SetGpuReg(REG_OFFSET_BG0HOFS, gBattle_BG0_X);
@@ -2731,9 +2734,37 @@ void BeginBattleIntro(void)
 
 static void BattleMainCB1(void)
 {
-    gBattleMainFunc();
+    if (SoullikeCoop_IsActive())
+    {
+        // In a co-op battle the engine runs on its own random stream, which
+        // both games keep identical. See soullike_coop.h.
+        void (*funcBefore)(void) = gBattleMainFunc;
+
+        SoullikeCoop_SwapEngineRng();
+        gBattleMainFunc();
+        if (gBattleMainFunc == HandleTurnActionSelectionState && funcBefore != HandleTurnActionSelectionState)
+            SoullikeCoop_OnTurnStart();
+        SoullikeCoop_SwapEngineRng();
+    }
+    else
+    {
+        gBattleMainFunc();
+    }
     for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
-        gBattlerControllerFuncs[battler](battler);
+    {
+        // The opponents' AI picks its moves in the controller, so it needs
+        // the shared stream too.
+        if (SoullikeCoop_ControllerUsesEngineRng(battler))
+        {
+            SoullikeCoop_SwapEngineRng();
+            gBattlerControllerFuncs[battler](battler);
+            SoullikeCoop_SwapEngineRng();
+        }
+        else
+        {
+            gBattlerControllerFuncs[battler](battler);
+        }
+    }
 }
 
 static void ClearSetBScriptingStruct(void)
@@ -2744,7 +2775,7 @@ static void ClearSetBScriptingStruct(void)
     memset(&gBattleScripting, 0, sizeof(gBattleScripting));
 
     gBattleScripting.windowsType = temp;
-    gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+    gBattleScripting.battleStyle = SoullikeCoop_IsActive() ? OPTIONS_BATTLE_STYLE_SET : gSaveBlock2Ptr->optionsBattleStyle;
     #if TESTING
     gBattleScripting.battleStyle = OPTIONS_BATTLE_STYLE_SET;
     #endif
@@ -2803,7 +2834,7 @@ static void BattleStartClearSetData(void)
 
     if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
     {
-        if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && gSaveBlock2Ptr->optionsBattleSceneOff == TRUE)
+        if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && !SoullikeCoop_IsActive() && gSaveBlock2Ptr->optionsBattleSceneOff == TRUE)
             gHitMarker |= HITMARKER_NO_ANIMATIONS;
     }
     else if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)) && GetBattleSceneInRecordedBattle())

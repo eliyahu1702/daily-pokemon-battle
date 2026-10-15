@@ -5,6 +5,7 @@
 #include "battle_anim.h"
 #include "battle_arena.h"
 #include "battle_controllers.h"
+#include "soullike_coop.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_interface.h"
 #include "battle_message.h"
@@ -71,7 +72,8 @@ bool32 BattlerIsPartner(enum BattlerId battlerId)
 {
     return (gBattlerBattleController[battlerId] == BATTLE_CONTROLLER_PLAYER_PARTNER
          || gBattlerBattleController[battlerId] == BATTLE_CONTROLLER_RECORDED_PARTNER
-         || gBattlerBattleController[battlerId] == BATTLE_CONTROLLER_LINK_PARTNER);
+         || gBattlerBattleController[battlerId] == BATTLE_CONTROLLER_LINK_PARTNER
+         || gBattlerBattleController[battlerId] == BATTLE_CONTROLLER_SOULLIKE_REMOTE);
 }
 
 bool32 BattlerIsOpponent(enum BattlerId battlerId)
@@ -351,6 +353,14 @@ static void InitBtlControllersInternal(void)
             }
         }
 
+        // Soullike co-op: this game's player controls their own battler and
+        // the partner's battler follows what arrives over the link.
+        if (SoullikeCoop_IsActive())
+        {
+            SetBattlerControllerFunc(GetBattlerPosition(B_BATTLER_0), SoullikeCoop_IsRemoteBattler(B_BATTLER_0) ? SetControllerToSoullikeRemote : SetControllerToPlayer);
+            SetBattlerControllerFunc(GetBattlerPosition(B_BATTLER_2), SoullikeCoop_IsRemoteBattler(B_BATTLER_2) ? SetControllerToSoullikeRemote : SetControllerToPlayer);
+        }
+
         bool32 bufferPartyOrders;
 
         if (!isLink)
@@ -556,6 +566,7 @@ static void PrepareBufferDataTransfer(enum BattlerId battler, u32 bufferId, u8 *
                 gBattleResources->bufferA[battler][i] = *data;
             break;
         case B_COMM_TO_ENGINE:
+            SoullikeCoop_OnEngineResponse(battler, data, size);
             for (i = 0; i < size; data++, i++)
                 gBattleResources->bufferB[battler][i] = *data;
             break;

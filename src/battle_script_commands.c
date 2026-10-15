@@ -7,6 +7,7 @@
 #include "battle_ai_record.h"
 #include "battle_ai_util.h"
 #include "battle_scripts.h"
+#include "soullike_coop.h"
 #include "battle_switch_in.h"
 #include "battle_environment.h"
 #include "battle_gimmick.h"
@@ -2107,6 +2108,8 @@ static bool32 BattleTypeAllowsExp(void)
 {
     if (RECORDED_WILD_BATTLE)
         return TRUE;
+    else if (SoullikeCoop_IsActive()) // a level up in one game only would desync the battle
+        return FALSE;
     else if (gBattleTypeFlags &
               ( BATTLE_TYPE_LINK
               | BATTLE_TYPE_RECORDED_LINK

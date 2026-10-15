@@ -345,6 +345,36 @@ Debug_SoullikeLinkStatus::
 Debug_SoullikeLinkStatusText:
 	.string "Link: {STR_VAR_1}\nPing: {STR_VAR_2} frames\pDaily Run date: {STR_VAR_3}$"
 
+@ Both players pick this at the same time to fight a double battle together.
+Debug_SoullikeCoopBattle::
+	lockall
+	message Debug_SoullikeCoopWaitingText
+	waitmessage
+	callnative SoullikeCoop_BeginHandshake
+	waitstate
+	closemessage
+	goto_if_eq VAR_RESULT, FALSE, Debug_SoullikeCoopNoPartner
+	callnative SoullikeCoop_StartBattle
+	waitstate @ until the battle is over
+	callnative SoullikeCoop_BufferResult
+	msgbox Debug_SoullikeCoopResultText, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Debug_SoullikeCoopNoPartner::
+	msgbox Debug_SoullikeCoopNoPartnerText, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Debug_SoullikeCoopWaitingText:
+	.string "Waiting for your partner to pick\nCo-op Battle too…$"
+
+Debug_SoullikeCoopNoPartnerText:
+	.string "No partner connected. Check the\nSoullike Link status first.$"
+
+Debug_SoullikeCoopResultText:
+	.string "{STR_VAR_1}\nBattle sync: {STR_VAR_2}.$"
+
 Debug_Follower_NPC_Not_Enabled::
 	msgbox Debug_Enable_To_Use_Follower_NPCs, MSGBOX_DEFAULT
 	release
