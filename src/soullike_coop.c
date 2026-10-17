@@ -13,6 +13,7 @@
 #include "script.h"
 #include "soullike_coop.h"
 #include "soullike_link.h"
+#include "soullike_run.h"
 #include "sprite.h"
 #include "string_util.h"
 #include "task.h"
@@ -102,11 +103,16 @@ struct CoopState
     u32 remoteHash[COOP_HASH_SLOTS];
     bool8 remoteHashValid[COOP_HASH_SLOTS];
     u16 turn;
+    bool8 customOpponents;
+    struct SoullikeCoopOpponent opponents[2];
+    u8 resultCount;
+    struct Pokemon result[COOP_TEAM_SIZE];
 };
 
 static EWRAM_DATA struct CoopState sCoop = {0};
 
 extern const u8 Debug_SoullikeCoopBattle[];
+extern const u8 Debug_SoullikeRun[];
 
 static const u8 sTestNames[2][PLAYER_NAME_LENGTH + 1] = {
     _("ONE"),
@@ -164,6 +170,11 @@ static void QueueSend(u8 type, const void *data, u8 len)
     msg->len = len;
     memcpy(msg->data, data, len);
     sCoop.outCount++;
+}
+
+void SoullikeCoop_Send(u8 type, const void *data, u8 len)
+{
+    QueueSend(type, data, len);
 }
 
 static void FlushOutbox(void)
@@ -330,8 +341,12 @@ static void CB2_EndCoopBattle(void)
     gSoullikeLink.coopState = SOULLIKE_COOP_FINISHED;
     gSoullikeLink.coopOutcome = gBattleOutcome;
 
-    // A practice battle for now: everyone's party goes back to how it was.
+    // Keep this player's side as it ended the battle, then put the party
+    // back. A run applies the result to the party itself.
+    sCoop.resultCount = LocalPlayerId() == 0 ? sCoop.p1Team->count : sCoop.p2Team->count;
+    memcpy(sCoop.result, gParties[LocalPlayerId() == 0 ? B_TRAINER_PLAYER : B_TRAINER_PARTNER], sizeof(sCoop.result));
     LoadPlayerParty();
+    sCoop.customOpponents = FALSE;
 
     partner->ready = FALSE;
     partner->chunksReceived = 0;
@@ -339,6 +354,39 @@ static void CB2_EndCoopBattle(void)
     sCoop.choiceCount = 0;
     gSpecialVar_Result = gBattleOutcome;
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+void SoullikeCoop_SetOpponents(const struct SoullikeCoopOpponent *a, const struct SoullikeCoopOpponent *b)
+{
+    sCoop.opponents[0] = *a;
+    sCoop.opponents[1] = *b;
+    sCoop.customOpponents = TRUE;
+}
+
+u32 SoullikeCoop_GetLocalBattleResult(struct Pokemon *mons)
+{
+    memcpy(mons, sCoop.result, sizeof(struct Pokemon) * sCoop.resultCount);
+    return sCoop.resultCount;
+}
+
+// Runs right after the battle seed is set, so both games build the same Pokémon.
+static void CreateCustomOpponents(void)
+{
+    u32 side, i;
+
+    for (side = 0; side < 2; side++)
+    {
+        struct Pokemon *party = gParties[side == 0 ? B_TRAINER_OPPONENT_A : B_TRAINER_OPPONENT_B];
+        const struct SoullikeCoopOpponent *opponent = &sCoop.opponents[side];
+
+        for (i = 0; i < PARTY_SIZE; i++)
+            ZeroMonData(&party[i]);
+        for (i = 0; i < opponent->count && i < ARRAY_COUNT(opponent->species); i++)
+        {
+            CreateMonWithIVs(&party[i], opponent->species[i], opponent->levels[i], Random32(), OTID_STRUCT_RANDOM_NO_SHINY, 10 + 5 * i);
+            GiveMonInitialMoveset(&party[i]);
+        }
+    }
 }
 
 void SoullikeCoop_StartBattle(struct ScriptContext *ctx)
@@ -376,13 +424,15 @@ void SoullikeCoop_StartBattle(struct ScriptContext *ctx)
     }
 
     memset(&gTrainerBattleParameter, 0, sizeof(gTrainerBattleParameter));
-    TRAINER_BATTLE_PARAM.opponentA = TRAINER_GRUNT_WEATHER_INST_1;
-    TRAINER_BATTLE_PARAM.opponentB = TRAINER_GRUNT_WEATHER_INST_3;
+    TRAINER_BATTLE_PARAM.opponentA = sCoop.customOpponents ? sCoop.opponents[0].trainerId : TRAINER_GRUNT_WEATHER_INST_1;
+    TRAINER_BATTLE_PARAM.opponentB = sCoop.customOpponents ? sCoop.opponents[1].trainerId : TRAINER_GRUNT_WEATHER_INST_3;
 
     // Same seed, same opponents, same engine random stream in both games.
     SeedRng(sCoop.seed);
     CreateNPCTrainerPartyFromTrainer(gParties[B_TRAINER_OPPONENT_A], GetTrainerStructFromId(TRAINER_BATTLE_PARAM.opponentA));
     CreateNPCTrainerPartyFromTrainer(gParties[B_TRAINER_OPPONENT_B], GetTrainerStructFromId(TRAINER_BATTLE_PARAM.opponentB));
+    if (sCoop.customOpponents)
+        CreateCustomOpponents();
     sCoop.engineRng = LocalRandomSeed(sCoop.seed ^ 0x434F4F50);
     sCoop.engineRngInUse = FALSE;
     gBattleEnvironment = BATTLE_ENVIRONMENT_PLAIN;
@@ -660,20 +710,25 @@ static void UpdateTestCommand(void)
     if (!SoullikeLink_IsConnected())
         return;
 
-    if (gSoullikeLink.testCommand == SOULLIKE_TEST_COOP_BATTLE)
+    switch (gSoullikeLink.testCommand)
     {
+    case SOULLIKE_TEST_COOP_BATTLE:
+    case SOULLIKE_TEST_RUN:
         // Wait for the title screen, so the intro isn't cut off halfway through loading.
         if (IsTitleScreenRunning())
         {
-            gSoullikeLink.testCommand = SOULLIKE_TEST_COOP_LOADING;
+            gSoullikeLink.testCommand++; // to the matching LOADING state
             StartNewGameForTest();
         }
-    }
-    else if (gSoullikeLink.testCommand == SOULLIKE_TEST_COOP_LOADING
-          && gMain.callback2 == CB2_Overworld && !ArePlayerFieldControlsLocked() && !ScriptContext_IsEnabled())
-    {
-        gSoullikeLink.testCommand = SOULLIKE_TEST_NONE;
-        ScriptContext_SetupScript(Debug_SoullikeCoopBattle);
+        break;
+    case SOULLIKE_TEST_COOP_LOADING:
+    case SOULLIKE_TEST_RUN_LOADING:
+        if (gMain.callback2 == CB2_Overworld && !ArePlayerFieldControlsLocked() && !ScriptContext_IsEnabled())
+        {
+            ScriptContext_SetupScript(gSoullikeLink.testCommand == SOULLIKE_TEST_RUN_LOADING ? Debug_SoullikeRun : Debug_SoullikeCoopBattle);
+            gSoullikeLink.testCommand = SOULLIKE_TEST_NONE;
+        }
+        break;
     }
 }
 
@@ -699,6 +754,10 @@ void SoullikeCoop_Update(void)
             break;
         case SOULLIKE_MSG_COOP_HASH:
             HandleHash(data, len);
+            break;
+        case SOULLIKE_MSG_RUN_START:
+        case SOULLIKE_MSG_RUN_PICK:
+            SoullikeRun_HandleMessage(type, data, len);
             break;
         }
     }

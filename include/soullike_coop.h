@@ -20,10 +20,22 @@
 
 struct ScriptContext;
 
+// One opposing trainer in a co-op battle, for battles the run sets up.
+struct SoullikeCoopOpponent
+{
+    u16 trainerId;  // picture, name and AI come from this trainer
+    u8 count;
+    u8 levels[3];
+    u16 species[3];
+};
+
 bool32 SoullikeCoop_IsActive(void);
 bool32 SoullikeCoop_IsRemoteBattler(enum BattlerId battler);
 const u8 *SoullikeCoop_GetPlayerName(enum BattlerId battler);
 u8 SoullikeCoop_GetPartnerGender(void);
+
+// Queues a message for the partner. Messages go out in order, a few per frame.
+void SoullikeCoop_Send(u8 type, const void *data, u8 len);
 
 // Called once per frame from the main loop, after SoullikeLink_Update.
 void SoullikeCoop_Update(void);
@@ -37,6 +49,11 @@ bool32 SoullikeCoop_TryTakePartnerChoice(enum BattlerId battler);
 
 // Remote controller for the partner's battler.
 void SetControllerToSoullikeRemote(enum BattlerId battler);
+
+// Replaces the opponents of the next co-op battle. Both games must pass the same teams.
+void SoullikeCoop_SetOpponents(const struct SoullikeCoopOpponent *a, const struct SoullikeCoopOpponent *b);
+// After a co-op battle: copies this player's Pokémon as they ended the battle and returns how many.
+u32 SoullikeCoop_GetLocalBattleResult(struct Pokemon *mons);
 
 // Script natives used by Debug_SoullikeCoopBattle.
 void SoullikeCoop_BeginHandshake(struct ScriptContext *ctx);
