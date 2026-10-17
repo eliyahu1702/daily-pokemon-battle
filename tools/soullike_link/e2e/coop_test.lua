@@ -31,17 +31,19 @@ callbacks:add("frame", function()
 	local run = emu:read8(mb + OFF.runState)
 	if test == START_COMMAND or state == 2 or (RUN_MODE and run >= 1 and run <= 2) then
 		-- In a run, now and then move the cursor down, so the game doesn't get
-		-- stuck trying to send out a fainted Pokémon and picks vary a little,
-		-- and now and then press B for a while instead of A, to back out of
+		-- stuck trying to send out a fainted Pokémon and picks vary a little.
+		-- Every 256 frames, press B for a while instead of A, to back out of
 		-- menus A can't leave (like trying to switch to a Pokémon that's
-		-- already out).
-		local backing = RUN_MODE and frames % 256 >= 192
+		-- already out), wait for the menu to close, then move the battle
+		-- menu's cursor back up to FIGHT.
+		local phase = frames % 256
 		local press = frames % 8 < 2
-		if press and not backing then emu:addKey(C.GBA_KEY.A) else emu:clearKey(C.GBA_KEY.A) end
+		local quiet = RUN_MODE and phase >= 192
+		local backing = quiet and phase < 224
+		if press and not quiet then emu:addKey(C.GBA_KEY.A) else emu:clearKey(C.GBA_KEY.A) end
 		if press and backing then emu:addKey(C.GBA_KEY.B) else emu:clearKey(C.GBA_KEY.B) end
-		if RUN_MODE and frames % 64 == 4 then emu:addKey(C.GBA_KEY.DOWN) else emu:clearKey(C.GBA_KEY.DOWN) end
-		-- After backing out, move the battle menu's cursor back up to FIGHT.
-		if RUN_MODE and frames % 256 == 250 then emu:addKey(C.GBA_KEY.UP) else emu:clearKey(C.GBA_KEY.UP) end
+		if RUN_MODE and frames % 64 == 4 and not quiet then emu:addKey(C.GBA_KEY.DOWN) else emu:clearKey(C.GBA_KEY.DOWN) end
+		if RUN_MODE and (phase == 240 or phase == 248) then emu:addKey(C.GBA_KEY.UP) else emu:clearKey(C.GBA_KEY.UP) end
 	else
 		emu:clearKey(C.GBA_KEY.A)
 		emu:clearKey(C.GBA_KEY.DOWN)
