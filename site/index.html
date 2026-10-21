@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily Pokémon Battle</title>
+<meta name="description" content="A Pokémon Emerald romhack with one new battle every day. Draft six Pokémon with real competitive sets, then take on the same opponent as everyone else. Play in your browser or on any GBA emulator.">
+<meta property="og:title" content="Daily Pokémon Battle">
+<meta property="og:description" content="Draft six. Beat today's opponent. Same battle for everyone, a new one every day.">
+<meta property="og:image" content="screens/draft.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">A Pokémon Emerald romhack</p>
+    <h1>Daily Pokémon Battle</h1>
+    <p class="lede">Draft six Pokémon with real competitive sets, then take on today's opponent. Everyone gets the same draft and the same battle, and there's a new one every day.</p>
+    <div class="cta">
+      <a class="button primary" href="#play">Play in your browser</a>
+      <a class="button" href="#download">Download the patch</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap features">
+    <figure><img src="screens/draft.png" alt="The draft screen: three Pokémon to choose from, with item and ability"><figcaption><b>Draft 1 of 3, six times.</b> Every Pokémon comes with a real competitive build. Check its moves, item, ability and stats before you pick.</figcaption></figure>
+    <figure><img src="screens/doubles.png" alt="A double battle against Salon Maiden Anabel"><figcaption><b>Singles or doubles.</b> About one day in three is a double battle. You'll know before the draft, and every set is built for the format.</figcaption></figure>
+    <figure><img src="screens/leads.png" alt="Picking two leads in the party menu"><figcaption><b>Pick your leads.</b> Choose who goes out first once you've seen the whole team.</figcaption></figure>
+    <figure><img src="screens/singles.png" alt="A single battle against Champion Cynthia"><figcaption><b>178 opponents.</b> Gym leaders, the Elite Four, champions, villains, Red, the Frontier Brains and Battle Tower aces, all with modern moves, abilities and items.</figcaption></figure>
+    <figure><img src="screens/moves.png" alt="A Pokémon's summary showing its moves"><figcaption><b>Every generation.</b> Pokémon from Kanto to Paldea, built on pokeemerald-expansion.</figcaption></figure>
+    <figure><img src="screens/results.png" alt="The results screen with team, score and best of the day"><figcaption><b>Chase a score.</b> Fewer turns, fewer faints and more HP left mean more points. Lose and you can try again the same day.</figcaption></figure>
+  </section>
+
+  <section id="play" class="wrap panel">
+    <h2>Play in your browser</h2>
+    <p>You need your own copy of <b>Pokémon Emerald (USA/Europe)</b> as a .gba file. It's patched right here in your browser and never uploaded anywhere. Your save stays in this browser.</p>
+    <div id="setup">
+      <div id="have-rom" hidden>
+        <button class="button primary" id="continue">Continue playing</button>
+        <button class="linkish" id="forget">Use a different file</button>
+      </div>
+      <div id="need-rom">
+        <label class="button primary file">
+          Choose your Emerald .gba file
+          <input type="file" id="rom" accept=".gba,application/octet-stream">
+        </label>
+      </div>
+      <p id="status" role="status"></p>
+    </div>
+    <div id="game-wrap" hidden><div id="game"></div></div>
+    <details class="controls">
+      <summary>Controls</summary>
+      <p>On a phone, use the on-screen buttons. On a keyboard: arrows to move, <kbd>Z</kbd> is A, <kbd>X</kbd> is B, <kbd>Enter</kbd> is Start, <kbd>V</kbd> is Select, <kbd>Q</kbd> and <kbd>E</kbd> are L and R. Use the gear icon under the game to change them, or plug in a controller.</p>
+    </details>
+  </section>
+
+  <section id="download" class="wrap panel">
+    <h2>Play on an emulator</h2>
+    <ol>
+      <li>Download <a href="daily-pokemon-battle.bps" download>daily-pokemon-battle.bps</a>.</li>
+      <li>Patch your own Pokémon Emerald (USA/Europe) file with it. The easiest way is <a href="https://www.marcrobledo.com/RomPatcher.js/" rel="noopener">Rom Patcher JS</a>, which works on phones too. On PC you can also use <a href="https://github.com/Alcaro/Flips/releases" rel="noopener">Flips</a>.</li>
+      <li>Open the patched file in an emulator with real-time clock support: <b>mGBA</b> on Windows, Mac or Linux, <b>Pizza Boy GBA</b> or <b>My Boy!</b> on Android, <b>Delta</b> on iPhone.</li>
+    </ol>
+    <p class="note">Base file check: CRC32 <code>1F1C08FB</code>, SHA-1 <code>f3ae088181bf583e55daf962a92bb46f4f1d07b7</code>. The new day starts at midnight on your device's clock.</p>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Daily Pokémon Battle is a free fan project. It isn't affiliated with or endorsed by Nintendo, Game Freak or The Pokémon Company. No game files are hosted here: you need your own copy of Pokémon Emerald.</p>
+  <p>Built on <a href="https://github.com/rh-hideout/pokeemerald-expansion">pokeemerald-expansion</a>. Sets from <a href="https://www.smogon.com/">Smogon</a> and <a href="https://github.com/pkmn/randbats">pkmn/randbats</a>. Browser play by <a href="https://emulatorjs.org/">EmulatorJS</a> (GPL-3.0) with mGBA. <a href="https://github.com/eliyahu1702/daily-pokemon-battle">Source on GitHub</a>.</p>
+</footer>
+
+<script src="bps.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

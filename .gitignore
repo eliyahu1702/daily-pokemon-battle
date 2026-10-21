@@ -71,3 +71,4 @@ __pycache__
 src/data/draft_pool.h
 src/data/daily_trainers.h
 tools/daily/playtest/playtest
+!site/*.js

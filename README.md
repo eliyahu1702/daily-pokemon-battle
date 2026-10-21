@@ -18,6 +18,19 @@ A Pokémon Emerald romhack built around a daily challenge: draft a team of six, 
 
 Pokémon from every generation are in, with modern moves, abilities and items, thanks to [pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion).
 
+## Playing
+
+- **In your browser:** https://eliyahu1702.github.io/daily-pokemon-battle/ . Pick your own Pokémon Emerald (USA/Europe) file and it's patched and started right on the page. Works on phones too.
+- **On an emulator:** download `daily-pokemon-battle.bps` from the [latest release](https://github.com/eliyahu1702/daily-pokemon-battle/releases/latest) and apply it to your own Emerald file with [Rom Patcher JS](https://www.marcrobledo.com/RomPatcher.js/) or [Flips](https://github.com/Alcaro/Flips). Use an emulator with real-time clock support: mGBA on PC, Pizza Boy GBA or My Boy! on Android, Delta on iPhone.
+
+The base file must be Pokémon Emerald (USA/Europe), SHA-1 `f3ae088181bf583e55daf962a92bb46f4f1d07b7`. No game files are distributed here.
+
+## Releasing
+
+1. Build the ROM, then make and check the patch: `FLIPS=path/to/flips tools/release/make_patch.sh emerald.gba daily-pokemon-battle.bps`.
+2. Build the site: `tools/release/build_site.sh daily-pokemon-battle.bps site-out`, then push `site-out` to the `gh-pages` branch.
+3. Attach the patch to a new GitHub release.
+
 ## Building
 
 Follow the expansion's [install guide](INSTALL.md) for your OS, then run:
@@ -34,6 +47,7 @@ This produces `pokeemerald.gba`. Play it in any GBA emulator with real-time cloc
 - `src/battle_factory_screen.c`: the draft picker (a daily mode of the Battle Factory rental screen).
 - `src/daily_results_screen.c`: the results screen and score.
 - `data/maps/DailyBattleHall/`: the hall map and its script.
+- `site/`: the play-in-browser page (patching in `bps.js`, EmulatorJS setup in `app.js`); `tools/release/` builds it.
 - `tools/daily/`: the generator that builds the draft pool and opponent teams from Smogon and Showdown data, and a headless playtest driver. See [tools/daily/README.md](tools/daily/README.md).
 
 The expansion's original README is in [docs/EXPANSION_README.md](docs/EXPANSION_README.md).
