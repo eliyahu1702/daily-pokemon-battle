@@ -48,6 +48,7 @@ jobs:
       - name: Playtest (new game, draft, battle, results screen)
         run: |
           make -C tools/daily/playtest
+          python3 tools/daily/check_sets.py
           python3 tools/daily/playtest/check_all.py pokeemerald.gba playtest-out/selftest
           python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win-singles win singles
           python3 tools/daily/playtest/full_run.py pokeemerald.gba playtest-out/win-doubles win doubles

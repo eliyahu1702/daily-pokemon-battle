@@ -1016,7 +1016,7 @@ Nature: NATURE_TIMID
 - MOVE_SLEEP_TALK
 
 /* Lopunny (gen8zu: Utility) */
-SPECIES_LOPUNNY @ ITEM_ASSAULT_VEST
+SPECIES_LOPUNNY @ ITEM_LEFTOVERS
 Level: 100
 Ability: ABILITY_KLUTZ
 EVs: 4 Def / 252 HP / 252 Spe
@@ -8314,7 +8314,7 @@ Nature: NATURE_MODEST
 - MOVE_MORNING_SUN
 
 /* Vanilluxe (gen8nu: Wallbreaker) */
-SPECIES_VANILLUXE @ ITEM_CHOICE_SPECS
+SPECIES_VANILLUXE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_SNOW_WARNING
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -8338,7 +8338,7 @@ Nature: NATURE_JOLLY
 - MOVE_CLOSE_COMBAT
 
 /* Bouffalant (gen7zu: Choice Band) */
-SPECIES_BOUFFALANT @ ITEM_CHOICE_BAND
+SPECIES_BOUFFALANT @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_RECKLESS
 EVs: 252 Atk / 4 SpD / 252 Spe
@@ -8946,7 +8946,7 @@ Nature: NATURE_JOLLY
 - MOVE_ROOST
 
 /* Dragapult (gen9monotype: Choice Scarf (Dragon)) */
-SPECIES_DRAGAPULT @ ITEM_CHOICE_SCARF
+SPECIES_DRAGAPULT @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_INFILTRATOR
 EVs: 252 Atk / 4 SpD / 252 Spe
@@ -10404,7 +10404,7 @@ Nature: NATURE_MODEST
 - MOVE_MORNING_SUN
 
 /* Vanilluxe (gen8nu: Wallbreaker) */
-SPECIES_VANILLUXE @ ITEM_CHOICE_SPECS
+SPECIES_VANILLUXE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_SNOW_WARNING
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -11699,7 +11699,7 @@ Music: Elite Four
 AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
 
 /* Mabosstiff (gen9zu: Choiced) */
-SPECIES_MABOSSTIFF @ ITEM_CHOICE_SCARF
+SPECIES_MABOSSTIFF @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_STAKEOUT
 EVs: 252 Atk / 4 SpD / 252 Spe
@@ -12422,7 +12422,7 @@ Nature: NATURE_MODEST
 - MOVE_ROOST
 
 /* Latias (gen9nationaldexmonotype: Choice Scarf (Dragon)) */
-SPECIES_LATIAS @ ITEM_CHOICE_SCARF
+SPECIES_LATIAS @ ITEM_LEFTOVERS
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -12932,7 +12932,7 @@ Nature: NATURE_BOLD
 - MOVE_KNOCK_OFF
 
 /* Seviper (randbats: Fast Attacker) */
-SPECIES_SEVIPER @ ITEM_CHOICE_SCARF
+SPECIES_SEVIPER @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_INFILTRATOR
 EVs: 252 HP / 252 Def / 4 Atk
@@ -13923,7 +13923,7 @@ Nature: NATURE_ADAMANT
 - MOVE_ICE_PUNCH
 
 /* Gengar (gen9ru: Choice Scarf) */
-SPECIES_GENGAR @ ITEM_CHOICE_SCARF
+SPECIES_GENGAR @ ITEM_LEFTOVERS
 Level: 100
 Ability: ABILITY_CURSED_BODY
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -14230,7 +14230,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -14802,7 +14802,7 @@ Nature: NATURE_TIMID
 - MOVE_TRICK
 
 /* Mismagius (randbats: Doubles Wallbreaker) */
-SPECIES_MISMAGIUS @ ITEM_CHOICE_SPECS
+SPECIES_MISMAGIUS @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -15122,7 +15122,7 @@ Nature: NATURE_TIMID
 - MOVE_TRICK
 
 /* Mismagius (randbats: Doubles Wallbreaker) */
-SPECIES_MISMAGIUS @ ITEM_CHOICE_SPECS
+SPECIES_MISMAGIUS @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -15282,7 +15282,7 @@ Nature: NATURE_IMPISH
 - MOVE_PROTECT
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -15842,7 +15842,7 @@ Nature: NATURE_TIMID
 - MOVE_SWITCHEROO
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -16390,7 +16390,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Chandelure (randbats: Doubles Fast Attacker) */
-SPECIES_CHANDELURE @ ITEM_CHOICE_SCARF
+SPECIES_CHANDELURE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_FLASH_FIRE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -16950,7 +16950,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Mismagius (randbats: Doubles Wallbreaker) */
-SPECIES_MISMAGIUS @ ITEM_CHOICE_SPECS
+SPECIES_MISMAGIUS @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -17042,7 +17042,7 @@ Nature: NATURE_IMPISH
 - MOVE_PROTECT
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -17250,7 +17250,7 @@ Nature: NATURE_ADAMANT
 - MOVE_ICE_PUNCH
 
 /* Thundurus-Therian (randbats: Doubles Fast Attacker) */
-SPECIES_THUNDURUS_THERIAN @ ITEM_CHOICE_SCARF
+SPECIES_THUNDURUS_THERIAN @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_VOLT_ABSORB
 EVs: 252 SpA / 252 Spe / 4 HP
@@ -17809,7 +17809,7 @@ Nature: NATURE_ADAMANT
 - MOVE_ICE_PUNCH
 
 /* Sandy Shocks (randbats: Doubles Fast Attacker) */
-SPECIES_SANDY_SHOCKS @ ITEM_ASSAULT_VEST
+SPECIES_SANDY_SHOCKS @ ITEM_SITRUS_BERRY
 Level: 100
 Ability: ABILITY_PROTOSYNTHESIS
 EVs: 252 SpA / 252 Spe / 4 HP
@@ -18069,7 +18069,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Chandelure (randbats: Doubles Fast Attacker) */
-SPECIES_CHANDELURE @ ITEM_CHOICE_SCARF
+SPECIES_CHANDELURE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_FLASH_FIRE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -18721,7 +18721,7 @@ Nature: NATURE_TIMID
 - MOVE_VOLT_SWITCH
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -19041,7 +19041,7 @@ Nature: NATURE_JOLLY
 - MOVE_TAUNT
 
 /* Chandelure (randbats: Doubles Fast Attacker) */
-SPECIES_CHANDELURE @ ITEM_CHOICE_SCARF
+SPECIES_CHANDELURE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_FLASH_FIRE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -19865,7 +19865,7 @@ Nature: NATURE_MODEST
 - MOVE_PROTECT
 
 /* Barraskewda (randbats: Doubles Wallbreaker) */
-SPECIES_BARRASKEWDA @ ITEM_CHOICE_BAND
+SPECIES_BARRASKEWDA @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_PROPELLER_TAIL
 EVs: 252 HP / 252 SpD / 4 Atk
@@ -20949,7 +20949,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Houndstone (randbats: Choice Item user) */
-SPECIES_HOUNDSTONE @ ITEM_CHOICE_SCARF
+SPECIES_HOUNDSTONE @ ITEM_SITRUS_BERRY
 Level: 100
 Ability: ABILITY_FLUFFY
 EVs: 252 Atk / 252 Spe / 4 HP
@@ -21269,7 +21269,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Tinkaton (randbats: Doubles Support) */
-SPECIES_TINKATON @ ITEM_ASSAULT_VEST
+SPECIES_TINKATON @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MOLD_BREAKER
 EVs: 252 HP / 252 Def / 4 Atk
@@ -21293,7 +21293,7 @@ Nature: NATURE_Relaxed
 - MOVE_STONE_EDGE
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -22481,7 +22481,7 @@ Nature: NATURE_TIMID
 - MOVE_TAILWIND
 
 /* Vanilluxe (gen8nu: Wallbreaker (doubles)) */
-SPECIES_VANILLUXE @ ITEM_CHOICE_SPECS
+SPECIES_VANILLUXE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_SNOW_WARNING
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -22505,7 +22505,7 @@ Nature: NATURE_JOLLY
 - MOVE_CLOSE_COMBAT
 
 /* Bouffalant (gen7zu: Choice Band (doubles)) */
-SPECIES_BOUFFALANT @ ITEM_CHOICE_BAND
+SPECIES_BOUFFALANT @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_RECKLESS
 EVs: 252 Atk / 4 SpD / 252 Spe
@@ -22929,7 +22929,7 @@ Nature: NATURE_CAREFUL
 - MOVE_HEAVY_SLAM
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -24389,7 +24389,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Hydreigon (randbats: Doubles Wallbreaker) */
-SPECIES_HYDREIGON @ ITEM_CHOICE_SPECS
+SPECIES_HYDREIGON @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -24549,7 +24549,7 @@ AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict S
 Battle Type: Doubles
 
 /* Zoroark (randbats: Doubles Wallbreaker) */
-SPECIES_ZOROARK @ ITEM_CHOICE_SPECS
+SPECIES_ZOROARK @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_ILLUSION
 EVs: 252 HP / 252 Def / 4 SpA
@@ -24597,7 +24597,7 @@ Nature: NATURE_TIMID
 - MOVE_TAILWIND
 
 /* Vanilluxe (gen8nu: Wallbreaker (doubles)) */
-SPECIES_VANILLUXE @ ITEM_CHOICE_SPECS
+SPECIES_VANILLUXE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_SNOW_WARNING
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -24973,7 +24973,7 @@ Nature: NATURE_Timid
 - MOVE_SLEEP_POWDER
 
 /* Mismagius (randbats: Doubles Wallbreaker) */
-SPECIES_MISMAGIUS @ ITEM_CHOICE_SPECS
+SPECIES_MISMAGIUS @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_LEVITATE
 EVs: 252 HP / 252 Def / 4 SpA
@@ -25225,7 +25225,7 @@ Nature: NATURE_ADAMANT
 - MOVE_CLOSE_COMBAT
 
 /* Perrserker (randbats: Doubles Bulky Attacker) */
-SPECIES_PERRSERKER @ ITEM_ASSAULT_VEST
+SPECIES_PERRSERKER @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_STEELY_SPIRIT
 EVs: 252 HP / 252 SpD / 4 Atk
@@ -25489,7 +25489,7 @@ Nature: NATURE_TIMID
 - MOVE_FOCUS_BLAST
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -25625,7 +25625,7 @@ Nature: NATURE_BOLD
 - MOVE_SYNTHESIS
 
 /* Magnezone (randbats: Doubles Support) */
-SPECIES_MAGNEZONE @ ITEM_ASSAULT_VEST
+SPECIES_MAGNEZONE @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MAGNET_PULL
 EVs: 252 HP / 252 SpD / 4 SpA
@@ -25957,7 +25957,7 @@ Nature: NATURE_Bold
 - MOVE_RAGE_POWDER
 
 /* Tinkaton (randbats: Doubles Support) */
-SPECIES_TINKATON @ ITEM_ASSAULT_VEST
+SPECIES_TINKATON @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_MOLD_BREAKER
 EVs: 252 HP / 252 Def / 4 Atk
@@ -27361,7 +27361,7 @@ Nature: NATURE_CALM
 - MOVE_WIDE_GUARD
 
 /* Barraskewda (randbats: Doubles Wallbreaker) */
-SPECIES_BARRASKEWDA @ ITEM_CHOICE_BAND
+SPECIES_BARRASKEWDA @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_PROPELLER_TAIL
 EVs: 252 HP / 252 SpD / 4 Atk
@@ -28161,7 +28161,7 @@ Nature: NATURE_ADAMANT
 - MOVE_DRAGON_TAIL
 
 /* Gengar (gen9ru: Choice Scarf (doubles)) */
-SPECIES_GENGAR @ ITEM_CHOICE_SCARF
+SPECIES_GENGAR @ ITEM_SITRUS_BERRY
 Level: 100
 Ability: ABILITY_CURSED_BODY
 EVs: 252 SpA / 4 SpD / 252 Spe

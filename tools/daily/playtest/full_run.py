@@ -74,6 +74,11 @@ def script(battle_outcome, outcome, days_ahead, doubles):
         s += ["press " + pattern[i % len(pattern)], "wait 20"]
         if i % 5 == 0 or 120 <= i <= 160:  # every press around the end of the battle
             s.append("shot 3%04d" % i)
+    if outcome == "win":
+        # Walk back up to the host, who offers today's results again.
+        s += ["wait 300"] + ["press UP", "wait 20"] * 9
+        s += ["press A", "wait 60", "press A", "wait 60", "press A", "wait 400", "shot 40_results_again"]
+        s += ["press A", "wait 120", "press B", "wait 60", "press B", "wait 60", "shot 41_back_in_hall"]
     return "\n".join(s) + "\n"
 
 

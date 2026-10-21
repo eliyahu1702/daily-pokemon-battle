@@ -7,6 +7,85 @@ Venusaur (4), Charizard (3), Blastoise (3), Nidoqueen (3), Nidoking (3), Clefabl
 Ability fixes:
 GRENINJA -> GRENINJA_BATTLE_BOND for BATTLE_BOND
 
+Item fixes:
+singles GENGAR (choice item with TOXIC_SPIKES): CHOICE_SCARF -> LEFTOVERS
+singles DRAPION (choice item with TOXIC, TOXIC_SPIKES): CHOICE_SCARF -> LEFTOVERS
+singles MAGNEZONE (choice item with TOXIC): CHOICE_SPECS -> LIFE_ORB
+singles ROTOM_WASH (choice item with WILL_O_WISP): CHOICE_SCARF -> LEFTOVERS
+singles ROTOM_WASH (choice item with DEFOG): CHOICE_SCARF -> LEFTOVERS
+singles SERPERIOR (choice item with GLARE): CHOICE_SCARF -> LIFE_ORB
+singles VANILLUXE (choice item with AURORA_VEIL): CHOICE_SPECS -> LIFE_ORB
+singles BRAVIARY (choice item with DEFOG): CHOICE_SCARF -> LIFE_ORB
+singles LANDORUS_THERIAN (choice item with DEFOG): CHOICE_SCARF -> LIFE_ORB
+singles ARAQUANID (choice item with STICKY_WEB): CHOICE_BAND -> LIFE_ORB
+singles TAPU_FINI (choice item with DEFOG): CHOICE_SCARF -> LIFE_ORB
+singles TAPU_FINI (choice item with TAUNT): CHOICE_SCARF -> LEFTOVERS
+singles DRAGAPULT (choice item with WILL_O_WISP): CHOICE_BAND -> LIFE_ORB
+singles HOUNDSTONE (choice item with ROAR): CHOICE_BAND -> LIFE_ORB
+singles FLAMIGO (choice item with ROOST): CHOICE_SCARF -> LIFE_ORB
+singles KINGAMBIT (Assault Vest with SWORDS_DANCE): ASSAULT_VEST -> LIFE_ORB
+singles SANDY_SHOCKS (choice item with STEALTH_ROCK): CHOICE_SCARF -> LIFE_ORB
+singles SANDY_SHOCKS (choice item with SPIKES): CHOICE_SPECS -> LIFE_ORB
+singles GHOLDENGO (choice item with RECOVER): CHOICE_SCARF -> LEFTOVERS
+singles LOPUNNY (Assault Vest with SWITCHEROO, HEALING_WISH, THUNDER_WAVE): ASSAULT_VEST -> LEFTOVERS
+singles VANILLUXE (choice item with AURORA_VEIL): CHOICE_SPECS -> LIFE_ORB
+singles BOUFFALANT (choice item with TOXIC): CHOICE_BAND -> LIFE_ORB
+singles DRAGAPULT (choice item with THUNDER_WAVE): CHOICE_SCARF -> LIFE_ORB
+singles MABOSSTIFF (choice item with DESTINY_BOND): CHOICE_SCARF -> LIFE_ORB
+singles LATIAS (choice item with DEFOG): CHOICE_SCARF -> LEFTOVERS
+singles SEVIPER (choice item with GLARE): CHOICE_SCARF -> LIFE_ORB
+singles GENGAR (choice item with TOXIC_SPIKES): CHOICE_SCARF -> LEFTOVERS
+doubles MUK_ALOLA (Assault Vest with HELPING_HAND): ASSAULT_VEST -> LIFE_ORB
+doubles MUK_ALOLA (Assault Vest with HELPING_HAND): ASSAULT_VEST -> LIFE_ORB
+doubles GENGAR (choice item with PROTECT): CHOICE_SCARF -> SITRUS_BERRY
+doubles ZAPDOS_GALAR (choice item with COACHING): CHOICE_SCARF -> LIFE_ORB
+doubles ZAPDOS_GALAR (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles LATIOS (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles DRAPION (choice item with PROTECT, TOXIC_SPIKES): CHOICE_SCARF -> SITRUS_BERRY
+doubles MAGNEZONE (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles GALLADE (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles ZOROARK_HISUI (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles VANILLUXE (choice item with AURORA_VEIL): CHOICE_SPECS -> LIFE_ORB
+doubles CHANDELURE (choice item with PROTECT): CHOICE_SCARF -> LIFE_ORB
+doubles HYDREIGON (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles THUNDURUS_THERIAN (choice item with PROTECT): CHOICE_SCARF -> LIFE_ORB
+doubles THUNDURUS_THERIAN (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles BARRASKEWDA (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles BARRASKEWDA (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles INDEEDEE_M (choice item with ENCORE, PROTECT): CHOICE_SCARF -> SITRUS_BERRY
+doubles DRACOVISH (choice item with SLEEP_TALK): CHOICE_BAND -> LIFE_ORB
+doubles ENAMORUS_THERIAN (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles ENAMORUS_THERIAN (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles TINKATON (Assault Vest with ENCORE): ASSAULT_VEST -> LIFE_ORB
+doubles TINKATON (Assault Vest with ENCORE, STEALTH_ROCK): ASSAULT_VEST -> SITRUS_BERRY
+doubles CYCLIZAR (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles HOUNDSTONE (choice item with WILL_O_WISP): CHOICE_SCARF -> SITRUS_BERRY
+doubles FLAMIGO (choice item with ROOST): CHOICE_SCARF -> LIFE_ORB
+doubles ANNIHILAPE (choice item with COACHING): CHOICE_SCARF -> LIFE_ORB
+doubles SANDY_SHOCKS (Assault Vest with PROTECT, STEALTH_ROCK): ASSAULT_VEST -> SITRUS_BERRY
+doubles WALKING_WAKE (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles OKIDOGI (Assault Vest with BULK_UP): ASSAULT_VEST -> LIFE_ORB
+doubles MUNKIDORI (choice item with PROTECT): CHOICE_SCARF -> LIFE_ORB
+doubles MUNKIDORI (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles MAGNEZONE (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles MISMAGIUS (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles CHANDELURE (choice item with PROTECT): CHOICE_SCARF -> LIFE_ORB
+doubles THUNDURUS_THERIAN (choice item with PROTECT): CHOICE_SCARF -> LIFE_ORB
+doubles SANDY_SHOCKS (Assault Vest with PROTECT, STEALTH_ROCK): ASSAULT_VEST -> SITRUS_BERRY
+doubles BARRASKEWDA (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles HOUNDSTONE (choice item with WILL_O_WISP): CHOICE_SCARF -> SITRUS_BERRY
+doubles TINKATON (Assault Vest with ENCORE): ASSAULT_VEST -> LIFE_ORB
+doubles VANILLUXE (choice item with AURORA_VEIL): CHOICE_SPECS -> LIFE_ORB
+doubles BOUFFALANT (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles MAGNEZONE (Assault Vest with PROTECT): ASSAULT_VEST -> LIFE_ORB
+doubles HYDREIGON (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles ZOROARK (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles MISMAGIUS (choice item with PROTECT): CHOICE_SPECS -> LIFE_ORB
+doubles PERRSERKER (Assault Vest with HELPING_HAND): ASSAULT_VEST -> LIFE_ORB
+doubles TINKATON (Assault Vest with ENCORE): ASSAULT_VEST -> LIFE_ORB
+doubles BARRASKEWDA (choice item with PROTECT): CHOICE_BAND -> LIFE_ORB
+doubles GENGAR (choice item with PROTECT): CHOICE_SCARF -> SITRUS_BERRY
+
 Opponents, singles:
 BROCK        Leader     Rock      Aerodactyl, Kabutops, Omastar, Rhyperior, Tyranitar, Garganacl
 MISTY        Leader     Water     Starmie, Gyarados, Politoed, Walking Wake, Primarina, Ogerpon-Wellspring

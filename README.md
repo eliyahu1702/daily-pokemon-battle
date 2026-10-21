@@ -13,7 +13,7 @@ A Pokémon Emerald romhack built around a daily challenge: draft a team of six, 
   - Champions (Red, Blue, Lance, Steven, Wallace, Cynthia, Alder, Iris, Diantha, Kukui, Leon, Geeta, Nemona, Kieran), villains (Giovanni, Archie, Maxie, Cyrus, Ghetsis, N, Lysandre, Guzma, Lusamine, Rose, Volo), rivals (Silver, Wally, Hop, Arven, Penny) and the Frontier Brains, each with their signature team plus a variation.
   - Battle Tower aces running real competitive archetypes: rain, sun, sand, snow, hyper offense, stall, balance, Trick Room, VoltTurn, setup, and classic DPP and BW sand teams.
 - **Same challenge for everyone.** The date seeds both the draft and the opponent, so everybody gets the same fight on the same day. Opponents run through a shuffled order, so none repeats until all of them have appeared.
-- **See your score.** After the battle a results screen shows your team, how each one finished, and a score. A win is worth 1000, plus 150 for every Pokémon still standing and 1 per percent of HP left across the team, minus 15 per turn. A loss scores 75 per opposing Pokémon knocked out. Your best score of the day is kept.
+- **See your score.** After the battle a results screen shows your team, how each one finished, and a score. A win is worth 1000, plus 150 for every Pokémon still standing and 1 per percent of HP left across the team, minus 15 per turn. A loss scores 75 per opposing Pokémon knocked out. Your best score of the day is kept, and after a win the host can show your results screen again.
 - Lose and you can try again as often as you like that day. Win and your streak goes up.
 
 Pokémon from every generation are in, with modern moves, abilities and items, thanks to [pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion).

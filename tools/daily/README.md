@@ -22,6 +22,7 @@ Rules it applies:
 - Sets per Pokémon: Smogon's sets first, then sets built from Showdown's random battle roles ([pkmn/randbats](https://github.com/pkmn/randbats), in `setsource.py`), which come with a movepool, items and abilities; EVs and nature are picked from the Pokémon's stats and moves. Doubles uses Smogon's doubles and VGC sets, then random doubles roles, and only as a last resort a singles set with its singles-only move (hazards, Toxic, Roar) swapped for Protect.
 - Opponents: the leader's signature Pokémon first, then the strongest Pokémon of their type to fill six. Sets come from Smogon's Monotype analyses where they exist.
 - Every species, move, item and ability is checked against the expansion's constants, so a name that doesn't exist in the game is dropped instead of breaking the build.
+- Items must fit the moves: no Choice item next to Protect or another status move (Trick and Healing Wish are fine), no Assault Vest with status moves, no Light Clay without screens. A misfit item becomes Life Orb on attackers and Leftovers (Sitrus Berry in doubles) on the rest. `check_sets.py` checks the committed sets for this in CI.
 - Abilities are checked against the species' own ability list in the game. An ability that belongs to another form (Greninja's Battle Bond) switches the Pokémon to that form. Trainer pictures must have a front sprite.
 
 ### Refreshing the Smogon data

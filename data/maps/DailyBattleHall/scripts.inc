@@ -38,7 +38,15 @@ DailyBattleHall_EventScript_Challenge::
 
 DailyBattleHall_EventScript_AlreadyWon::
 	special DailyBattle_BufferStreak
-	msgbox DailyBattleHall_Text_AlreadyWon, MSGBOX_YESNO
+	msgbox DailyBattleHall_Text_AlreadyWon, MSGBOX_DEFAULT
+	special DailyBattle_HasSavedResult
+	goto_if_eq VAR_RESULT, FALSE, DailyBattleHall_EventScript_OfferRematch
+	msgbox DailyBattleHall_Text_SeeResults, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, DailyBattleHall_EventScript_OfferRematch
+	closemessage
+	special DailyBattle_ShowSavedResults
+DailyBattleHall_EventScript_OfferRematch::
+	msgbox DailyBattleHall_Text_Rematch, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, DailyBattleHall_EventScript_ComeBackTomorrow
 	special DailyDraft_HasTodaysTeam
 	goto_if_eq VAR_RESULT, TRUE, DailyBattleHall_EventScript_Battle
@@ -180,7 +188,12 @@ DailyBattleHall_Text_Won:
 
 DailyBattleHall_Text_AlreadyWon:
 	.string "You already beat today's opponent,\n"
-	.string "{STR_VAR_2} {STR_VAR_1}! Win streak: {STR_VAR_3}\p"
+	.string "{STR_VAR_2} {STR_VAR_1}! Win streak: {STR_VAR_3}$"
+
+DailyBattleHall_Text_SeeResults:
+	.string "Want to see your results again?$"
+
+DailyBattleHall_Text_Rematch:
 	.string "Want a rematch just for fun?$"
 
 DailyBattleHall_Text_ComeBackTomorrow:

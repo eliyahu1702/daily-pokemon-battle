@@ -522,13 +522,22 @@ def main():
     # game asserts when a trainer Pokémon has an ability its species can't have.
     species_abilities = setsource.load_species_abilities(ROOT)
     opponents = {mode: all_opponents(S, dex, mode) for mode in MODES}
-    fixes = set()
-    for x in flat + [x for mode in MODES for o in opponents[mode] for x in o["team"]]:
-        note = setsource.legalize_ability(x, species_abilities)
-        if note:
-            fixes.add(note)
+    # Items have to fit the moves too: random battle roles list items for the whole role, so a
+    # four-move pick can end up with a Choice item next to Protect.
+    sound_moves = setsource.load_sound_moves(ROOT)
+    fixes, item_fixes = set(), []
+    for mode in MODES:
+        for x in [x for _, sets in pools[mode] for x in sets] + [x for o in opponents[mode] for x in o["team"]]:
+            note = setsource.legalize_ability(x, species_abilities)
+            if note:
+                fixes.add(note)
+            note = setsource.legalize_item(x, S.move_info, sound_moves, mode == "doubles")
+            if note:
+                item_fixes.append("%s %s" % (mode, note))
     if fixes:
         report.append("Ability fixes:\n" + "\n".join(sorted(fixes)) + "\n")
+    if item_fixes:
+        report.append("Item fixes:\n" + "\n".join(item_fixes) + "\n")
     front_pics = setsource.load_front_trainer_pics(ROOT)
     bad_pics = {o["pic"] for mode in MODES for o in opponents[mode] if norm(o["pic"]) not in front_pics}
     if bad_pics:

@@ -651,3 +651,5 @@ gSpecials::
 	def_special DailyBattle_IsDoubles
 	def_special DailyBattle_ChooseLeads, waitstate=1
 	def_special DailyBattle_ShowResults, waitstate=1
+	def_special DailyBattle_HasSavedResult
+	def_special DailyBattle_ShowSavedResults, waitstate=1

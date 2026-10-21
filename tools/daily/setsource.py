@@ -72,6 +72,55 @@ def legalize_ability(s, species_abilities):
     return "%s: %s -> %s" % (s["species"], old, legal[0])
 
 
+def load_sound_moves(root):
+    text = open(os.path.join(root, "src", "data", "moves_info.h")).read()
+    parts = re.split(r"\[MOVE_([A-Z0-9_]+)\]\s*=\s*\{", text)
+    return {parts[i] for i in range(1, len(parts), 2) if re.search(r"\.soundMove\s*=\s*TRUE", parts[i + 1])}
+
+
+CHOICE_ITEMS = {"CHOICE_BAND", "CHOICE_SPECS", "CHOICE_SCARF"}
+# Status moves a Choice holder still runs on purpose: passing the item, or fainting on use.
+CHOICE_OK_STATUS = {"TRICK", "SWITCHEROO", "HEALING_WISH", "LUNAR_DANCE", "MEMENTO"}
+SCREENS = {"REFLECT", "LIGHT_SCREEN", "AURORA_VEIL"}
+CHARGE_MOVES = {"METEOR_BEAM", "ELECTRO_SHOT", "SKY_ATTACK", "SOLAR_BEAM", "SOLAR_BLADE", "GEOMANCY",
+                "SKULL_BASH", "RAZOR_WIND", "FREEZE_SHOCK", "ICE_BURN", "BOUNCE", "DIG", "DIVE", "FLY",
+                "PHANTOM_FORCE", "SHADOW_FORCE"}
+
+
+def is_status(move, move_info):
+    # A few damaging moves pick their category in code (Water Shuriken), so power decides too.
+    category, power = move_info.get(move, ("STATUS", 0))
+    return category == "STATUS" and power == 0
+
+
+def item_problem(item, moves, move_info, sound_moves):
+    """Why an item doesn't fit a set's moves, or None."""
+    status = [m for m in moves if is_status(m, move_info)]
+    if item in CHOICE_ITEMS and set(status) - CHOICE_OK_STATUS:
+        return "choice item with " + ", ".join(sorted(set(status) - CHOICE_OK_STATUS))
+    if item == "ASSAULT_VEST" and status:
+        return "Assault Vest with " + ", ".join(status)
+    if item == "LIGHT_CLAY" and not SCREENS & set(moves):
+        return "Light Clay without screens"
+    if item == "THROAT_SPRAY" and not sound_moves & set(moves):
+        return "Throat Spray without a sound move"
+    if item == "POWER_HERB" and not CHARGE_MOVES & set(moves):
+        return "Power Herb without a charge move"
+    return None
+
+
+def legalize_item(s, move_info, sound_moves, doubles):
+    """Swaps an item that doesn't fit the set's moves (Choice Scarf with Protect) for Life Orb
+    on attackers, or Leftovers (Sitrus Berry in doubles) on the rest. Returns a note."""
+    problem = s["item"] and item_problem(s["item"], s["moves"], move_info, sound_moves)
+    if not problem:
+        return None
+    attacks = sum(1 for m in s["moves"] if not is_status(m, move_info))
+    old = s["item"]
+    s["item"] = "LIFE_ORB" if attacks >= 3 else "SITRUS_BERRY" if doubles else "LEFTOVERS"
+    return "%s (%s): %s -> %s" % (s["species"], problem, old, s["item"])
+
+
 def load_front_trainer_pics(root):
     """TRAINER_PIC_* suffixes that have a front sprite (back-only pics crash as opponents)."""
     text = open(os.path.join(root, "src", "data", "graphics", "trainers.h")).read()
