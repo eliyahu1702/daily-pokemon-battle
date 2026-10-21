@@ -6,6 +6,7 @@
 //   press KEY [N]   hold KEY for N frames (default 6), then release for 12 frames
 //   repeat N KEY    press KEY N times
 //   poke8 ADDR V    write byte V to ADDR
+//   expect8 ADDR V  stop with exit code 2 unless the byte at ADDR is V
 //   clockdays N     run the cartridge clock N days ahead of the real date
 //   shot NAME       save the screen to NAME.png in the output directory
 #include <mgba/core/core.h>
@@ -134,6 +135,15 @@ int main(int argc, char **argv)
         }
         else if (!strcmp(cmd, "poke8"))
             core->busWrite8(core, strtoul(arg1, NULL, 0), strtoul(arg2, NULL, 0));
+        else if (!strcmp(cmd, "expect8"))
+        {
+            unsigned got = core->busRead8(core, strtoul(arg1, NULL, 0));
+            if (got != strtoul(arg2, NULL, 0))
+            {
+                fprintf(stderr, "expected %s at %s, found %u\n", arg2, arg1, got);
+                return 2;
+            }
+        }
         else
         {
             fprintf(stderr, "unknown command %s\n", cmd);

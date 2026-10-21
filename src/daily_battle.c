@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle_factory_screen.h"
 #include "battle_main.h"
+#include "battle_setup.h"
 #include "daily_battle.h"
 #include "data.h"
 #include "event_data.h"
@@ -48,6 +49,11 @@ static const u8 *const sDailyTrainerThemes[] = DAILY_TRAINER_THEMES;
 STATIC_ASSERT(ARRAY_COUNT(sDailyTrainerThemes) == DAILY_TRAINERS_COUNT, DailyTrainerThemesCount);
 
 static EWRAM_DATA struct Pokemon sDraftChoices[DRAFT_CHOICES] = {0};
+
+// Set to 1 by tools/daily/playtest/check_all.py before the hall's first DailyBattle_Setup:
+// that call then builds every opponent's team and every draft set once, so a set that trips
+// an assert shows up in CI rather than on the day it comes up. It ends at 2.
+EWRAM_DATA u8 gDailySelfTest = 0;
 
 static void Task_OpenDraftPicker(u8 taskId);
 static void CB2_ReturnFromChooseLeads(void);
@@ -149,6 +155,24 @@ void DailyBattle_InitNewGame(void)
     FlagSet(FLAG_DAILY_NO_WHITEOUT);
 }
 
+static void RunSelfTest(void)
+{
+    u32 i;
+    u32 draftSets = sDoublesFirstSet[DRAFT_DOUBLES_SPECIES_COUNT - 1] + sDoublesSetCount[DRAFT_DOUBLES_SPECIES_COUNT - 1];
+
+    for (i = 0; i < DAILY_TRAINERS_COUNT * 2; i++)
+    {
+        const struct Trainer *trainer = &sDailyTrainers[DIFFICULTY_NORMAL][i];
+
+        SanitizeFrontTrainerPic(trainer->trainerPic);
+        CreateNPCTrainerPartyFromTrainer(gParties[B_TRAINER_OPPONENT_A], trainer);
+    }
+    for (i = 0; i < draftSets; i++)
+        CreateDraftMon(&sDraftChoices[0], i);
+    ZeroEnemyPartyMons();
+    gDailySelfTest = 2;
+}
+
 // Picks today's opponent and format. Buffers name, class and theme into STR_VAR_1..3.
 // VAR_RESULT is TRUE if the player already beat today's opponent.
 void DailyBattle_Setup(void)
@@ -157,6 +181,8 @@ void DailyBattle_Setup(void)
     u32 id = GetOpponentForDay(today);
     const struct Trainer *trainer;
 
+    if (gDailySelfTest == 1)
+        RunSelfTest();
     VarSet(VAR_DAILY_OPPONENT, id);
     VarSet(VAR_DAILY_DOUBLES, IsDoublesDay(today));
     trainer = GetDailyTrainer();

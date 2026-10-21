@@ -1267,7 +1267,7 @@ Nature: NATURE_TIMID
 === DAILY_TRAINER_PRYCE ===
 Name: PRYCE
 Class: Leader
-Pic: Old Man
+Pic: Expert M
 Music: Intense
 AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
 
@@ -4505,7 +4505,7 @@ Nature: NATURE_JOLLY
 === DAILY_TRAINER_RAMOS ===
 Name: RAMOS
 Class: Leader
-Pic: Old Man
+Pic: Expert M
 Music: Intense
 AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
 
@@ -5020,7 +5020,7 @@ Nature: NATURE_NAIVE
 - MOVE_STONE_EDGE
 
 /* Greninja (gen9monotype: Battle Bond (Water)) */
-SPECIES_GRENINJA @ ITEM_LIFE_ORB
+SPECIES_GRENINJA_BATTLE_BOND @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_BATTLE_BOND
 EVs: 252 SpA / 4 SpD / 252 Spe
@@ -15344,7 +15344,7 @@ Nature: NATURE_TIMID
 === DAILY_TRAINER_PRYCE_DOUBLES ===
 Name: PRYCE
 Class: Leader
-Pic: Old Man
+Pic: Expert M
 Music: Intense
 AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
 Battle Type: Doubles
@@ -18623,7 +18623,7 @@ Nature: NATURE_Careful
 === DAILY_TRAINER_RAMOS_DOUBLES ===
 Name: RAMOS
 Class: Leader
-Pic: Old Man
+Pic: Expert M
 Music: Intense
 AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
 Battle Type: Doubles
@@ -19145,7 +19145,7 @@ Nature: NATURE_NAIVE
 - MOVE_STONE_EDGE
 
 /* Greninja (gen9monotype: Battle Bond (Water) (doubles)) */
-SPECIES_GRENINJA @ ITEM_LIFE_ORB
+SPECIES_GRENINJA_BATTLE_BOND @ ITEM_LIFE_ORB
 Level: 100
 Ability: ABILITY_BATTLE_BOND
 EVs: 252 SpA / 4 SpD / 252 Spe

@@ -22,6 +22,7 @@ Rules it applies:
 - Sets per Pokémon: Smogon's sets first, then sets built from Showdown's random battle roles ([pkmn/randbats](https://github.com/pkmn/randbats), in `setsource.py`), which come with a movepool, items and abilities; EVs and nature are picked from the Pokémon's stats and moves. Doubles uses Smogon's doubles and VGC sets, then random doubles roles, and only as a last resort a singles set with its singles-only move (hazards, Toxic, Roar) swapped for Protect.
 - Opponents: the leader's signature Pokémon first, then the strongest Pokémon of their type to fill six. Sets come from Smogon's Monotype analyses where they exist.
 - Every species, move, item and ability is checked against the expansion's constants, so a name that doesn't exist in the game is dropped instead of breaking the build.
+- Abilities are checked against the species' own ability list in the game. An ability that belongs to another form (Greninja's Battle Bond) switches the Pokémon to that form. Trainer pictures must have a front sprite.
 
 ### Refreshing the Smogon data
 
@@ -46,5 +47,7 @@ python3 tools/daily/playtest/full_run.py pokeemerald.gba /tmp/run win doubles   
 ```
 
 `full_run.py` moves the clock to the next singles or doubles day and plays a new game through the six draft rounds, the lead pick, the battle and the results screen, and fails if the game hits an assertion screen. After a few turns it forces the outcome by writing `gBattleOutcome`, so both the win and the loss paths get covered.
+
+`check_all.py pokeemerald.gba /tmp/selftest` makes the game build every opponent's team, in singles and doubles, and every draft set, in a few seconds. A set the game would reject on its day (an ability the species can't have, a trainer picture with no front sprite) stops it on an assertion screen and fails the check.
 
 `day_rollover.py pokeemerald.gba /tmp/days 7` starts a new game on each of the next seven days (using the `clockdays` script command to move the cartridge clock) and fails if two days share an opponent or draft, or if the same day comes out differently twice.

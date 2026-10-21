@@ -20,8 +20,8 @@ Pokémon from every generation are in, with modern moves, abilities and items, t
 
 ## Playing
 
-- **In your browser:** https://eliyahu1702.github.io/daily-pokemon-battle/ . Pick your own Pokémon Emerald (USA/Europe) file and it's patched and started right on the page. Works on phones too.
-- **On an emulator:** download `daily-pokemon-battle.bps` from the [latest release](https://github.com/eliyahu1702/daily-pokemon-battle/releases/latest) and apply it to your own Emerald file with [Rom Patcher JS](https://www.marcrobledo.com/RomPatcher.js/) or [Flips](https://github.com/Alcaro/Flips). Use an emulator with real-time clock support: mGBA on PC, Pizza Boy GBA or My Boy! on Android, Delta on iPhone.
+- **On an emulator:** download `daily-pokemon-battle.bps` from https://eliyahu1702.github.io/daily-pokemon-battle/ or the [latest release](https://github.com/eliyahu1702/daily-pokemon-battle/releases/latest) and apply it to your own Emerald file with [Rom Patcher JS](https://www.marcrobledo.com/RomPatcher.js/) or [Flips](https://github.com/Alcaro/Flips). Use an emulator with real-time clock support: mGBA on PC, Pizza Boy GBA or My Boy! on Android, Delta on iPhone.
+- **No emulator?** The same page can patch your Emerald file and run it in your browser, on PC or phone. The file stays on your device.
 
 The base file must be Pokémon Emerald (USA/Europe), SHA-1 `f3ae088181bf583e55daf962a92bb46f4f1d07b7`. No game files are distributed here.
 

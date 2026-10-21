@@ -17,8 +17,8 @@
     <h1>Daily Pokémon Battle</h1>
     <p class="lede">Draft six Pokémon with real competitive sets, then take on today's opponent. Everyone gets the same draft and the same battle, and there's a new one every day.</p>
     <div class="cta">
-      <a class="button primary" href="#play">Play in your browser</a>
-      <a class="button" href="#download">Download the patch</a>
+      <a class="button primary" href="daily-pokemon-battle.bps" download>Download the patch</a>
+      <a class="button" href="#download">How to play</a>
     </div>
   </div>
 </header>
@@ -33,8 +33,25 @@
     <figure><img src="screens/results.png" alt="The results screen with team, score and best of the day"><figcaption><b>Chase a score.</b> Fewer turns, fewer faints and more HP left mean more points. Lose and you can try again the same day.</figcaption></figure>
   </section>
 
+  <section id="download" class="wrap panel">
+    <h2>How to play</h2>
+    <p>You need your own copy of <b>Pokémon Emerald (USA/Europe)</b> as a .gba file, and the patch.</p>
+    <ol>
+      <li>Download <a href="daily-pokemon-battle.bps" download>daily-pokemon-battle.bps</a>.</li>
+      <li>Open <a href="https://www.marcrobledo.com/RomPatcher.js/" rel="noopener">Rom Patcher JS</a> (it works on phones too), choose your Emerald file as the ROM and the .bps as the patch, and press Apply patch. You get a new .gba file. On PC you can also use <a href="https://github.com/Alcaro/Flips/releases" rel="noopener">Flips</a>.</li>
+      <li>Open the new file in an emulator with real-time clock support:
+        <ul>
+          <li><b>PC (Windows, Mac, Linux):</b> <a href="https://mgba.io/downloads.html" rel="noopener">mGBA</a>.</li>
+          <li><b>Android:</b> Pizza Boy GBA or My Boy!.</li>
+          <li><b>iPhone and iPad:</b> Delta, from the App Store.</li>
+        </ul>
+      </li>
+    </ol>
+    <p class="note">Base file check: CRC32 <code>1F1C08FB</code>, SHA-1 <code>f3ae088181bf583e55daf962a92bb46f4f1d07b7</code>. A new battle starts at midnight on your device's clock.</p>
+  </section>
+
   <section id="play" class="wrap panel">
-    <h2>Play in your browser</h2>
+    <h2>No emulator? Play in your browser</h2>
     <p>You need your own copy of <b>Pokémon Emerald (USA/Europe)</b> as a .gba file. It's patched right here in your browser and never uploaded anywhere. Your save stays in this browser.</p>
     <div id="setup">
       <div id="have-rom" hidden>
@@ -42,7 +59,7 @@
         <button class="linkish" id="forget">Use a different file</button>
       </div>
       <div id="need-rom">
-        <label class="button primary file">
+        <label class="button file">
           Choose your Emerald .gba file
           <input type="file" id="rom" accept=".gba,application/octet-stream">
         </label>
@@ -56,15 +73,6 @@
     </details>
   </section>
 
-  <section id="download" class="wrap panel">
-    <h2>Play on an emulator</h2>
-    <ol>
-      <li>Download <a href="daily-pokemon-battle.bps" download>daily-pokemon-battle.bps</a>.</li>
-      <li>Patch your own Pokémon Emerald (USA/Europe) file with it. The easiest way is <a href="https://www.marcrobledo.com/RomPatcher.js/" rel="noopener">Rom Patcher JS</a>, which works on phones too. On PC you can also use <a href="https://github.com/Alcaro/Flips/releases" rel="noopener">Flips</a>.</li>
-      <li>Open the patched file in an emulator with real-time clock support: <b>mGBA</b> on Windows, Mac or Linux, <b>Pizza Boy GBA</b> or <b>My Boy!</b> on Android, <b>Delta</b> on iPhone.</li>
-    </ol>
-    <p class="note">Base file check: CRC32 <code>1F1C08FB</code>, SHA-1 <code>f3ae088181bf583e55daf962a92bb46f4f1d07b7</code>. The new day starts at midnight on your device's clock.</p>
-  </section>
 </main>
 
 <footer class="wrap">

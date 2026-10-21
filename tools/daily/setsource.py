@@ -40,6 +40,45 @@ def load_base_stats(root):
     return stats
 
 
+def load_species_abilities(root):
+    """SPECIES_* suffix -> the abilities the expansion allows it, in slot order."""
+    out = {}
+    folder = os.path.join(root, "src", "data", "pokemon", "species_info")
+    for name in sorted(os.listdir(folder)):
+        text = open(os.path.join(folder, name)).read()
+        parts = re.split(r"\[SPECIES_([A-Z0-9_]+)\]\s*=\s*\{", text)
+        for i in range(1, len(parts), 2):
+            m = re.search(r"\.abilities\s*=\s*\{([^}]*)\}", parts[i + 1])
+            if m:
+                abilities = re.findall(r"ABILITY_([A-Z0-9_]+)", m.group(1))
+                out[parts[i]] = [a for a in abilities if a != "NONE"]
+    return out
+
+
+def legalize_ability(s, species_abilities):
+    """Makes a set's ability one the game allows. An ability that belongs to another form
+    (Greninja's Battle Bond) switches to that form; otherwise the first legal ability is used.
+    Returns a note when something changed."""
+    legal = species_abilities.get(s["species"])
+    if not legal or s["ability"] in legal:
+        return None
+    # Prefer the form named after the ability (GRENINJA_BATTLE_BOND over GRENINJA_ASH).
+    forms = sorted(species_abilities.items(), key=lambda f: (f[0] != s["species"] + "_" + s["ability"], f[0]))
+    for form, abilities in forms:
+        if form.startswith(s["species"] + "_") and s["ability"] in abilities:
+            old, s["species"] = s["species"], form
+            return "%s -> %s for %s" % (old, form, s["ability"])
+    old, s["ability"] = s["ability"], legal[0]
+    return "%s: %s -> %s" % (s["species"], old, legal[0])
+
+
+def load_front_trainer_pics(root):
+    """TRAINER_PIC_* suffixes that have a front sprite (back-only pics crash as opponents)."""
+    text = open(os.path.join(root, "src", "data", "graphics", "trainers.h")).read()
+    parts = re.split(r"\[TRAINER_PIC_([A-Z0-9_]+)\]\s*=", text)
+    return {parts[i] for i in range(1, len(parts), 2) if ".frontPic" in parts[i + 1]}
+
+
 def load_move_info(root):
     """MOVE_* suffix -> (category, power)."""
     text = open(os.path.join(root, "src", "data", "moves_info.h")).read()

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Plays a fresh game from the title screen through the draft and into today's battle.
 
-Usage: full_run.py ROM OUTDIR [win|lose] [singles|doubles]
-The cartridge clock is moved forward to the next day with the given format (the default is
-today, whatever it is). Before the battle the run picks new leads: the third Pokémon, plus the
+Usage: full_run.py ROM OUTDIR [win|lose] [singles|doubles|DAYS_AHEAD]
+The cartridge clock is moved forward to the next day with the given format, or by DAYS_AHEAD
+days (the default is today, whatever it is). Before the battle the run picks new leads: the third Pokémon, plus the
 fourth on a doubles day.
 Writes screenshots to OUTDIR and exits non-zero if the game hits an assertion screen.
 After a few turns the outcome is forced by writing gBattleOutcome (looked up in the .map
@@ -90,7 +90,7 @@ def main():
     rom, out = sys.argv[1], sys.argv[2]
     outcome = sys.argv[3] if len(sys.argv) > 3 else "win"
     fmt = sys.argv[4] if len(sys.argv) > 4 else None
-    days_ahead = days_until(fmt) if fmt else 0
+    days_ahead = int(fmt) if fmt and fmt.isdigit() else days_until(fmt) if fmt else 0
     doubles = is_doubles_day((datetime.date.today() - datetime.date(2000, 1, 1)).days + 1 + days_ahead)
     print("playing %d days ahead, a %s day" % (days_ahead, "doubles" if doubles else "singles"))
     battle_outcome = symbol_address(os.path.splitext(rom)[0] + ".map", "gBattleOutcome")
