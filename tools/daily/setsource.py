@@ -136,8 +136,10 @@ def load_move_info(root):
     for i in range(1, len(parts), 2):
         block = parts[i + 1]
         cat = re.search(r"\.category\s*=\s*DAMAGE_CATEGORY_(\w+)", block)
-        power = re.search(r"\.power\s*=\s*(\d+)", block)
-        info[parts[i]] = (cat.group(1) if cat else "STATUS", int(power.group(1)) if power else 0)
+        # Power can depend on the generation setting ("B_UPDATED_MOVE_DATA >= GEN_6 ? 80 : 90").
+        power = re.search(r"\.power\s*=\s*([^,\n]+)", block)
+        values = [int(v) for v in re.findall(r"(?<!GEN_)\b(\d+)\b", power.group(1))] if power else []
+        info[parts[i]] = (cat.group(1) if cat else "STATUS", max(values, default=0))
     return info
 
 
@@ -146,9 +148,16 @@ def spread_for(moves, base, move_info, role, trick_room=False):
     phys = sum(1 for m in moves if move_info.get(m, ("STATUS", 0))[0] == "PHYSICAL" and move_info[m][1] > 0)
     spec = sum(1 for m in moves if move_info.get(m, ("STATUS", 0))[0] == "SPECIAL" and move_info[m][1] > 0)
     attack = "atk" if phys >= spec else "spa"
-    bulky = any(w in role for w in BULKY_ROLE_WORDS) or phys + spec <= 1
+    # Whole words only: a "Wallbreaker" is an attacker.
+    bulky_role = any(re.search(r"\b%s\b" % w, role) for w in BULKY_ROLE_WORDS)
+    # Bulky roles with three or more attacks invest in attack, not defense.
+    bulky = (bulky_role and phys + spec <= 2) or phys + spec <= 1
     slow = trick_room or base["spe"] < 55
-    if bulky:
+    if bulky_role and not bulky:
+        defense = "def" if base["def"] <= base["spd"] else "spd"
+        evs = {"hp": 252, attack: 252, defense: 4}
+        nature = ("Brave" if attack == "atk" else "Quiet") if slow else ("Adamant" if attack == "atk" else "Modest")
+    elif bulky:
         defense = "def" if base["def"] <= base["spd"] else "spd"
         evs = {"hp": 252, defense: 252, attack if phys + spec else "spe": 4}
         nature = {"def": "Impish" if attack == "atk" else "Bold",
@@ -164,9 +173,9 @@ def spread_for(moves, base, move_info, role, trick_room=False):
         evs = {attack: 252, "spe": 252, "hp": 4}
         nature = "Jolly" if attack == "atk" else "Timid"
     ivs = {"spe": 0} if slow else {}
-    if attack == "atk":
-        ivs["spa"] = 31
-    return evs, nature, ivs
+    if attack == "spa" and phys == 0:
+        ivs["atk"] = 0
+    return evs, nature.upper(), ivs
 
 
 def randbats_sets(R, dex, data, species, base_stats, move_info, banned_items, banned_moves, max_sets=4):
