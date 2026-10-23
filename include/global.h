@@ -254,8 +254,53 @@ struct NPCFollower
 #include "constants/items.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
+// Daily Battle Hall records: see src/daily_records.c. Days are RTC day counts + 1, so 0 is "never".
+#define DAILY_HISTORY_COUNT 30
+
+struct DailyHistoryEntry
+{
+    u16 day;
+    u16 score;
+    u8 opponent; // DailyTrainerId
+    u8 turns;
+    u8 knockouts:3;
+    u8 lost:3;
+    u8 won:1;
+    u8 doubles:1;
+    u8 padding;
+};
+
+struct DailyLastResult
+{
+    struct DailyHistoryEntry entry;
+    u16 species[PARTY_SIZE];
+    u16 heldItems[PARTY_SIZE];
+    u8 hp[PARTY_SIZE]; // HP percent left, 0 if fainted
+    u8 padding[2];
+};
+
+struct DailyRecords
+{
+    u16 magic; // DAILY_RECORDS_MAGIC once set up; saves from before records hold anything here
+    u8 historyCount;
+    u8 historyHead; // Where the next entry goes; history is a ring of the newest entries
+    u16 bossWins;
+    u16 played;
+    u16 wins;
+    u16 streak;
+    u16 bestStreak;
+    u16 bestScore;
+    u16 lastWinDay;
+    u16 playedDay;  // The last day whose one scored attempt has been used
+    u16 attemptDay; // Set while a scored battle is running; still set after a reset means a forfeit
+    u32 badges;
+    struct DailyLastResult last;
+    struct DailyHistoryEntry history[DAILY_HISTORY_COUNT];
+};
+
 struct SaveBlock3
 {
+    struct DailyRecords dailyRecords;
 #if OW_USE_FAKE_RTC
     struct SiiRtcInfo fakeRTC;
 #endif

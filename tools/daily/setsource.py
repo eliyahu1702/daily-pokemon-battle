@@ -19,8 +19,10 @@ SINGLES_ONLY_MOVES = {"STEALTH_ROCK", "SPIKES", "TOXIC_SPIKES", "STICKY_WEB", "R
 BULKY_ROLE_WORDS = ("Support", "Wall", "Bulky", "Pivot", "Tera Blast user")
 
 
-def load_base_stats(root):
-    """SPECIES_* suffix -> {hp, atk, def, spa, spd, spe}, read from the expansion's species info."""
+def load_base_stats(root, conditional=False):
+    """SPECIES_* suffix -> {hp, atk, def, spa, spd, spe}, read from the expansion's species info.
+    Species whose stats depend on a config (`P_UPDATED_STATS >= GEN_n ? a : b`) are left out
+    unless `conditional`, which takes the current stats; the draft pool was built without them."""
     stats = {}
     folder = os.path.join(root, "src", "data", "pokemon", "species_info")
     fields = {"hp": "baseHP", "atk": "baseAttack", "def": "baseDefense",
@@ -33,6 +35,8 @@ def load_base_stats(root):
             found = {}
             for key, field in fields.items():
                 m = re.search(r"\.%s\s*=\s*(\d+)" % field, block)
+                if not m and conditional:
+                    m = re.search(r"\.%s\s*=\s*[^;,\n?]*\?\s*(\d+)" % field, block)
                 if m:
                     found[key] = int(m.group(1))
             if len(found) == 6:

@@ -11,21 +11,42 @@
 #define VAR_DAILY_DRAFT_DAY   VAR_UNUSED_0x4091
 #define VAR_DAILY_WON_DAY     VAR_UNUSED_0x409B
 #define VAR_DAILY_STREAK      VAR_UNUSED_0x409D
-#define VAR_DAILY_BEST_SCORE  VAR_UNUSED_0x40A1
-#define VAR_DAILY_BEST_DAY    VAR_UNUSED_0x40A8
-#define VAR_DAILY_DOUBLES     VAR_UNUSED_0x40B8 // TRUE when today's battle is a double battle
+#define VAR_DAILY_DAY         VAR_UNUSED_0x40A8 // The day being played: today, or a past day in practice
+#define VAR_DAILY_DOUBLES     VAR_UNUSED_0x40B8 // TRUE when the current battle is a double battle
+#define VAR_DAILY_MODE        VAR_UNUSED_0x40FB // DAILY_MODE_*
+#define VAR_DAILY_SEED        VAR_UNUSED_0x40FC // Draft seed: the day for a daily, DAILY_SEED_RANDOM | n in practice
 
-// Today's best win, so the results screen can be shown again from the hall. Kept for the
-// day in VAR_DAILY_WON_DAY. Stats: turns | knockouts << 8 | lost << 12. Each team member:
-// species low byte << 8 | HP percent (0 fainted, 0xFF empty slot), in party order.
-#define VAR_DAILY_RESULT_SCORE VAR_UNUSED_0x40BB
-#define VAR_DAILY_RESULT_STATS VAR_UNUSED_0x40DB
-#define VAR_DAILY_RESULT_MON_0 VAR_UNUSED_0x40DC
-#define VAR_DAILY_RESULT_MON_1 VAR_UNUSED_0x40E5
-#define VAR_DAILY_RESULT_MON_2 VAR_UNUSED_0x40F7
-#define VAR_DAILY_RESULT_MON_3 VAR_UNUSED_0x40F8
-#define VAR_DAILY_RESULT_MON_4 VAR_UNUSED_0x40F9
-#define VAR_DAILY_RESULT_MON_5 VAR_UNUSED_0x40FA
+// The scored daily battle, or an unscored practice battle after it.
+#define DAILY_MODE_DAILY    0
+#define DAILY_MODE_PRACTICE 1
+
+// Practice drafts use seeds no real day reaches.
+#define DAILY_SEED_RANDOM 0x8000
+
+// VAR_0x8004 for DailyBattle_SetupPractice: today's opponent, a random one, or the daily from
+// 1-7 days ago (PRACTICE_PAST_DAY + days ago).
+#define PRACTICE_TODAY     0
+#define PRACTICE_RANDOM    1
+#define PRACTICE_PAST_DAY  10
+
+// Badges, as bits of the records' badges field.
+#define DAILY_BADGE_FIRST_WIN        0
+#define DAILY_BADGE_DOUBLE_TROUBLE   1
+#define DAILY_BADGE_FLAWLESS         2
+#define DAILY_BADGE_LAST_STAND       3
+#define DAILY_BADGE_SPEEDSTER        4
+#define DAILY_BADGE_HIGH_ROLLER      5
+#define DAILY_BADGE_ON_A_ROLL        6
+#define DAILY_BADGE_WEEK_WARRIOR     7
+#define DAILY_BADGE_UNSTOPPABLE      8
+#define DAILY_BADGE_BOSS_SLAYER      9
+#define DAILY_BADGE_LEGEND_HUNTER    10
+#define DAILY_BADGE_TITLE_TAKER      11
+#define DAILY_BADGE_REGULAR          12
+#define DAILY_BADGE_VETERAN          13
+#define DAILY_BADGE_CENTURION        14
+#define DAILY_BADGE_PRACTICE_PAYS    15
+#define DAILY_BADGE_COUNT            16
 
 // One day in DOUBLES_DAY_PERIOD is a double battle, picked by the daily seed.
 #define DOUBLES_DAY_PERIOD 3

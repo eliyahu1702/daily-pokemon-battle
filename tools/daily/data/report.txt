@@ -265,6 +265,18 @@ ACE_VOLTTURN Cooltraine archetype Rotom-Wash, Landorus-Therian, Scizor, Iron Val
 ACE_SETUP    Dragon Tam archetype Dragonite, Dragapult, Kingambit, Volcarona, Garchomp, Gholdengo
 ACE_DPP      Expert     archetype Tyranitar, Gengar, Metagross, Heatran, Gyarados, Breloom
 ACE_BWSAND   Expert     archetype Tyranitar, Excadrill, Landorus, Ferrothorn, Latios, Starmie
+BOSS_MAXIE   Magma Lead boss      Groudon, Camerupt, Crobat, Mightyena, Weezing, Torkoal
+BOSS_ARCHIE  Aqua Leade boss      Kyogre, Sharpedo, Crobat, Mightyena, Muk, Kingdra
+BOSS_CYRUS   Boss FRLG  boss      Dialga, Weavile, Honchkrow, Crobat, Gyarados, Houndoom
+BOSS_GHETSIS Boss FRLG  boss      Kyurem-Black, Hydreigon, Cofagrigus, Seismitoad, Eelektross, Bisharp
+BOSS_N       Pkmn Train boss      Reshiram, Zoroark, Carracosta, Vanilluxe, Archeops, Klinklang
+BOSS_LYSANDRE Boss FRLG  boss      Yveltal, Pyroar, Mienshao, Honchkrow, Gyarados, Tyranitar
+BOSS_LUSAMINE Boss FRLG  boss      Necrozma-Dusk-Mane, Clefable, Lilligant, Mismagius, Milotic, Bewear
+BOSS_ROSE    Boss FRLG  boss      Eternatus, Copperajah, Escavalier, Ferrothorn, Perrserker, Klinklang
+BOSS_VOLO    Champion   boss      Giratina-Origin, Spiritomb, Garchomp, Roserade, Togekiss, Lucario
+BOSS_GIOVANNI Boss FRLG  boss      Mewtwo, Nidoking, Persian, Nidoqueen, Rhyperior, Kangaskhan
+BOSS_STEVEN  Champion   boss      Rayquaza, Metagross, Skarmory, Claydol, Aggron, Cradily
+BOSS_RED     Pkmn Train boss      Ho-Oh, Pikachu, Charizard, Venusaur, Blastoise, Snorlax
 
 Opponents, doubles:
 BROCK        Leader     Rock      Aerodactyl, Kabutops, Omastar, Rhyperior, Tyranitar, Garganacl
@@ -445,3 +457,15 @@ ACE_VOLTTURN Cooltraine archetype Rotom-Wash, Landorus-Therian, Scizor, Iron Val
 ACE_SETUP    Dragon Tam archetype Dragonite, Dragapult, Kingambit, Volcarona, Garchomp, Gholdengo
 ACE_DPP      Expert     archetype Tyranitar, Gengar, Metagross, Heatran, Gyarados, Breloom
 ACE_BWSAND   Expert     archetype Tyranitar, Excadrill, Landorus, Ferrothorn, Latios, Starmie
+BOSS_MAXIE   Magma Lead boss      Groudon, Camerupt, Crobat, Mightyena, Weezing, Torkoal
+BOSS_ARCHIE  Aqua Leade boss      Kyogre, Sharpedo, Crobat, Mightyena, Muk, Kingdra
+BOSS_CYRUS   Boss FRLG  boss      Dialga, Weavile, Honchkrow, Crobat, Gyarados, Houndoom
+BOSS_GHETSIS Boss FRLG  boss      Kyurem-Black, Hydreigon, Cofagrigus, Seismitoad, Eelektross, Bisharp
+BOSS_N       Pkmn Train boss      Reshiram, Zoroark, Carracosta, Vanilluxe, Archeops, Klinklang
+BOSS_LYSANDRE Boss FRLG  boss      Yveltal, Pyroar, Mienshao, Honchkrow, Gyarados, Tyranitar
+BOSS_LUSAMINE Boss FRLG  boss      Necrozma-Dusk-Mane, Clefable, Lilligant, Mismagius, Milotic, Bewear
+BOSS_ROSE    Boss FRLG  boss      Eternatus, Copperajah, Escavalier, Ferrothorn, Perrserker, Klinklang
+BOSS_VOLO    Champion   boss      Giratina-Origin, Spiritomb, Garchomp, Roserade, Togekiss, Lucario
+BOSS_GIOVANNI Boss FRLG  boss      Mewtwo, Nidoking, Persian, Nidoqueen, Rhyperior, Kangaskhan
+BOSS_STEVEN  Champion   boss      Rayquaza, Metagross, Skarmory, Claydol, Aggron, Cradily
+BOSS_RED     Pkmn Train boss      Ho-Oh, Pikachu, Charizard, Venusaur, Blastoise, Snorlax

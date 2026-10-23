@@ -121,6 +121,24 @@ COMPETITIVE = [
      ["Tyranitar", "Excadrill", "Landorus", "Ferrothorn", "Latios", "Starmie"]),
 ]
 
+# Sunday bosses: a villain (or Champion) from SIGNATURE leading their legendary, with five of
+# their usual team. Fields: (signature key, legendary, theme). The hall shows the legendary
+# before the draft, so the theme names it.
+BOSSES = [
+    ("MAXIE",    "Groudon",            "Awakening GROUDON!"),
+    ("ARCHIE",   "Kyogre",             "Awakening KYOGRE!"),
+    ("CYRUS",    "Dialga",             "Commanding DIALGA!"),
+    ("GHETSIS",  "Kyurem-Black",       "Wielding BLACK KYUREM!"),
+    ("N",        "Reshiram",           "Riding with RESHIRAM!"),
+    ("LYSANDRE", "Yveltal",            "Unleashing YVELTAL!"),
+    ("LUSAMINE", "Necrozma-Dusk-Mane", "Fused with DUSK MANE NECROZMA!"),
+    ("ROSE",     "Eternatus",          "Releasing ETERNATUS!"),
+    ("VOLO",     "Giratina-Origin",    "Calling on GIRATINA!"),
+    ("GIOVANNI", "Mewtwo",             "Controlling MEWTWO!"),
+    ("STEVEN",   "Rayquaza",           "Joined by RAYQUAZA!"),
+    ("RED",      "Ho-Oh",              "Blessed by HO-OH!"),
+]
+
 # Hand-written sets for signature Pokémon with no Smogon set in the formats we keep.
 CUSTOM_SETS = {
     "Pikachu": {"item": "Light Ball", "ability": "Lightning Rod", "nature": "Hasty",

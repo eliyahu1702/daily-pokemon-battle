@@ -53,6 +53,20 @@ static void Press(const char *key, int frames)
     RunFrames(12);
 }
 
+// The n-th key of a comma-separated list, wrapping around: "UP,A,B" gives UP, A, B, UP...
+static const char *NthKey(const char *list, int n)
+{
+    static char key[32];
+    int count = 1;
+
+    for (const char *c = list; *c; c++)
+        count += (*c == ',');
+    for (n %= count; n > 0; n--)
+        list = strchr(list, ',') + 1;
+    snprintf(key, sizeof(key), "%.*s", (int)strcspn(list, ","), list);
+    return key;
+}
+
 static void Shot(const char *name)
 {
     char path[512];
@@ -133,8 +147,33 @@ int main(int argc, char **argv)
             core->rtc.override = RTC_WALLCLOCK_OFFSET;
             core->rtc.value = (int64_t)atoi(arg1) * 24 * 60 * 60 * 1000;
         }
+        else if (!strcmp(cmd, "reset")) // like pressing the reset button; the save stays
+            core->reset(core);
         else if (!strcmp(cmd, "poke8"))
             core->busWrite8(core, strtoul(arg1, NULL, 0), strtoul(arg2, NULL, 0));
+        else if (!strcmp(cmd, "until")) // until KEYS ADDR VALUE: press KEYS (in turn, comma-separated) every 20 frames until the u32 at ADDR is VALUE
+        {
+            char arg3[128];
+            uint32_t addr, value;
+            int presses = 0;
+
+            if (sscanf(line, "%*s %*s %*s %127s", arg3) != 1)
+                return 1;
+            addr = strtoul(arg2, NULL, 0);
+            value = strtoul(arg3, NULL, 0);
+            while (core->busRead32(core, addr) != value)
+            {
+                if (++presses > 2000)
+                {
+                    fprintf(stderr, "gave up waiting for %s at %s\n", arg3, arg2);
+                    Shot("until_failed");
+                    return 3;
+                }
+                if (strcmp(arg1, "none"))
+                    Press(NthKey(arg1, presses - 1), 6);
+                RunFrames(14);
+            }
+        }
         else if (!strcmp(cmd, "expect8"))
         {
             unsigned got = core->busRead8(core, strtoul(arg1, NULL, 0));

@@ -11,7 +11,7 @@ python3 tools/daily/generate.py
 It writes three files, which are committed so the ROM builds without Python:
 
 - `src/data/draft_pool.party`: every set you can be offered in the draft: the singles pool, then the doubles pool, with three or four sets per Pokémon.
-- `src/data/daily_trainers.party`: every daily opponent: a monotype team per gym leader and Elite Four member in `leaders.py`, and the signature teams (with variations) and competitive archetypes in `opponents.py`. Each opponent appears twice, once with singles sets and once (`_DOUBLES`, `Battle Type: Doubles`) with doubles sets.
+- `src/data/daily_trainers.party`: every daily opponent: a monotype team per gym leader and Elite Four member in `leaders.py`, the signature teams (with variations) and competitive archetypes in `opponents.py`, and last the Sunday bosses (`BOSSES` in `opponents.py`), each leading their legendary. Each opponent appears twice, once with singles sets and once (`_DOUBLES`, `Battle Type: Doubles`) with doubles sets.
 - `include/constants/daily_battle_generated.h`: their ids and types, and where each Pokémon's sets start in the pool.
 
 `data/report.txt` lists the pool and each opponent's team for a quick read.
@@ -44,10 +44,12 @@ A headless mGBA driver that presses buttons from a script and saves screenshots.
 ```console
 sudo apt install libmgba-dev libpng-dev python3-pil
 make -C tools/daily/playtest
-python3 tools/daily/playtest/full_run.py pokeemerald.gba /tmp/run win doubles   # or lose, singles
+python3 tools/daily/playtest/full_run.py pokeemerald.gba /tmp/run win doubles   # or lose; singles, sunday
 ```
 
-`full_run.py` moves the clock to the next singles or doubles day and plays a new game through the six draft rounds, the lead pick, the battle and the results screen, and fails if the game hits an assertion screen. After a few turns it forces the outcome by writing `gBattleOutcome`, so both the win and the loss paths get covered.
+`full_run.py` moves the clock to the next singles, doubles or Sunday boss day and plays a new game through the six draft rounds, the lead pick, the battle and the results screen, then shows the results again, pages through the records and plays a practice battle (today's opponent after a win, yesterday's daily after a loss). It fails if the game hits an assertion screen or a screen never comes up. After a few turns it forces the outcome by writing `gBattleOutcome`, so both the win and the loss paths get covered. Scripts wait for screens with the `until KEY ADDR VALUE` command, which presses KEY until `gMain.callback2` is that screen's callback (looked up in the `.map` file, or with `arm-none-eabi-nm` for static ones).
+
+`forfeit.py pokeemerald.gba /tmp/forfeit` starts today's battle, resets the game during it and checks that the hall then counts it as a loss.
 
 `check_all.py pokeemerald.gba /tmp/selftest` makes the game build every opponent's team, in singles and doubles, and every draft set, in a few seconds. A set the game would reject on its day (an ability the species can't have, a trainer picture with no front sprite) stops it on an assertion screen and fails the check.
 

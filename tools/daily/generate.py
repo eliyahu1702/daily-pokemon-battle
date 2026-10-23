@@ -16,6 +16,7 @@ Outputs (Showdown-format party files consumed by tools/trainerproc):
   include/constants/daily_battle_generated.h
 """
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -26,7 +27,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 from leaders import LEADERS  # noqa: E402
-from opponents import COMPETITIVE, CUSTOM_SETS, SIGNATURE  # noqa: E402
+from opponents import BOSSES, COMPETITIVE, CUSTOM_SETS, SIGNATURE  # noqa: E402
 import setsource  # noqa: E402
 
 LEVEL = 100
@@ -208,6 +209,15 @@ class SetSource:
         self.base_stats = setsource.load_base_stats(ROOT)
         self.move_info = setsource.load_move_info(ROOT)
         self.cache = {}
+
+    def with_all_stats(self):
+        """A copy that also builds random battle sets for species with config-dependent stats
+        (Mewtwo, say). Only the bosses' legendaries use it, so the draft pool stays as it was."""
+        if not hasattr(self, "_all_stats"):
+            self._all_stats = copy.copy(self)
+            self._all_stats.base_stats = setsource.load_base_stats(ROOT, conditional=True)
+            self._all_stats.cache = {}
+        return self._all_stats
 
     def smogon(self, species, formats, banned_items):
         full, partial = [], []
@@ -473,6 +483,17 @@ def all_opponents(S, dex, mode):
         opponents.append({"key": key, "name": name, "class": cls, "pic": pic, "music": "Intense",
                           "theme": theme, "kind": "archetype",
                           "team": build_fixed_team(S, dex, key, species, mode)})
+    # Sunday bosses come last, so the other days' order doesn't change when bosses are added.
+    signature = {e[0]: e for e in SIGNATURE}
+    for key, legend, theme in BOSSES:
+        entry = signature[key]
+        ace = pick_set(S.with_all_stats(), legend, OPPONENT_FORMATS, 0, OPPONENT_BANNED_ITEMS, mode=mode)
+        assert ace, legend
+        rest = [x for x in build_signature_team(S, dex, entry, 0, mode) if x["name"] != legend]
+        team = [ace] + rest[:5]
+        opponents.append({"key": "BOSS_" + key, "name": entry[1], "class": entry[2], "pic": entry[3],
+                          "music": "Elite Four", "theme": theme, "kind": "boss", "legend": legend,
+                          "team": team})
     for o in opponents:
         assert len(o["name"]) <= 10, o["name"]
         if len(o["team"]) < 6:
@@ -583,6 +604,12 @@ def main():
            "enum DailyTrainerId", "{"]
     hdr += ["    DAILY_TRAINER_%s," % o["key"] for o in singles]
     hdr += ["    DAILY_TRAINERS_COUNT", "};", ""]
+    bosses = [o for o in singles if o["kind"] == "boss"]
+    hdr += ["// Sunday bosses are the last DAILY_BOSS_COUNT opponents; the other days draw from the rest.",
+            "#define DAILY_BOSS_COUNT %d" % len(bosses),
+            "#define DAILY_BOSS_FIRST (DAILY_TRAINERS_COUNT - DAILY_BOSS_COUNT)",
+            "// Each boss's legendary, shown before the draft.",
+            "#define DAILY_BOSS_LEGENDS { %s }" % ", ".join("SPECIES_" + R.species_(o["legend"]) for o in bosses), ""]
     hdr += ["#define DAILY_TRAINER_%s_DOUBLES (DAILY_TRAINER_%s + DAILY_TRAINERS_COUNT)" % (o["key"], o["key"])
             for o in singles]
     hdr += ["",

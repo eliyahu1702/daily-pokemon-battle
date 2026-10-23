@@ -2,7 +2,7 @@
 """Builds every daily opponent's team (singles and doubles) and every draft set once.
 
 Usage: check_all.py ROM OUTDIR
-Sets gDailySelfTest before the hall picks today's opponent, which makes the game create
+Sets gDailySelfTest before the hall sets up today's battle, which makes the game create
 every team and draft set in one go. A set the game rejects stops it on an assertion screen,
 saved as OUTDIR/selftest.png, and the check fails. Much faster than playing every day.
 """
@@ -12,7 +12,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from full_run import symbol_address  # noqa: E402
+from full_run import Screens, symbol_address  # noqa: E402
 
 
 def main():
@@ -21,8 +21,9 @@ def main():
     os.makedirs(out, exist_ok=True)
     s = ["wait 600", "poke8 0x%x 1" % flag, "press START", "wait 120", "press START", "wait 60",
          "press A", "wait 60"]
-    s += ["press A", "wait 20"] * 110   # up to the hall's opponent announcement
-    s += ["wait 1800", "shot selftest", "expect8 0x%x 2" % flag]
+    # The test runs when the host first sets up the day, before the menu; by the time the draft
+    # opens it's done. A set that asserts stops the game, so the draft never opens.
+    s += [Screens(rom).until("draft"), "wait 60", "shot selftest", "expect8 0x%x 2" % flag]
     path = os.path.join(out, "script.txt")
     open(path, "w").write("\n".join(s) + "\n")
     save = os.path.join(out, "save.sav")

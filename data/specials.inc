@@ -638,18 +638,24 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
-	def_special DailyBattle_Setup
-	def_special DailyBattle_RecordWin
+	def_special DailyBattle_StartDaily
+	def_special DailyBattle_SetupPractice
+	def_special DailyBattle_BufferOpponent
 	def_special DailyBattle_BufferStreak
-	def_special DailyDraft_HasTodaysTeam
-	def_special DailyDraft_Begin
+	def_special DailyBattle_IsDoubles
+	def_special DailyBattle_IsPractice
+	def_special DailyBattle_GetBoss
+	def_special DailyDraft_Prepare
 	def_special DailyDraft_BufferRound
 	def_special DailyDraft_PrepareChoices
 	def_special DailyDraft_Pick
 	def_special DailyDraft_OpenPicker, waitstate=1
-	def_special DailyBattle_RecordResult
-	def_special DailyBattle_IsDoubles
+	def_special DailyBattle_SaveIfDaily
 	def_special DailyBattle_ChooseLeads, waitstate=1
+	def_special DailyBattle_BeginAttempt
+	def_special DailyBattle_RecordResult
 	def_special DailyBattle_ShowResults, waitstate=1
-	def_special DailyBattle_HasSavedResult
-	def_special DailyBattle_ShowSavedResults, waitstate=1
+	def_special DailyBattle_NextNewBadge
+	def_special DailyBattle_HasLastResult
+	def_special DailyBattle_ShowLastResult, waitstate=1
+	def_special DailyBattle_ShowRecords, waitstate=1

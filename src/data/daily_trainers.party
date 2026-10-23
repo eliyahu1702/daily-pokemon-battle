@@ -14061,6 +14061,954 @@ Nature: NATURE_TIMID
 - MOVE_TELEPORT
 - MOVE_RAPID_SPIN
 
+=== DAILY_TRAINER_BOSS_MAXIE ===
+Name: MAXIE
+Class: Magma Leader
+Pic: Magma Leader Maxie
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Groudon (gen8battlestadiumsingles: Assault Vest Dynamaxer) */
+SPECIES_GROUDON @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_DROUGHT
+EVs: 252 Atk / 252 HP / 4 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_PRECIPICE_BLADES
+- MOVE_HEAT_CRASH
+- MOVE_STONE_EDGE
+- MOVE_HEAVY_SLAM
+
+/* Camerupt (gen9zu: Specially Defensive) */
+SPECIES_CAMERUPT @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 4 Def / 252 HP / 252 SpD
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CALM
+- MOVE_STEALTH_ROCK
+- MOVE_LAVA_PLUME
+- MOVE_EARTH_POWER
+- MOVE_ROAR
+
+/* Crobat (gen9nationaldexmonotype: Utility (Poison)) */
+SPECIES_CROBAT @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_INFILTRATOR
+EVs: 252 HP / 56 SpD / 200 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_BRAVE_BIRD
+- MOVE_TOXIC
+- MOVE_DEFOG
+- MOVE_ROOST
+
+/* Mightyena (gen7pu: All-out Attacker) */
+SPECIES_MIGHTYENA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_CRUNCH
+- MOVE_SUCKER_PUNCH
+- MOVE_PLAY_ROUGH
+- MOVE_IRON_TAIL
+
+/* Weezing (gen9monotype: Physically Defensive (Poison)) */
+SPECIES_WEEZING @ ITEM_BLACK_SLUDGE
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 Def / 248 HP / 8 SpD
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_SLUDGE_BOMB
+- MOVE_HAZE
+- MOVE_PAIN_SPLIT
+- MOVE_WILL_O_WISP
+
+/* Torkoal (gen9monotype: Sun Setter) */
+SPECIES_TORKOAL @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_DROUGHT
+EVs: 252 Def / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_STEALTH_ROCK
+- MOVE_LAVA_PLUME
+- MOVE_RAPID_SPIN
+- MOVE_BODY_PRESS
+
+=== DAILY_TRAINER_BOSS_ARCHIE ===
+Name: ARCHIE
+Class: Aqua Leader
+Pic: Aqua Leader Archie
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Kyogre (gen9battlestadiumsingles: Assault Vest) */
+SPECIES_KYOGRE @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_DRIZZLE
+EVs: 252 HP / 252 SpA / 4 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_SURF
+- MOVE_ICE_BEAM
+- MOVE_THUNDER
+- MOVE_WATER_SPOUT
+
+/* Sharpedo (gen8ru: Physical Cleaner) */
+SPECIES_SHARPEDO @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SPEED_BOOST
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_WATERFALL
+- MOVE_CRUNCH
+- MOVE_CLOSE_COMBAT
+- MOVE_PROTECT
+
+/* Crobat (gen9nationaldexmonotype: Utility (Poison)) */
+SPECIES_CROBAT @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_INFILTRATOR
+EVs: 252 HP / 56 SpD / 200 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_BRAVE_BIRD
+- MOVE_TOXIC
+- MOVE_DEFOG
+- MOVE_ROOST
+
+/* Mightyena (gen7pu: All-out Attacker) */
+SPECIES_MIGHTYENA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_CRUNCH
+- MOVE_SUCKER_PUNCH
+- MOVE_PLAY_ROUGH
+- MOVE_IRON_TAIL
+
+/* Muk (gen9pu: ToxTect) */
+SPECIES_MUK @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_STICKY_HOLD
+EVs: 252 Def / 248 HP / 8 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_TOXIC
+- MOVE_PROTECT
+- MOVE_KNOCK_OFF
+- MOVE_DRAIN_PUNCH
+
+/* Kingdra (gen9pu: CritDra) */
+SPECIES_KINGDRA @ ITEM_SCOPE_LENS
+Level: 100
+Ability: ABILITY_SNIPER
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_FOCUS_ENERGY
+- MOVE_AGILITY
+- MOVE_DRACO_METEOR
+- MOVE_HYDRO_PUMP
+
+=== DAILY_TRAINER_BOSS_CYRUS ===
+Name: CYRUS
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Dialga (gen8battlestadiumsingles: Bulky Dynamax) */
+SPECIES_DIALGA @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 252 HP / 252 SpA / 4 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_FLASH_CANNON
+- MOVE_DRACO_METEOR
+- MOVE_EARTH_POWER
+- MOVE_THUNDER
+
+/* Weavile (gen9monotype: Swords Dance (Dark)) */
+SPECIES_WEAVILE @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_SWORDS_DANCE
+- MOVE_TRIPLE_AXEL
+- MOVE_ICE_SHARD
+- MOVE_KNOCK_OFF
+
+/* Honchkrow (gen9zu: All-Out Attacker) */
+SPECIES_HONCHKROW @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_SUCKER_PUNCH
+- MOVE_BRAVE_BIRD
+- MOVE_U_TURN
+- MOVE_NIGHT_SLASH
+
+/* Crobat (gen9nationaldexmonotype: Utility (Poison)) */
+SPECIES_CROBAT @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_INFILTRATOR
+EVs: 252 HP / 56 SpD / 200 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_BRAVE_BIRD
+- MOVE_TOXIC
+- MOVE_DEFOG
+- MOVE_ROOST
+
+/* Gyarados (gen9monotype: Dragon Dance (Flying)) */
+SPECIES_GYARADOS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 8 Def / 248 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_SUBSTITUTE
+- MOVE_DRAGON_DANCE
+- MOVE_EARTHQUAKE
+- MOVE_WATERFALL
+
+/* Houndoom (gen9zu: Wallbreaker) */
+SPECIES_HOUNDOOM @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_FLASH_FIRE
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_NASTY_PLOT
+- MOVE_FIRE_BLAST
+- MOVE_DARK_PULSE
+- MOVE_SUBSTITUTE
+
+=== DAILY_TRAINER_BOSS_GHETSIS ===
+Name: GHETSIS
+Class: Boss FRLG
+Pic: Gentleman FRLG
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Kyurem-Black (gen9battlestadiumsingles: Dragon Dance) */
+SPECIES_KYUREM_BLACK @ ITEM_LOADED_DICE
+Level: 100
+Ability: ABILITY_TERAVOLT
+EVs: 252 Atk / 4 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_DRAGON_DANCE
+- MOVE_ICICLE_SPEAR
+- MOVE_SCALE_SHOT
+- MOVE_FUSION_BOLT
+
+/* Hydreigon (gen9monotype: Choice Scarf (Dragon)) */
+SPECIES_HYDREIGON @ ITEM_CHOICE_SCARF
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_DRACO_METEOR
+- MOVE_DARK_PULSE
+- MOVE_FIRE_BLAST
+- MOVE_EARTH_POWER
+
+/* Cofagrigus (gen8zu: IronPress) */
+SPECIES_COFAGRIGUS @ ITEM_COLBUR_BERRY
+Level: 100
+Ability: ABILITY_MUMMY
+EVs: 172 Def / 252 HP / 84 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_IRON_DEFENSE
+- MOVE_BODY_PRESS
+- MOVE_SHADOW_BALL
+- MOVE_REST
+
+/* Seismitoad (gen8monotype: Offensive (Ground)) */
+SPECIES_SEISMITOAD @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_WATER_ABSORB
+EVs: 168 Atk / 124 Def / 112 HP / 104 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SUBSTITUTE
+- MOVE_POWER_WHIP
+- MOVE_EARTHQUAKE
+- MOVE_KNOCK_OFF
+
+/* Eelektross (gen9zu: Coil) */
+SPECIES_EELEKTROSS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 HP / 252 SpD / 4 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_COIL
+- MOVE_SUPERCELL_SLAM
+- MOVE_DRAIN_PUNCH
+- MOVE_KNOCK_OFF
+
+/* Bisharp (gen9monotype: Eviolite Swords Dance (Dark)) */
+SPECIES_BISHARP @ ITEM_EVIOLITE
+Level: 100
+Ability: ABILITY_DEFIANT
+EVs: 232 Atk / 20 Def / 80 HP / 176 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SWORDS_DANCE
+- MOVE_THROAT_CHOP
+- MOVE_SUCKER_PUNCH
+- MOVE_IRON_HEAD
+
+=== DAILY_TRAINER_BOSS_N ===
+Name: N
+Class: Pkmn Trainer 1
+Pic: Rich Boy
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Reshiram (gen8battlestadiumsingles: Choice Scarf) */
+SPECIES_RESHIRAM @ ITEM_CHOICE_SCARF
+Level: 100
+Ability: ABILITY_TURBOBLAZE
+EVs: 4 Def / 252 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_BLUE_FLARE
+- MOVE_DRACO_METEOR
+- MOVE_EARTH_POWER
+- MOVE_SHADOW_BALL
+
+/* Zoroark (gen9pu: Choice Band) */
+SPECIES_ZOROARK @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_ILLUSION
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_KNOCK_OFF
+- MOVE_U_TURN
+- MOVE_TRICK
+- MOVE_SUCKER_PUNCH
+
+/* Carracosta (gen8zu: Shell Smash) */
+SPECIES_CARRACOSTA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 252 Atk / 4 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_NAIVE
+- MOVE_SHELL_SMASH
+- MOVE_STONE_EDGE
+- MOVE_AQUA_JET
+- MOVE_ICE_BEAM
+
+/* Vanilluxe (gen8ru: Wallbreaker) */
+SPECIES_VANILLUXE @ ITEM_ICY_ROCK
+Level: 100
+Ability: ABILITY_SNOW_WARNING
+EVs: 24 HP / 252 SpA / 232 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_BLIZZARD
+- MOVE_FREEZE_DRY
+- MOVE_ICE_SHARD
+- MOVE_TAUNT
+
+/* Archeops (gen8ru: Lead) */
+SPECIES_ARCHEOPS @ ITEM_FOCUS_SASH
+Level: 100
+Ability: ABILITY_DEFEATIST
+EVs: 252 Atk / 252 Spe
+IVs: 0 HP / 31 Atk / 0 Def / 31 SpA / 0 SpD / 31 Spe
+Nature: NATURE_HASTY
+- MOVE_HEAD_SMASH
+- MOVE_ENDEAVOR
+- MOVE_STEALTH_ROCK
+- MOVE_TAUNT
+
+/* Klinklang (gen8zu: Choice Band) */
+SPECIES_KLINKLANG @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_GEAR_GRIND
+- MOVE_WILD_CHARGE
+- MOVE_VOLT_SWITCH
+- MOVE_FACADE
+
+=== DAILY_TRAINER_BOSS_LYSANDRE ===
+Name: LYSANDRE
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Yveltal (gen8battlestadiumsingles: Physical Attacker) */
+SPECIES_YVELTAL @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_DARK_AURA
+EVs: 252 Atk / 4 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SUCKER_PUNCH
+- MOVE_DUAL_WINGBEAT
+- MOVE_HEAT_WAVE
+- MOVE_FOUL_PLAY
+
+/* Pyroar (gen9zu: Special Attacker) */
+SPECIES_PYROAR @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_UNNERVE
+EVs: 4 Def / 252 SpA / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_FIRE_BLAST
+- MOVE_HYPER_VOICE
+- MOVE_TAUNT
+- MOVE_WILL_O_WISP
+
+/* Mienshao (gen9nationaldexuu: Choice Scarf) */
+SPECIES_MIENSHAO @ ITEM_CHOICE_SCARF
+Level: 100
+Ability: ABILITY_REGENERATOR
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_CLOSE_COMBAT
+- MOVE_KNOCK_OFF
+- MOVE_U_TURN
+- MOVE_TRIPLE_AXEL
+
+/* Honchkrow (gen9zu: All-Out Attacker) */
+SPECIES_HONCHKROW @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_SUCKER_PUNCH
+- MOVE_BRAVE_BIRD
+- MOVE_U_TURN
+- MOVE_NIGHT_SLASH
+
+/* Gyarados (gen9monotype: Dragon Dance (Flying)) */
+SPECIES_GYARADOS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 8 Def / 248 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_SUBSTITUTE
+- MOVE_DRAGON_DANCE
+- MOVE_EARTHQUAKE
+- MOVE_WATERFALL
+
+/* Tyranitar (gen9monotype: Assault Vest (Rock)) */
+SPECIES_TYRANITAR @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_SAND_STREAM
+EVs: 252 Atk / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_KNOCK_OFF
+- MOVE_STONE_EDGE
+- MOVE_EARTHQUAKE
+- MOVE_ICE_PUNCH
+
+=== DAILY_TRAINER_BOSS_LUSAMINE ===
+Name: LUSAMINE
+Class: Boss FRLG
+Pic: Lady
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Necrozma-Dusk-Mane (gen9battlestadiumsingles: Trick Room) */
+SPECIES_NECROZMA_DUSK_MANE @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_PRISM_ARMOR
+EVs: 228 Atk / 36 Def / 244 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_BRAVE
+- MOVE_TRICK_ROOM
+- MOVE_PHOTON_GEYSER
+- MOVE_SUNSTEEL_STRIKE
+- MOVE_SWORDS_DANCE
+
+/* Clefable (gen9monotype: Calm Mind) */
+SPECIES_CLEFABLE @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_MAGIC_GUARD
+EVs: 132 Def / 252 HP / 64 SpD / 60 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_MOONBLAST
+- MOVE_THUNDERBOLT
+- MOVE_MOONLIGHT
+- MOVE_CALM_MIND
+
+/* Lilligant (randbats: Setup Sweeper) */
+SPECIES_LILLIGANT @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_OWN_TEMPO
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_ALLURING_VOICE
+- MOVE_PETAL_DANCE
+- MOVE_QUIVER_DANCE
+- MOVE_SLEEP_POWDER
+
+/* Mismagius (gen9pu: Nasty Plot) */
+SPECIES_MISMAGIUS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 4 Def / 252 SpA / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_NASTY_PLOT
+- MOVE_SHADOW_BALL
+- MOVE_DRAINING_KISS
+- MOVE_SUBSTITUTE
+
+/* Milotic (gen9monotype: Bulky Pivot) */
+SPECIES_MILOTIC @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_COMPETITIVE
+EVs: 252 HP / 4 SpA / 252 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_SASSY
+- MOVE_SCALD
+- MOVE_FLIP_TURN
+- MOVE_RECOVER
+- MOVE_DRAGON_TAIL
+
+/* Bewear (gen8monotype: Bulk Up (Normal)) */
+SPECIES_BEWEAR @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_FLUFFY
+EVs: 196 Def / 252 HP / 60 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_DRAIN_PUNCH
+- MOVE_DARKEST_LARIAT
+- MOVE_BULK_UP
+- MOVE_SUBSTITUTE
+
+=== DAILY_TRAINER_BOSS_ROSE ===
+Name: ROSE
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Eternatus (gen9battlestadiumsingles: Cosmic Power) */
+SPECIES_ETERNATUS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 236 Def / 252 HP / 20 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_COSMIC_POWER
+- MOVE_RECOVER
+- MOVE_DYNAMAX_CANNON
+- MOVE_FLAMETHROWER
+
+/* Copperajah (gen9nu: Assault Vest) */
+SPECIES_COPPERAJAH @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_SHEER_FORCE
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_IRON_HEAD
+- MOVE_KNOCK_OFF
+- MOVE_EARTHQUAKE
+- MOVE_SUPERCELL_SLAM
+
+/* Escavalier (gen8ru: Swords Dance) */
+SPECIES_ESCAVALIER @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_SHELL_ARMOR
+EVs: 16 Atk / 248 HP / 160 SpD / 84 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_SWORDS_DANCE
+- MOVE_IRON_HEAD
+- MOVE_CLOSE_COMBAT
+- MOVE_KNOCK_OFF
+
+/* Ferrothorn (gen9nationaldexmonotype: Entry Hazard Wall (Grass)) */
+SPECIES_FERROTHORN @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_IRON_BARBS
+EVs: 168 Def / 252 HP / 88 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_RELAXED
+- MOVE_GYRO_BALL
+- MOVE_STEALTH_ROCK
+- MOVE_LEECH_SEED
+- MOVE_BODY_PRESS
+
+/* Perrserker (gen9zu: All-Out Attacker) */
+SPECIES_PERRSERKER @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_TOUGH_CLAWS
+EVs: 252 Atk / 248 HP / 8 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_IRON_HEAD
+- MOVE_CLOSE_COMBAT
+- MOVE_KNOCK_OFF
+- MOVE_U_TURN
+
+/* Klinklang (gen8zu: Choice Band) */
+SPECIES_KLINKLANG @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_GEAR_GRIND
+- MOVE_WILD_CHARGE
+- MOVE_VOLT_SWITCH
+- MOVE_FACADE
+
+=== DAILY_TRAINER_BOSS_VOLO ===
+Name: VOLO
+Class: Champion
+Pic: Expert M
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Giratina-Origin (randbats: Fast Attacker) */
+SPECIES_GIRATINA_ORIGIN @ ITEM_GRISEOUS_CORE
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_DEFOG
+- MOVE_DRACO_METEOR
+- MOVE_DRAGON_TAIL
+- MOVE_POLTERGEIST
+
+/* Spiritomb (gen9pu: Trick Room Sweeper) */
+SPECIES_SPIRITOMB @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_INFILTRATOR
+EVs: 252 HP / 252 SpA / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_QUIET
+- MOVE_TRICK_ROOM
+- MOVE_NASTY_PLOT
+- MOVE_DARK_PULSE
+- MOVE_PSYSHOCK
+
+/* Garchomp (gen9monotype: Choice Scarf (Ground)) */
+SPECIES_GARCHOMP @ ITEM_CHOICE_SCARF
+Level: 100
+Ability: ABILITY_ROUGH_SKIN
+EVs: 72 Atk / 184 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_NAIVE
+- MOVE_EARTHQUAKE
+- MOVE_DRACO_METEOR
+- MOVE_FIRE_BLAST
+- MOVE_STONE_EDGE
+
+/* Roserade (gen9nationaldexru: Defensive) */
+SPECIES_ROSERADE @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_NATURAL_CURE
+EVs: 120 Def / 252 HP / 136 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_SPIKES
+- MOVE_GIGA_DRAIN
+- MOVE_SLUDGE_BOMB
+- MOVE_SYNTHESIS
+
+/* Togekiss (gen8monotype: Nasty Plot (Fairy)) */
+SPECIES_TOGEKISS @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_SERENE_GRACE
+EVs: 4 Def / 252 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_AIR_SLASH
+- MOVE_FIRE_BLAST
+- MOVE_SUBSTITUTE
+- MOVE_NASTY_PLOT
+
+/* Lucario (gen9monotype: Nasty Plot (Steel)) */
+SPECIES_LUCARIO @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_STEADFAST
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_FOCUS_BLAST
+- MOVE_VACUUM_WAVE
+- MOVE_DARK_PULSE
+- MOVE_NASTY_PLOT
+
+=== DAILY_TRAINER_BOSS_GIOVANNI ===
+Name: GIOVANNI
+Class: Boss FRLG
+Pic: Leader Giovanni FRLG
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Mewtwo (randbats: Setup Sweeper) */
+SPECIES_MEWTWO @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_AURA_SPHERE
+- MOVE_DARK_PULSE
+- MOVE_FIRE_BLAST
+- MOVE_NASTY_PLOT
+
+/* Nidoking (gen9nationaldexmonotype: Wallbreaker (Poison)) */
+SPECIES_NIDOKING @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SHEER_FORCE
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_EARTH_POWER
+- MOVE_ICE_BEAM
+- MOVE_FLAMETHROWER
+- MOVE_STEALTH_ROCK
+
+/* Persian (gen8zu: Revenge Killer) */
+SPECIES_PERSIAN @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_TECHNICIAN
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_FAKE_OUT
+- MOVE_KNOCK_OFF
+- MOVE_U_TURN
+- MOVE_DOUBLE_EDGE
+
+/* Nidoqueen (gen9nationaldexru: Defensive Utility) */
+SPECIES_NIDOQUEEN @ ITEM_BLACK_SLUDGE
+Level: 100
+Ability: ABILITY_SHEER_FORCE
+EVs: 172 Def / 248 HP / 88 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_STEALTH_ROCK
+- MOVE_EARTH_POWER
+- MOVE_ICE_BEAM
+- MOVE_PROTECT
+
+/* Rhyperior (gen9monotype: All-out-Attacker (Rock)) */
+SPECIES_RHYPERIOR @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 252 Def / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_EARTHQUAKE
+- MOVE_SMACK_DOWN
+- MOVE_FIRE_PUNCH
+- MOVE_ICE_PUNCH
+
+/* Kangaskhan (gen8zu: Priority Attacker) */
+SPECIES_KANGASKHAN @ ITEM_SILK_SCARF
+Level: 100
+Ability: ABILITY_SCRAPPY
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_FAKE_OUT
+- MOVE_DOUBLE_EDGE
+- MOVE_SUCKER_PUNCH
+- MOVE_EARTHQUAKE
+
+=== DAILY_TRAINER_BOSS_STEVEN ===
+Name: STEVEN
+Class: Champion
+Pic: Steven
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Rayquaza (randbats: Setup Sweeper) */
+SPECIES_RAYQUAZA @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_AIR_LOCK
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_DRAGON_ASCENT
+- MOVE_DRAGON_DANCE
+- MOVE_EARTHQUAKE
+- MOVE_OUTRAGE
+
+/* Metagross (gen9monotype: Choice Band (Psychic)) */
+SPECIES_METAGROSS @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 252 Atk / 160 HP / 96 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_HEAVY_SLAM
+- MOVE_BULLET_PUNCH
+- MOVE_KNOCK_OFF
+- MOVE_EARTHQUAKE
+
+/* Skarmory (gen9monotype: Physically Defensive (Flying)) */
+SPECIES_SKARMORY @ ITEM_ROCKY_HELMET
+Level: 100
+Ability: ABILITY_STURDY
+EVs: 252 Def / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_BODY_PRESS
+- MOVE_SPIKES
+- MOVE_WHIRLWIND
+- MOVE_ROOST
+
+/* Claydol (gen8pu: Defensive) */
+SPECIES_CLAYDOL @ ITEM_COLBUR_BERRY
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 240 Def / 252 HP / 16 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_STEALTH_ROCK
+- MOVE_TOXIC
+- MOVE_PSYCHIC
+- MOVE_TELEPORT
+
+/* Aggron (gen8pu: Choice Band) */
+SPECIES_AGGRON @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_ROCK_HEAD
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_HEAD_SMASH
+- MOVE_HEAVY_SLAM
+- MOVE_AQUA_TAIL
+- MOVE_EARTHQUAKE
+
+/* Cradily (gen8monotype: Specially Defensive (Grass)) */
+SPECIES_CRADILY @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_STORM_DRAIN
+EVs: 4 Atk / 252 HP / 252 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_ROCK_BLAST
+- MOVE_STEALTH_ROCK
+- MOVE_TOXIC
+- MOVE_RECOVER
+
+=== DAILY_TRAINER_BOSS_RED ===
+Name: RED
+Class: Pkmn Trainer 1
+Pic: Red
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+
+/* Ho-Oh (gen9battlestadiumsingles: Bulky Offense) */
+SPECIES_HO_OH @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_REGENERATOR
+EVs: 252 Atk / 252 HP / 4 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SACRED_FIRE
+- MOVE_BRAVE_BIRD
+- MOVE_RECOVER
+- MOVE_EARTHQUAKE
+
+/* Pikachu (custom) */
+SPECIES_PIKACHU @ ITEM_LIGHT_BALL
+Level: 100
+Ability: ABILITY_LIGHTNING_ROD
+EVs: 252 Atk / 4 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_HASTY
+- MOVE_VOLT_TACKLE
+- MOVE_SURF
+- MOVE_IRON_TAIL
+- MOVE_FAKE_OUT
+
+/* Charizard (gen8pu: Defensive) */
+SPECIES_CHARIZARD @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_BLAZE
+EVs: 248 HP / 8 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_TOXIC
+- MOVE_ROOST
+- MOVE_FLAMETHROWER
+- MOVE_DEFOG
+
+/* Venusaur (gen9pu: Defensive) */
+SPECIES_VENUSAUR @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_OVERGROW
+EVs: 168 Def / 252 HP / 32 SpD / 56 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_GIGA_DRAIN
+- MOVE_SLUDGE_BOMB
+- MOVE_KNOCK_OFF
+- MOVE_SYNTHESIS
+
+/* Blastoise (gen8ru: Shell Smash) */
+SPECIES_BLASTOISE @ ITEM_WHITE_HERB
+Level: 100
+Ability: ABILITY_TORRENT
+EVs: 4 HP / 252 SpA / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_SHELL_SMASH
+- MOVE_SURF
+- MOVE_ICE_BEAM
+- MOVE_DARK_PULSE
+
+/* Snorlax (gen9monotype: Curse) */
+SPECIES_SNORLAX @ ITEM_CHESTO_BERRY
+Level: 100
+Ability: ABILITY_THICK_FAT
+EVs: 8 Def / 248 HP / 252 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_CURSE
+- MOVE_REST
+- MOVE_BODY_SLAM
+- MOVE_HEAVY_SLAM
+
 === DAILY_TRAINER_BROCK_DOUBLES ===
 Name: BROCK
 Class: Leader
@@ -28299,3 +29247,963 @@ Nature: NATURE_TIMID
 - MOVE_RECOVER
 - MOVE_TELEPORT
 - MOVE_PROTECT
+
+=== DAILY_TRAINER_BOSS_MAXIE_DOUBLES ===
+Name: MAXIE
+Class: Magma Leader
+Pic: Magma Leader Maxie
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Groudon (gen9vgc2025: Bulky Attacker) */
+SPECIES_GROUDON @ ITEM_CLEAR_AMULET
+Level: 100
+Ability: ABILITY_DROUGHT
+EVs: 156 Atk / 4 Def / 108 HP / 228 SpD / 12 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_PRECIPICE_BLADES
+- MOVE_HEAT_CRASH
+- MOVE_HIGH_HORSEPOWER
+- MOVE_PROTECT
+
+/* Camerupt (randbats: Doubles Support) */
+SPECIES_CAMERUPT @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 252 HP / 252 Def / 4 SpA
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_RELAXED
+- MOVE_EARTH_POWER
+- MOVE_HEAT_WAVE
+- MOVE_PROTECT
+- MOVE_STEALTH_ROCK
+
+/* Crobat (gen8doublesou: Fast Utility) */
+SPECIES_CROBAT @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INNER_FOCUS
+EVs: 240 HP / 84 SpD / 184 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_TAILWIND
+- MOVE_TAUNT
+- MOVE_BRAVE_BIRD
+- MOVE_SUPER_FANG
+
+/* Mightyena (randbats: Doubles Setup Sweeper) */
+SPECIES_MIGHTYENA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_CRUNCH
+- MOVE_HOWL
+- MOVE_PLAY_ROUGH
+- MOVE_SUCKER_PUNCH
+
+/* Weezing (gen9monotype: Physically Defensive (Poison) (doubles)) */
+SPECIES_WEEZING @ ITEM_BLACK_SLUDGE
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 Def / 248 HP / 8 SpD
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_SLUDGE_BOMB
+- MOVE_PROTECT
+- MOVE_PAIN_SPLIT
+- MOVE_WILL_O_WISP
+
+/* Torkoal (gen9doublesou: TR Attacker) */
+SPECIES_TORKOAL @ ITEM_CHARCOAL
+Level: 100
+Ability: ABILITY_DROUGHT
+EVs: 248 HP / 252 SpA / 8 SpD
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_QUIET
+- MOVE_ERUPTION
+- MOVE_HEAT_WAVE
+- MOVE_EARTH_POWER
+- MOVE_PROTECT
+
+=== DAILY_TRAINER_BOSS_ARCHIE_DOUBLES ===
+Name: ARCHIE
+Class: Aqua Leader
+Pic: Aqua Leader Archie
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Kyogre (gen9vgc2025: Rain Attacker) */
+SPECIES_KYOGRE @ ITEM_MYSTIC_WATER
+Level: 100
+Ability: ABILITY_DRIZZLE
+EVs: 4 Def / 52 HP / 236 SpA / 4 SpD / 212 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_WATER_SPOUT
+- MOVE_HYDRO_PUMP
+- MOVE_THUNDER
+- MOVE_PROTECT
+
+/* Sharpedo (gen8ru: Physical Cleaner (doubles)) */
+SPECIES_SHARPEDO @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SPEED_BOOST
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_WATERFALL
+- MOVE_CRUNCH
+- MOVE_CLOSE_COMBAT
+- MOVE_PROTECT
+
+/* Crobat (gen8doublesou: Fast Utility) */
+SPECIES_CROBAT @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INNER_FOCUS
+EVs: 240 HP / 84 SpD / 184 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_TAILWIND
+- MOVE_TAUNT
+- MOVE_BRAVE_BIRD
+- MOVE_SUPER_FANG
+
+/* Mightyena (randbats: Doubles Setup Sweeper) */
+SPECIES_MIGHTYENA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_CRUNCH
+- MOVE_HOWL
+- MOVE_PLAY_ROUGH
+- MOVE_SUCKER_PUNCH
+
+/* Muk (gen9pu: ToxTect (doubles)) */
+SPECIES_MUK @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_STICKY_HOLD
+EVs: 252 Def / 248 HP / 8 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_TOXIC
+- MOVE_PROTECT
+- MOVE_KNOCK_OFF
+- MOVE_DRAIN_PUNCH
+
+/* Kingdra (gen9pu: CritDra (doubles)) */
+SPECIES_KINGDRA @ ITEM_SCOPE_LENS
+Level: 100
+Ability: ABILITY_SNIPER
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_FOCUS_ENERGY
+- MOVE_AGILITY
+- MOVE_DRACO_METEOR
+- MOVE_HYDRO_PUMP
+
+=== DAILY_TRAINER_BOSS_CYRUS_DOUBLES ===
+Name: CYRUS
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Dialga (gen8vgc2022: Offensive) */
+SPECIES_DIALGA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_TELEPATHY
+EVs: 4 Def / 252 HP / 236 SpA / 4 SpD / 12 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_ROAR_OF_TIME
+- MOVE_FLASH_CANNON
+- MOVE_EARTH_POWER
+- MOVE_TRICK_ROOM
+
+/* Weavile (gen82v2doubles: Offensive Life Orb) */
+SPECIES_WEAVILE @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 252 Atk / 24 HP / 232 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_FAKE_OUT
+- MOVE_KNOCK_OFF
+- MOVE_ICICLE_CRASH
+- MOVE_PROTECT
+
+/* Honchkrow (randbats: Offensive Protect) */
+SPECIES_HONCHKROW @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_BRAVE_BIRD
+- MOVE_HEAT_WAVE
+- MOVE_PROTECT
+- MOVE_SUCKER_PUNCH
+
+/* Crobat (gen8doublesou: Fast Utility) */
+SPECIES_CROBAT @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INNER_FOCUS
+EVs: 240 HP / 84 SpD / 184 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_TAILWIND
+- MOVE_TAUNT
+- MOVE_BRAVE_BIRD
+- MOVE_SUPER_FANG
+
+/* Gyarados (gen9vgc2023: Bulky Pivot) */
+SPECIES_GYARADOS @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 4 Atk / 204 Def / 252 HP / 4 SpD / 44 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_WATERFALL
+- MOVE_THUNDER_WAVE
+- MOVE_TAUNT
+- MOVE_PROTECT
+
+/* Houndoom (randbats: Doubles Fast Attacker) */
+SPECIES_HOUNDOOM @ ITEM_FOCUS_SASH
+Level: 100
+Ability: ABILITY_FLASH_FIRE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_DARK_PULSE
+- MOVE_HEAT_WAVE
+- MOVE_NASTY_PLOT
+- MOVE_PROTECT
+
+=== DAILY_TRAINER_BOSS_GHETSIS_DOUBLES ===
+Name: GHETSIS
+Class: Boss FRLG
+Pic: Gentleman FRLG
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Kyurem-Black (gen9nationaldexdoubles: Setup Attacker) */
+SPECIES_KYUREM_BLACK @ ITEM_CLEAR_AMULET
+Level: 100
+Ability: ABILITY_TERAVOLT
+EVs: 216 Atk / 40 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_ICICLE_SPEAR
+- MOVE_FUSION_BOLT
+- MOVE_DRAGON_DANCE
+- MOVE_PROTECT
+
+/* Hydreigon (gen9vgc2025: Glass Cannon) */
+SPECIES_HYDREIGON @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 4 HP / 252 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_HEAT_WAVE
+- MOVE_DARK_PULSE
+- MOVE_SNARL
+- MOVE_DRACO_METEOR
+
+/* Cofagrigus (gen8zu: IronPress (doubles)) */
+SPECIES_COFAGRIGUS @ ITEM_COLBUR_BERRY
+Level: 100
+Ability: ABILITY_MUMMY
+EVs: 172 Def / 252 HP / 84 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_IRON_DEFENSE
+- MOVE_BODY_PRESS
+- MOVE_SHADOW_BALL
+- MOVE_PROTECT
+
+/* Seismitoad (gen8monotype: Offensive (Ground) (doubles)) */
+SPECIES_SEISMITOAD @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_WATER_ABSORB
+EVs: 168 Atk / 124 Def / 112 HP / 104 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_PROTECT
+- MOVE_POWER_WHIP
+- MOVE_EARTHQUAKE
+- MOVE_KNOCK_OFF
+
+/* Eelektross (randbats: Doubles Bulky Attacker) */
+SPECIES_EELEKTROSS @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 HP / 252 SpA / 4 Def
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_QUIET
+- MOVE_CLOSE_COMBAT
+- MOVE_ELECTROWEB
+- MOVE_FLAMETHROWER
+- MOVE_GIGA_DRAIN
+
+/* Bisharp (gen9monotype: Eviolite Swords Dance (Dark) (doubles)) */
+SPECIES_BISHARP @ ITEM_EVIOLITE
+Level: 100
+Ability: ABILITY_DEFIANT
+EVs: 232 Atk / 20 Def / 80 HP / 176 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SWORDS_DANCE
+- MOVE_THROAT_CHOP
+- MOVE_SUCKER_PUNCH
+- MOVE_IRON_HEAD
+
+=== DAILY_TRAINER_BOSS_N_DOUBLES ===
+Name: N
+Class: Pkmn Trainer 1
+Pic: Rich Boy
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Reshiram (randbats: Doubles Wallbreaker) */
+SPECIES_RESHIRAM @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_TURBOBLAZE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_BLUE_FLARE
+- MOVE_DRACO_METEOR
+- MOVE_HEAT_WAVE
+- MOVE_PROTECT
+
+/* Zoroark (randbats: Offensive Protect) */
+SPECIES_ZOROARK @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_ILLUSION
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_DARK_PULSE
+- MOVE_NASTY_PLOT
+- MOVE_PROTECT
+- MOVE_SLUDGE_BOMB
+
+/* Carracosta (gen8zu: Shell Smash (doubles)) */
+SPECIES_CARRACOSTA @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 252 Atk / 4 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_NAIVE
+- MOVE_SHELL_SMASH
+- MOVE_STONE_EDGE
+- MOVE_AQUA_JET
+- MOVE_ICE_BEAM
+
+/* Vanilluxe (gen8ru: Wallbreaker (doubles)) */
+SPECIES_VANILLUXE @ ITEM_ICY_ROCK
+Level: 100
+Ability: ABILITY_SNOW_WARNING
+EVs: 24 HP / 252 SpA / 232 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_BLIZZARD
+- MOVE_FREEZE_DRY
+- MOVE_ICE_SHARD
+- MOVE_TAUNT
+
+/* Archeops (gen8ru: Lead (doubles)) */
+SPECIES_ARCHEOPS @ ITEM_FOCUS_SASH
+Level: 100
+Ability: ABILITY_DEFEATIST
+EVs: 252 Atk / 252 Spe
+IVs: 0 HP / 31 Atk / 0 Def / 31 SpA / 0 SpD / 31 Spe
+Nature: NATURE_HASTY
+- MOVE_HEAD_SMASH
+- MOVE_ENDEAVOR
+- MOVE_PROTECT
+- MOVE_TAUNT
+
+/* Klinklang (gen8zu: Choice Band (doubles)) */
+SPECIES_KLINKLANG @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_GEAR_GRIND
+- MOVE_WILD_CHARGE
+- MOVE_VOLT_SWITCH
+- MOVE_FACADE
+
+=== DAILY_TRAINER_BOSS_LYSANDRE_DOUBLES ===
+Name: LYSANDRE
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Yveltal (gen8battlestadiumdoubles: Assault Vest) */
+SPECIES_YVELTAL @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_DARK_AURA
+EVs: 4 Def / 236 HP / 68 SpA / 12 SpD / 188 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_OBLIVION_WING
+- MOVE_SNARL
+- MOVE_FOUL_PLAY
+- MOVE_SUCKER_PUNCH
+
+/* Pyroar (randbats: Offensive Protect) */
+SPECIES_PYROAR @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_UNNERVE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_FIRE_BLAST
+- MOVE_HEAT_WAVE
+- MOVE_HYPER_VOICE
+- MOVE_PROTECT
+
+/* Mienshao (gen9vgc2024: Offensive Utility) */
+SPECIES_MIENSHAO @ ITEM_FOCUS_SASH
+Level: 100
+Ability: ABILITY_INNER_FOCUS
+EVs: 252 Atk / 4 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_CLOSE_COMBAT
+- MOVE_FAKE_OUT
+- MOVE_FEINT
+- MOVE_WIDE_GUARD
+
+/* Honchkrow (randbats: Offensive Protect) */
+SPECIES_HONCHKROW @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_MOXIE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_BRAVE_BIRD
+- MOVE_HEAT_WAVE
+- MOVE_PROTECT
+- MOVE_SUCKER_PUNCH
+
+/* Gyarados (gen9vgc2023: Bulky Pivot) */
+SPECIES_GYARADOS @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INTIMIDATE
+EVs: 4 Atk / 204 Def / 252 HP / 4 SpD / 44 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_WATERFALL
+- MOVE_THUNDER_WAVE
+- MOVE_TAUNT
+- MOVE_PROTECT
+
+/* Tyranitar (gen9doublesou: Bulky Attacker) */
+SPECIES_TYRANITAR @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_SAND_STREAM
+EVs: 252 Atk / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_STEALTH_ROCK
+- MOVE_STONE_EDGE
+- MOVE_CRUNCH
+- MOVE_DRAGON_TAIL
+
+=== DAILY_TRAINER_BOSS_LUSAMINE_DOUBLES ===
+Name: LUSAMINE
+Class: Boss FRLG
+Pic: Lady
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Necrozma-Dusk-Mane (gen8battlestadiumdoubles: Offensive Trick Room) */
+SPECIES_NECROZMA_DUSK_MANE @ ITEM_WEAKNESS_POLICY
+Level: 100
+Ability: ABILITY_PRISM_ARMOR
+EVs: 252 Atk / 252 HP / 4 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SUNSTEEL_STRIKE
+- MOVE_EARTHQUAKE
+- MOVE_TRICK_ROOM
+- MOVE_PROTECT
+
+/* Clefable (gen9vgc2025: Redirection Support) */
+SPECIES_CLEFABLE @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_UNAWARE
+EVs: 172 Def / 252 HP / 84 SpD
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CALM
+- MOVE_MOONBLAST
+- MOVE_FOLLOW_ME
+- MOVE_PROTECT
+- MOVE_LIFE_DEW
+
+/* Lilligant (randbats: Setup Sweeper (doubles)) */
+SPECIES_LILLIGANT @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_OWN_TEMPO
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_ALLURING_VOICE
+- MOVE_PETAL_DANCE
+- MOVE_QUIVER_DANCE
+- MOVE_SLEEP_POWDER
+
+/* Mismagius (randbats: Doubles Wallbreaker) */
+SPECIES_MISMAGIUS @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_DAZZLING_GLEAM
+- MOVE_MYSTICAL_FIRE
+- MOVE_PROTECT
+- MOVE_SHADOW_BALL
+
+/* Milotic (gen7doublesou: Defensive) */
+SPECIES_MILOTIC @ ITEM_PSYCHIC_SEED
+Level: 100
+Ability: ABILITY_COMPETITIVE
+EVs: 200 Def / 252 HP / 56 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_SCALD
+- MOVE_ICY_WIND
+- MOVE_RECOVER
+- MOVE_PROTECT
+
+/* Bewear (gen8monotype: Bulk Up (Normal) (doubles)) */
+SPECIES_BEWEAR @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_FLUFFY
+EVs: 196 Def / 252 HP / 60 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_DRAIN_PUNCH
+- MOVE_DARKEST_LARIAT
+- MOVE_BULK_UP
+- MOVE_PROTECT
+
+=== DAILY_TRAINER_BOSS_ROSE_DOUBLES ===
+Name: ROSE
+Class: Boss FRLG
+Pic: Gentleman
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Eternatus (randbats: Offensive Protect) */
+SPECIES_ETERNATUS @ ITEM_POWER_HERB
+Level: 100
+Ability: ABILITY_PRESSURE
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_DYNAMAX_CANNON
+- MOVE_FIRE_BLAST
+- MOVE_METEOR_BEAM
+- MOVE_PROTECT
+
+/* Copperajah (randbats: Doubles Bulky Attacker) */
+SPECIES_COPPERAJAH @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_HEAVY_METAL
+EVs: 252 HP / 252 Atk / 4 Def
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_BRAVE
+- MOVE_HEAT_CRASH
+- MOVE_HEAVY_SLAM
+- MOVE_HIGH_HORSEPOWER
+- MOVE_STONE_EDGE
+
+/* Escavalier (gen8ru: Swords Dance (doubles)) */
+SPECIES_ESCAVALIER @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_SHELL_ARMOR
+EVs: 16 Atk / 248 HP / 160 SpD / 84 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_SWORDS_DANCE
+- MOVE_IRON_HEAD
+- MOVE_CLOSE_COMBAT
+- MOVE_KNOCK_OFF
+
+/* Ferrothorn (gen8doublesou: Iron Defense) */
+SPECIES_FERROTHORN @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_IRON_BARBS
+EVs: 200 Def / 252 HP / 56 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_BODY_PRESS
+- MOVE_IRON_DEFENSE
+- MOVE_LEECH_SEED
+- MOVE_PROTECT
+
+/* Perrserker (randbats: Choice Item user) */
+SPECIES_PERRSERKER @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_STEELY_SPIRIT
+EVs: 252 HP / 252 Atk / 4 Def
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_BRAVE
+- MOVE_CLOSE_COMBAT
+- MOVE_IRON_HEAD
+- MOVE_KNOCK_OFF
+- MOVE_U_TURN
+
+/* Klinklang (gen8zu: Choice Band (doubles)) */
+SPECIES_KLINKLANG @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_GEAR_GRIND
+- MOVE_WILD_CHARGE
+- MOVE_VOLT_SWITCH
+- MOVE_FACADE
+
+=== DAILY_TRAINER_BOSS_VOLO_DOUBLES ===
+Name: VOLO
+Class: Champion
+Pic: Expert M
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Giratina-Origin (randbats: Doubles Fast Attacker) */
+SPECIES_GIRATINA_ORIGIN @ ITEM_GRISEOUS_CORE
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_DRACO_METEOR
+- MOVE_POLTERGEIST
+- MOVE_PROTECT
+- MOVE_SHADOW_FORCE
+
+/* Spiritomb (randbats: Doubles Support) */
+SPECIES_SPIRITOMB @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_INFILTRATOR
+EVs: 252 HP / 252 Def / 4 Atk
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_RELAXED
+- MOVE_FOUL_PLAY
+- MOVE_HELPING_HAND
+- MOVE_ICY_WIND
+- MOVE_WILL_O_WISP
+
+/* Garchomp (gen9vgc2025: Glass Cannon) */
+SPECIES_GARCHOMP @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_ROUGH_SKIN
+EVs: 252 Atk / 4 HP / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_STOMPING_TANTRUM
+- MOVE_EARTHQUAKE
+- MOVE_DRAGON_CLAW
+- MOVE_PROTECT
+
+/* Roserade (gen9nationaldexru: Defensive (doubles)) */
+SPECIES_ROSERADE @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_NATURAL_CURE
+EVs: 120 Def / 252 HP / 136 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_PROTECT
+- MOVE_GIGA_DRAIN
+- MOVE_SLUDGE_BOMB
+- MOVE_SYNTHESIS
+
+/* Togekiss (gen8vgc2020: Scope Lens) */
+SPECIES_TOGEKISS @ ITEM_SCOPE_LENS
+Level: 100
+Ability: ABILITY_SUPER_LUCK
+EVs: 4 HP / 252 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_MODEST
+- MOVE_AIR_SLASH
+- MOVE_DAZZLING_GLEAM
+- MOVE_FOLLOW_ME
+- MOVE_PROTECT
+
+/* Lucario (randbats: Offensive Protect) */
+SPECIES_LUCARIO @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_INNER_FOCUS
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_CLOSE_COMBAT
+- MOVE_EXTREME_SPEED
+- MOVE_FLASH_CANNON
+- MOVE_PROTECT
+
+=== DAILY_TRAINER_BOSS_GIOVANNI_DOUBLES ===
+Name: GIOVANNI
+Class: Boss FRLG
+Pic: Leader Giovanni FRLG
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Mewtwo (randbats: Doubles Bulky Setup) */
+SPECIES_MEWTWO @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_UNNERVE
+EVs: 252 HP / 252 Def / 4 SpA
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_AURA_SPHERE
+- MOVE_NASTY_PLOT
+- MOVE_PSYSTRIKE
+- MOVE_RECOVER
+
+/* Nidoking (gen9nationaldexmonotype: Wallbreaker (Poison) (doubles)) */
+SPECIES_NIDOKING @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_SHEER_FORCE
+EVs: 252 SpA / 4 SpD / 252 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_EARTH_POWER
+- MOVE_ICE_BEAM
+- MOVE_FLAMETHROWER
+- MOVE_PROTECT
+
+/* Persian (randbats: Doubles Support) */
+SPECIES_PERSIAN @ ITEM_SILK_SCARF
+Level: 100
+Ability: ABILITY_TECHNICIAN
+EVs: 252 HP / 252 Atk / 4 Def
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_DOUBLE_EDGE
+- MOVE_FAKE_OUT
+- MOVE_HELPING_HAND
+- MOVE_ICY_WIND
+
+/* Nidoqueen (gen9nationaldexru: Defensive Utility (doubles)) */
+SPECIES_NIDOQUEEN @ ITEM_BLACK_SLUDGE
+Level: 100
+Ability: ABILITY_SHEER_FORCE
+EVs: 172 Def / 248 HP / 88 Spe
+IVs: 31 HP / 0 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_STEALTH_ROCK
+- MOVE_EARTH_POWER
+- MOVE_ICE_BEAM
+- MOVE_PROTECT
+
+/* Rhyperior (randbats: Doubles Bulky Setup) */
+SPECIES_RHYPERIOR @ ITEM_WEAKNESS_POLICY
+Level: 100
+Ability: ABILITY_SOLID_ROCK
+EVs: 252 HP / 252 SpD / 4 Atk
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 0 Spe
+Nature: NATURE_SASSY
+- MOVE_HIGH_HORSEPOWER
+- MOVE_PROTECT
+- MOVE_ROCK_POLISH
+- MOVE_ROCK_SLIDE
+
+/* Kangaskhan (gen8zu: Priority Attacker (doubles)) */
+SPECIES_KANGASKHAN @ ITEM_SILK_SCARF
+Level: 100
+Ability: ABILITY_SCRAPPY
+EVs: 252 Atk / 4 SpD / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_FAKE_OUT
+- MOVE_DOUBLE_EDGE
+- MOVE_SUCKER_PUNCH
+- MOVE_EARTHQUAKE
+
+=== DAILY_TRAINER_BOSS_STEVEN_DOUBLES ===
+Name: STEVEN
+Class: Champion
+Pic: Steven
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Rayquaza (randbats: Doubles Setup Sweeper) */
+SPECIES_RAYQUAZA @ ITEM_CLEAR_AMULET
+Level: 100
+Ability: ABILITY_AIR_LOCK
+EVs: 252 Atk / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_JOLLY
+- MOVE_DRAGON_ASCENT
+- MOVE_DRAGON_DANCE
+- MOVE_EARTHQUAKE
+- MOVE_EXTREME_SPEED
+
+/* Metagross (gen9vgc2024: Bulky Attacker) */
+SPECIES_METAGROSS @ ITEM_ASSAULT_VEST
+Level: 100
+Ability: ABILITY_CLEAR_BODY
+EVs: 116 Atk / 36 Def / 220 HP / 92 SpD / 44 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_HEAVY_SLAM
+- MOVE_PSYCHIC_FANGS
+- MOVE_BULLET_PUNCH
+- MOVE_STOMPING_TANTRUM
+
+/* Skarmory (randbats: Doubles Bulky Setup) */
+SPECIES_SKARMORY @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_STURDY
+EVs: 252 HP / 252 SpD / 4 Atk
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_BODY_PRESS
+- MOVE_BRAVE_BIRD
+- MOVE_IRON_DEFENSE
+- MOVE_PROTECT
+
+/* Claydol (gen8pu: Defensive (doubles)) */
+SPECIES_CLAYDOL @ ITEM_COLBUR_BERRY
+Level: 100
+Ability: ABILITY_LEVITATE
+EVs: 240 Def / 252 HP / 16 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_BOLD
+- MOVE_PROTECT
+- MOVE_TOXIC
+- MOVE_PSYCHIC
+- MOVE_TELEPORT
+
+/* Aggron (gen8pu: Choice Band (doubles)) */
+SPECIES_AGGRON @ ITEM_CHOICE_BAND
+Level: 100
+Ability: ABILITY_ROCK_HEAD
+EVs: 252 Atk / 4 Def / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_HEAD_SMASH
+- MOVE_HEAVY_SLAM
+- MOVE_AQUA_TAIL
+- MOVE_EARTHQUAKE
+
+/* Cradily (gen8monotype: Specially Defensive (Grass) (doubles)) */
+SPECIES_CRADILY @ ITEM_LEFTOVERS
+Level: 100
+Ability: ABILITY_STORM_DRAIN
+EVs: 4 Atk / 252 HP / 252 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_ROCK_BLAST
+- MOVE_PROTECT
+- MOVE_TOXIC
+- MOVE_RECOVER
+
+=== DAILY_TRAINER_BOSS_RED_DOUBLES ===
+Name: RED
+Class: Pkmn Trainer 1
+Pic: Red
+Music: Elite Four
+AI: Basic Trainer / Omniscient / Smart Switching / Smart Mon Choices / Predict Switch / Predict Move / Try To 2HKO / HP Aware / Weigh Ability Prediction / PP Stall Prevention
+Battle Type: Doubles
+
+/* Ho-Oh (gen9vgc2025: Bulky Utility) */
+SPECIES_HO_OH @ ITEM_CLEAR_AMULET
+Level: 100
+Ability: ABILITY_REGENERATOR
+EVs: 76 Atk / 156 Def / 204 HP / 4 SpD / 68 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_ADAMANT
+- MOVE_SACRED_FIRE
+- MOVE_BRAVE_BIRD
+- MOVE_TAILWIND
+- MOVE_PROTECT
+
+/* Pikachu (custom) */
+SPECIES_PIKACHU @ ITEM_LIGHT_BALL
+Level: 100
+Ability: ABILITY_LIGHTNING_ROD
+EVs: 252 Atk / 4 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_HASTY
+- MOVE_VOLT_TACKLE
+- MOVE_SURF
+- MOVE_IRON_TAIL
+- MOVE_FAKE_OUT
+
+/* Charizard (gen8pu: Defensive (doubles)) */
+SPECIES_CHARIZARD @ ITEM_HEAVY_DUTY_BOOTS
+Level: 100
+Ability: ABILITY_BLAZE
+EVs: 248 HP / 8 SpA / 252 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_PROTECT
+- MOVE_ROOST
+- MOVE_FLAMETHROWER
+- MOVE_DEFOG
+
+/* Venusaur (randbats: Offensive Protect) */
+SPECIES_VENUSAUR @ ITEM_LIFE_ORB
+Level: 100
+Ability: ABILITY_OVERGROW
+EVs: 252 SpA / 252 Spe / 4 HP
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_TIMID
+- MOVE_EARTH_POWER
+- MOVE_GIGA_DRAIN
+- MOVE_KNOCK_OFF
+- MOVE_PROTECT
+
+/* Blastoise (gen8doublesou: Follow Me Support) */
+SPECIES_BLASTOISE @ ITEM_SITRUS_BERRY
+Level: 100
+Ability: ABILITY_TORRENT
+EVs: 216 Def / 252 HP / 40 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_IMPISH
+- MOVE_FAKE_OUT
+- MOVE_FOLLOW_ME
+- MOVE_FLIP_TURN
+- MOVE_TOXIC
+
+/* Snorlax (gen9monotype: Curse (doubles)) */
+SPECIES_SNORLAX @ ITEM_CHESTO_BERRY
+Level: 100
+Ability: ABILITY_THICK_FAT
+EVs: 8 Def / 248 HP / 252 SpD
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Nature: NATURE_CAREFUL
+- MOVE_CURSE
+- MOVE_PROTECT
+- MOVE_BODY_SLAM
+- MOVE_HEAVY_SLAM

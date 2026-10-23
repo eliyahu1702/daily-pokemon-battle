@@ -2,34 +2,30 @@
 """Checks that the daily challenge changes with the date and stays the same within a day.
 
 Usage: day_rollover.py ROM OUTDIR [DAYS]
-Starts a new game with the cartridge clock set 0..DAYS-1 days ahead, screenshots the
-opponent announcement and the first draft round, and fails if two days look the same or
-if a rerun of the same day looks different.
+Starts a new game with the cartridge clock set 0..DAYS-1 days ahead, screenshots the first
+two draft rounds, and fails if two days look the same or if a rerun of the same day looks
+different.
 """
 import os
 import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from full_run import Screens, boot  # noqa: E402
 
 
-def script(days_ahead):
-    s = ["clockdays %d" % days_ahead, "wait 600", "press START", "wait 120", "press START", "wait 60",
-         "press A", "wait 60"]
-    for i in range(121):
-        s += ["press A", "wait 20"]
-        if i == 109:
-            s.append("shot opponent")
-    # Doubles days have two more intro pages; on singles days the spare presses open the
-    # picker's summary, which the B presses back out of.
-    s += ["wait 180", "press B", "wait 60", "press B", "wait 60", "press B", "wait 30", "shot draft"]
+def script(S, days_ahead):
+    s = boot(days_ahead) + [S.until("draft"), "wait 120", "shot opponent"]
+    s += ["press A", "wait 40", "press DOWN", "wait 20", "press A", S.until("field", "none"),
+          S.until("draft", "none"), "wait 120", "shot draft"]
     return "\n".join(s) + "\n"
 
 
 def run(rom, out, days_ahead):
     os.makedirs(out, exist_ok=True)
     path = os.path.join(out, "script.txt")
-    open(path, "w").write(script(days_ahead))
+    open(path, "w").write(script(Screens(rom), days_ahead))
     save = os.path.join(out, "save.sav")
     if os.path.exists(save):
         os.remove(save)

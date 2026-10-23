@@ -5,6 +5,7 @@
 #include "data.h"
 #include "event_data.h"
 #include "gpu_regs.h"
+#include "item_icon.h"
 #include "graphics.h"
 #include "main.h"
 #include "malloc.h"
@@ -13,6 +14,7 @@
 #include "pokemon.h"
 #include "pokemon_icon.h"
 #include "rtc.h"
+#include "save.h"
 #include "menu.h"
 #include "international_string_util.h"
 #include "script.h"
@@ -25,6 +27,7 @@
 #include "text.h"
 #include "window.h"
 #include "constants/daily_battle.h"
+#include "constants/items.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -48,16 +51,12 @@ struct DailyResult
     u8 knockouts;
     bool8 won:1;
     bool8 newBest:1;
-    u8 slot[PARTY_SIZE]; // Party index shown in each spot, or PARTY_SIZE for none
-    u8 hp[PARTY_SIZE];   // HP percent left, 0 if fainted
-};
-
-#define HP_EMPTY 0xFF
-
-static const u16 sResultMonVars[PARTY_SIZE] =
-{
-    VAR_DAILY_RESULT_MON_0, VAR_DAILY_RESULT_MON_1, VAR_DAILY_RESULT_MON_2,
-    VAR_DAILY_RESULT_MON_3, VAR_DAILY_RESULT_MON_4, VAR_DAILY_RESULT_MON_5,
+    bool8 practice:1;
+    u8 opponent;
+    bool8 doubles;
+    u16 species[PARTY_SIZE]; // SPECIES_NONE for an empty spot
+    u16 heldItems[PARTY_SIZE];
+    u8 hp[PARTY_SIZE];       // HP percent left, 0 if fainted
 };
 
 enum
@@ -74,6 +73,9 @@ enum
 
 static EWRAM_DATA struct DailyResult sResult = {0};
 static EWRAM_DATA u8 sIconSpriteIds[PARTY_SIZE] = {0};
+static EWRAM_DATA u8 sItemSpriteIds[PARTY_SIZE] = {0};
+
+#define TAG_ITEM_ICON 0x5D00 // + team spot
 
 void DailyBattle_ShowResults(void);
 static void CB2_InitResultsScreen(void);
@@ -92,8 +94,10 @@ static const u8 sText_Opponent[] = _("vs {STR_VAR_2} {STR_VAR_1}");
 static const u8 sText_Fainted[] = _("FNT");
 static const u8 sText_Percent[] = _("{STR_VAR_1}%");
 static const u8 sText_Stats1[] = _("Turns: {STR_VAR_1}   Lost: {STR_VAR_2}   KOs: {STR_VAR_3}/6");
-static const u8 sText_Stats2[] = _("HP left: {STR_VAR_1}%   Best today: {STR_VAR_2}");
+static const u8 sText_Stats2[] = _("HP left: {STR_VAR_1}%   Win streak: {STR_VAR_2}");
+static const u8 sText_Stats2Practice[] = _("HP left: {STR_VAR_1}%   Not scored");
 static const u8 sText_NewBest[] = _("NEW BEST!");
+static const u8 sText_Practice[] = _("PRACTICE");
 static const u8 sText_Ok[] = _("OK");
 
 static const struct BgTemplate sResults_BgTemplates[] =
@@ -168,17 +172,17 @@ static const struct WindowTemplate sResults_WindowTemplates[] =
     [RESULTS_WIN_PROMPT] = {
         .bg = 0,
         .tilemapLeft = 22,
-        .tilemapTop = 14,
+        .tilemapTop = 15,
         .width = 8,
-        .height = 6,
+        .height = 5,
         .paletteNum = PALNUM_TEXT,
         .baseBlock = 205,
     },
     DUMMY_WIN_TEMPLATE,
 };
 
-// Fills in each team member's HP percent. Returns the sum.
-static u32 GetTeamHpPercent(u32 *lost)
+// Fills in the team, with each member's HP percent. Returns the sum.
+static u32 GetTeam(u32 *lost)
 {
     u32 i, total = 0;
 
@@ -188,10 +192,11 @@ static u32 GetTeamHpPercent(u32 *lost)
         struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
         u32 hp, maxHp;
 
-        sResult.slot[i] = PARTY_SIZE;
-        if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE)
+        sResult.species[i] = GetMonData(mon, MON_DATA_SPECIES);
+        sResult.heldItems[i] = GetMonData(mon, MON_DATA_HELD_ITEM);
+        sResult.hp[i] = 0;
+        if (sResult.species[i] == SPECIES_NONE)
             continue;
-        sResult.slot[i] = i;
         hp = GetMonData(mon, MON_DATA_HP);
         maxHp = GetMonData(mon, MON_DATA_MAX_HP);
         sResult.hp[i] = (hp == 0 || maxHp == 0) ? 0 : max(1u, hp * 100 / maxHp);
@@ -202,70 +207,64 @@ static u32 GetTeamHpPercent(u32 *lost)
     return total;
 }
 
-static void SaveResult(void)
+static void ToSaved(struct DailyLastResult *saved)
 {
     u32 i;
 
-    VarSet(VAR_DAILY_RESULT_SCORE, sResult.score);
-    VarSet(VAR_DAILY_RESULT_STATS, sResult.turns | (sResult.knockouts << 8) | (sResult.lost << 12));
+    saved->entry.day = VarGet(VAR_DAILY_DAY) + 1;
+    saved->entry.score = sResult.score;
+    saved->entry.opponent = sResult.opponent;
+    saved->entry.turns = sResult.turns;
+    saved->entry.knockouts = sResult.knockouts;
+    saved->entry.lost = sResult.lost;
+    saved->entry.won = sResult.won;
+    saved->entry.doubles = sResult.doubles;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        u32 species = SPECIES_NONE;
-
-        if (sResult.slot[i] < PARTY_SIZE)
-            species = GetMonData(&gParties[B_TRAINER_PLAYER][sResult.slot[i]], MON_DATA_SPECIES);
-        VarSet(sResultMonVars[i], ((species & 0xFF) << 8) | (species == SPECIES_NONE ? HP_EMPTY : sResult.hp[i]));
+        saved->species[i] = sResult.species[i];
+        saved->heldItems[i] = sResult.heldItems[i];
+        saved->hp[i] = sResult.hp[i];
     }
 }
 
-// The team is still today's draft, but a rematch may have changed the lead order, so each
-// saved spot is matched back to the party by species.
-static void LoadSavedResult(void)
+static void FromSaved(const struct DailyLastResult *saved)
 {
-    u32 i, j, stats = VarGet(VAR_DAILY_RESULT_STATS);
-    bool8 used[PARTY_SIZE] = {0};
+    u32 i;
 
-    sResult.won = TRUE;
+    sResult.score = saved->entry.score;
+    sResult.opponent = saved->entry.opponent;
+    sResult.doubles = saved->entry.doubles;
+    sResult.turns = saved->entry.turns;
+    sResult.knockouts = saved->entry.knockouts;
+    sResult.lost = saved->entry.lost;
+    sResult.won = saved->entry.won;
     sResult.newBest = FALSE;
-    sResult.score = VarGet(VAR_DAILY_RESULT_SCORE);
-    sResult.turns = stats & 0xFF;
-    sResult.knockouts = (stats >> 8) & 0xF;
-    sResult.lost = stats >> 12;
+    sResult.practice = FALSE;
     sResult.hpPercent = 0;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        u32 saved = VarGet(sResultMonVars[i]);
-
-        sResult.slot[i] = PARTY_SIZE;
-        sResult.hp[i] = saved & 0xFF;
-        if (sResult.hp[i] == HP_EMPTY)
-            continue;
-        sResult.hpPercent += sResult.hp[i];
-        for (j = 0; j < PARTY_SIZE; j++)
-        {
-            u32 species = GetMonData(&gParties[B_TRAINER_PLAYER][j], MON_DATA_SPECIES);
-
-            if (!used[j] && species != SPECIES_NONE && (species & 0xFF) == (saved >> 8))
-                break;
-        }
-        if (j < PARTY_SIZE)
-        {
-            used[j] = TRUE;
-            sResult.slot[i] = j;
-        }
+        sResult.species[i] = saved->species[i];
+        sResult.heldItems[i] = saved->heldItems[i];
+        sResult.hp[i] = saved->hp[i];
+        sResult.hpPercent += saved->hp[i];
     }
 }
 
-// Call right after the daily battle, before the party is healed. Sets VAR_RESULT to TRUE on a win.
+// Call right after the battle, before the party is healed. A daily's result goes into the
+// records (and is saved); a practice result only counts toward its badge. Sets VAR_RESULT to
+// TRUE on a win.
 void DailyBattle_RecordResult(void)
 {
-    u32 lost, today, score;
+    u32 lost, score;
 
     sResult.won = (gBattleOutcome == B_OUTCOME_WON);
-    sResult.turns = gBattleResults.battleTurnCounter;
-    sResult.hpPercent = GetTeamHpPercent(&lost);
+    sResult.turns = min(gBattleResults.battleTurnCounter, 255);
+    sResult.hpPercent = GetTeam(&lost);
     sResult.lost = lost;
     sResult.knockouts = gBattleResults.opponentFaintCounter;
+    sResult.opponent = VarGet(VAR_DAILY_OPPONENT);
+    sResult.doubles = VarGet(VAR_DAILY_DOUBLES);
+    sResult.practice = (VarGet(VAR_DAILY_MODE) == DAILY_MODE_PRACTICE);
 
     if (sResult.won)
     {
@@ -277,35 +276,29 @@ void DailyBattle_RecordResult(void)
         score = SCORE_PER_KO_LOSS * sResult.knockouts;
     }
     sResult.score = score;
+    sResult.newBest = FALSE;
 
-    RtcCalcLocalTime();
-    today = RtcGetLocalDayCount() + 1;
-    if (VarGet(VAR_DAILY_BEST_DAY) != today)
+    if (sResult.practice)
     {
-        VarSet(VAR_DAILY_BEST_DAY, today);
-        VarSet(VAR_DAILY_BEST_SCORE, 0);
+        if (sResult.won)
+            DailyRecords_AwardPracticeWin();
     }
-    sResult.newBest = (score > VarGet(VAR_DAILY_BEST_SCORE));
-    if (sResult.newBest)
-        VarSet(VAR_DAILY_BEST_SCORE, score);
-    // Keep today's best win for the hall's "see your results" option.
-    if (sResult.won && (VarGet(VAR_DAILY_WON_DAY) != today || score > VarGet(VAR_DAILY_RESULT_SCORE)))
-        SaveResult();
+    else
+    {
+        struct DailyLastResult saved = {0};
 
+        ToSaved(&saved);
+        sResult.newBest = DailyRecords_AddResult(&saved);
+    }
+    // The hall has made a full save before this (see DailyBattle_SaveIfDaily), so the quick save is enough.
+    TrySavingData(SAVE_LINK);
     gSpecialVar_Result = sResult.won;
 }
 
-// VAR_RESULT is TRUE if there's a win from today to show again.
-void DailyBattle_HasSavedResult(void)
+// Shows the last scored daily's results again.
+void DailyBattle_ShowLastResult(void)
 {
-    RtcCalcLocalTime();
-    gSpecialVar_Result = VarGet(VAR_DAILY_WON_DAY) == RtcGetLocalDayCount() + 1
-                      && VarGet(VAR_DAILY_RESULT_SCORE) != 0;
-}
-
-void DailyBattle_ShowSavedResults(void)
-{
-    LoadSavedResult();
+    FromSaved(DailyRecords_GetLastResult());
     DailyBattle_ShowResults();
 }
 
@@ -341,7 +334,7 @@ static void PrintText(u32 windowId, const u8 *colors, u32 font, u32 x, u32 y, co
 static void PrintResults(void)
 {
     u32 i;
-    const struct Trainer *trainer = GetDailyTrainer();
+    const struct Trainer *trainer = GetDailyTrainerById(sResult.opponent, sResult.doubles);
 
     for (i = 0; i < RESULTS_WIN_PROMPT + 1; i++)
         FillWindowPixelBuffer(i, PIXEL_FILL(0));
@@ -363,7 +356,7 @@ static void PrintResults(void)
     {
         const u8 *text;
 
-        if (sResult.slot[i] >= PARTY_SIZE)
+        if (sResult.species[i] == SPECIES_NONE)
             continue;
         if (sResult.hp[i] == 0)
         {
@@ -385,13 +378,15 @@ static void PrintResults(void)
     StringExpandPlaceholders(gStringVar4, sText_Stats1);
     PrintText(RESULTS_WIN_STATS, sTextColors_Normal, FONT_SMALL, 2, 0, gStringVar4);
     ConvertIntToDecimalStringN(gStringVar1, sResult.hpPercent / PARTY_SIZE, STR_CONV_MODE_LEFT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar2, VarGet(VAR_DAILY_BEST_SCORE), STR_CONV_MODE_LEFT_ALIGN, 5);
-    StringExpandPlaceholders(gStringVar4, sText_Stats2);
+    ConvertIntToDecimalStringN(gStringVar2, DailyRecords_GetStreak(), STR_CONV_MODE_LEFT_ALIGN, 5);
+    StringExpandPlaceholders(gStringVar4, sResult.practice ? sText_Stats2Practice : sText_Stats2);
     PrintText(RESULTS_WIN_STATS, sTextColors_Normal, FONT_SMALL, 2, 12, gStringVar4);
 
-    if (sResult.newBest)
+    if (sResult.practice)
+        PrintText(RESULTS_WIN_PROMPT, sTextColors_Red, FONT_NORMAL, 4, 1, sText_Practice);
+    else if (sResult.newBest)
         PrintText(RESULTS_WIN_PROMPT, sTextColors_Red, FONT_NORMAL, 4, 1, sText_NewBest);
-    PrintText(RESULTS_WIN_PROMPT, sTextColors_Normal, FONT_NORMAL, 4, 33, sText_Ok);
+    PrintText(RESULTS_WIN_PROMPT, sTextColors_Normal, FONT_NORMAL, 4, 25, sText_Ok);
 
     for (i = 0; i < RESULTS_WIN_PROMPT + 1; i++)
     {
@@ -400,6 +395,7 @@ static void PrintResults(void)
     }
 }
 
+// Each team member's icon, with its held item underneath.
 static void CreateTeamIcons(void)
 {
     u32 i;
@@ -407,17 +403,24 @@ static void CreateTeamIcons(void)
     LoadMonIconPalettes();
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        struct Pokemon *mon;
-
         sIconSpriteIds[i] = MAX_SPRITES;
-        if (sResult.slot[i] >= PARTY_SIZE)
+        sItemSpriteIds[i] = MAX_SPRITES;
+        if (sResult.species[i] == SPECIES_NONE)
             continue;
-        mon = &gParties[B_TRAINER_PLAYER][sResult.slot[i]];
-        sIconSpriteIds[i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES), SpriteCB_MonIcon, 20 + 40 * i, 56, 0,
-                                          GetMonData(mon, MON_DATA_PERSONALITY));
+        sIconSpriteIds[i] = CreateMonIcon(sResult.species[i], SpriteCB_MonIcon, 20 + 40 * i, 56, 0, 0);
         // Fainted team members stand still.
         if (sResult.hp[i] == 0)
             gSprites[sIconSpriteIds[i]].callback = SpriteCallbackDummy;
+        if (sResult.heldItems[i] != ITEM_NONE)
+        {
+            sItemSpriteIds[i] = AddItemIconSprite(TAG_ITEM_ICON + i, TAG_ITEM_ICON + i, sResult.heldItems[i]);
+            if (sItemSpriteIds[i] < MAX_SPRITES)
+            {
+                gSprites[sItemSpriteIds[i]].x = 20 + 40 * i;
+                gSprites[sItemSpriteIds[i]].y = 108;
+                gSprites[sItemSpriteIds[i]].oam.priority = 0;
+            }
+        }
     }
 }
 
@@ -429,6 +432,12 @@ static void DestroyTeamIcons(void)
     {
         if (sIconSpriteIds[i] < MAX_SPRITES)
             FreeAndDestroyMonIconSprite(&gSprites[sIconSpriteIds[i]]);
+        if (sItemSpriteIds[i] < MAX_SPRITES)
+        {
+            FreeSpriteTilesByTag(TAG_ITEM_ICON + i);
+            FreeSpritePaletteByTag(TAG_ITEM_ICON + i);
+            DestroySprite(&gSprites[sItemSpriteIds[i]]);
+        }
     }
     FreeMonIconPalettes();
 }
